@@ -1,0 +1,77 @@
+.GreenButton {
+  width: 100px;
+  height: 40px;
+  border: 6px 0px solid;
+  border-color: #007e33;
+  background-color: #00c851;
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  outline: none;
+}
+.GreenButton:active {
+  border: none;
+  transform: translateY(0px);
+}
+.GreenButton:hover {
+  background-color: #007e33;
+}
+
+.BlueButton {
+  width: 100px;
+  height: 40px;
+  border: 6px 0px solid;
+  border-color: #0080aa;
+  background-color: #33b5e5;
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  outline: none;
+}
+.BlueButton:active {
+  border: none;
+  transform: translateY(0px);
+}
+.BlueButton:hover {
+  background-color: #0080aa;
+}
+
+.RedButton {
+  width: 100px;
+  height: 40px;
+  border: 6px 0px solid;
+  border-color: #cc0000;
+  background-color: #ff4444;
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  outline: none;
+}
+.RedButton:active {
+  border: none;
+  transform: translateY(0px);
+}
+.RedButton:hover {
+  background-color: #cc0000;
+}
+
+.YellowButton {
+  width: 100px;
+  height: 40px;
+  border: 6px 0px solid;
+  border-color: #ff8800;
+  background-color: #ffbb33;
+  color: white;
+  margin-left: 5px;
+  margin-right: 5px;
+  outline: none;
+}
+.YellowButton:active {
+  border: none;
+  transform: translateY(0px);
+}
+.YellowButton:hover {
+  background-color: #ff8800;
+}
+
+/*# sourceMappingURL=Button.css.map */

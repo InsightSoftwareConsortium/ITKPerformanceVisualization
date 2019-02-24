@@ -1,0 +1,18 @@
+@mixin button($bgcolor, $bordercolor) {
+    width: 100px;
+    height: 40px;
+    border: 6px 0px solid;
+    border-color: $bordercolor;
+    background-color: $bgcolor;
+    color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    outline: none;
+    &:active {
+        border: none;
+        transform: translateY(0px);
+    }
+    &:hover {
+        background-color: $bordercolor;
+    }
+}

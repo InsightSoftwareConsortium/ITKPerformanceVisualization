@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import Button from '../../Components/Button';
+import NavBar from '../../Components/NavBar';
 import '../../static/scss/App.css';
 
 class App extends Component {
@@ -6,17 +8,13 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
+          <NavBar></NavBar>
+          <div>
+            <Button color="Green">Marc</Button>
+            <Button color="Blue">Jake M</Button>
+            <Button color="Red">Parker</Button>
+            <Button color="Yellow">Jake S</Button>
+          </div>
         </header>
       </div>
     );

@@ -1,0 +1,17 @@
+@import 'mixins.scss';
+
+.GreenButton {
+    @include button(#00c851, #007e33);
+}
+
+.BlueButton {
+    @include button(#33b5e5, #0080aa);
+}
+
+.RedButton {
+    @include button(#ff4444, #cc0000);
+}
+
+.YellowButton {
+    @include button(#ffbb33, #ff8800);
+}
