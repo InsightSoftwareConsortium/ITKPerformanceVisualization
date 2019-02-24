@@ -1,1 +1,7 @@
-{"version":3,"sourceRoot":"","sources":["App.scss"],"names":[],"mappings":"AAAA;EACE;;;AAGF;EACE;EACA;;;AAGF;EACE;EACA;EACA;EACA;EACA;EACA;EACA;EACA;;;AAGF;EACE;;;AAGF;EACE;IACE;;EAEF;IACE","file":"App.css"}
+{
+"version": 3,
+"mappings": "AAEA,IAAK;EACH,WAAW,EAAE,2HAA2H;;AAG1I,YAAa;EACX,WAAW,ECPE,IAAI;EDQjB,YAAY,ECPC,IAAI",
+"sources": ["App.scss","variables.scss"],
+"names": [],
+"file": "App.css"
+}

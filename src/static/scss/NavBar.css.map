@@ -1,1 +1,7 @@
-{"version":3,"sourceRoot":"","sources":["NavBar.scss"],"names":[],"mappings":"AAAA;EACI;EACA;EACA;EACA;EACA;EACA","file":"NavBar.css"}
+{
+"version": 3,
+"mappings": "AAEA,OAAQ;EACJ,KAAK,EAAE,IAAI;EACX,MAAM,ECJK,IAAI;EDKf,gBAAgB,EAAE,UAAU;EAC5B,aAAa,EAAE,oBAAoB;EACnC,QAAQ,EAAE,KAAK;EACf,WAAW,ECRA,IAAI;EDSf,UAAU,EAAE,MAAM;;AAGtB,QAAS;EACL,OAAO,EAAC,YAAY;EACpB,cAAQ;IACJ,KAAK,EAAC,KAAK;EAEf,aAAO;IACH,KAAK,EAAC,IAAI",
+"sources": ["NavBar.scss","variables.scss"],
+"names": [],
+"file": "NavBar.css"
+}
