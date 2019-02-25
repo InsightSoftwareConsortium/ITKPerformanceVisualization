@@ -2,7 +2,13 @@ import React, { Component } from 'react';
 import Button from '../../components/Button/Button';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
+import MultiBoxPlot from "../../components/MultiBoxplot/MultiBoxplot";
+import ApiInstance from "../../api/api_wrapper.js";
+import DataTransformationInstance from "../../api/data_transformation.js";
 import '../../static/scss/App.css';
+
+const Api = ApiInstance.instance;
+const Dti = DataTransformationInstance.instance;
 
 class App extends Component {
 
@@ -30,6 +36,7 @@ class App extends Component {
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             <Button color="red">test</Button>
+            <MultiBoxPlot data={Dti.parseBenchmarkJson(null, Api.getItem(null, () => {}))}></MultiBoxPlot>
           </div>
       </div>
     );
