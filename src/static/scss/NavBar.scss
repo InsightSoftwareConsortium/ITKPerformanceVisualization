@@ -1,0 +1,21 @@
+@import 'variables.scss';
+
+.navbar {
+    width: 100%;
+    height: $navbarHeight;
+    background-color: whitesmoke;
+    border-bottom: .1vh solid gainsboro;
+    position: fixed;
+    line-height: $navbarHeight;
+    text-align: center;
+}
+
+.navitem {
+    display:inline-block;
+    &-right {
+        float:right;
+    }
+    &-left {
+        float:left;
+    }
+}

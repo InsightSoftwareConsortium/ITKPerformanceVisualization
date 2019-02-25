@@ -1,0 +1,9 @@
+.sidebar {
+  position: fixed;
+  width: 20vw;
+  background-color: gainsboro;
+  border-right: .1vw solid grey;
+  height: 100vh;
+  margin-top: 10vh; }
+
+/*# sourceMappingURL=SideBar.css.map */
