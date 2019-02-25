@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import vegaEmbed from 'vega-embed';
+import PropTypes from 'prop-types';
 export default class MultiBoxplot extends Component {
 
   static defaultProps = {
@@ -54,4 +55,11 @@ export default class MultiBoxplot extends Component {
       <div ref='MultiBoxplotContainer'/>
     );
   }
+}
+
+MultiBoxplot.propTypes = {
+  dependentVar: PropTypes.oneOf(["Value"]),
+  independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
+                  "OSPlatform", "OSRelease", "OSName", "CommitDate", 
+                  "CommitHash"])
 }

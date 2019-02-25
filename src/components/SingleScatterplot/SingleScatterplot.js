@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import vegaEmbed from 'vega-embed';
+import PropTypes from 'prop-types';
 export default class SingleScatterplot extends Component {
 
 	static defaultProps = {
@@ -72,4 +73,11 @@ export default class SingleScatterplot extends Component {
       <div ref='SingleScatterplotContainer'/>
     );
   }
+}
+
+SingleScatterplot.propTypes = {
+  dependentVar: PropTypes.oneOf(["Value"]),
+  independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
+                  "OSPlatform", "OSRelease", "OSName", "CommitDate", 
+                  "CommitHash"])
 }

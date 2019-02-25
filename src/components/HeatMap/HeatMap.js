@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import vegaEmbed from 'vega-embed';
+import PropTypes from 'prop-types';
 import _ from 'lodash';
 
 export default class HeatMap extends Component {
@@ -72,3 +73,9 @@ export default class HeatMap extends Component {
   }
 }
 
+HeatMap.propTypes = {
+  dependentVar:  PropTypes.oneOf(["ZScore", "StandardDeviation", "Mean"]),
+  independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
+                  "OSPlatform", "OSRelease", "OSName", "CommitDate", 
+                  "CommitHash"])
+}
