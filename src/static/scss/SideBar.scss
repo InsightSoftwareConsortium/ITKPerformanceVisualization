@@ -7,4 +7,55 @@
     border-right: .1vw solid grey;
     height: 100vh;
     margin-top: $navbarHeight;
+    z-index: 1;
+    transition: opacity 0.5s ease-in;
+
+
+    &-hide {
+        transform: translateX(-$sidebarWidth) rotate(0deg);  
+        transition: all .75s ease;
+    }
+
+    &-show {
+        transform: translateX(0) rotate(0deg); 
+        transition: all .75s ease; 
+    }
+}
+
+.sidebar-button {
+    &--left {
+        float:right;
+        color:white;
+        font-size: 5vh;
+        cursor: pointer;
+        &:hover {
+            color: whitesmoke;
+        }
+        margin-right: 1vw;
+        margin-top: 1vh;
+    }
+
+    &--right {
+        &:hover {
+            color: grey;
+        }
+        color: black;
+        font-size: 5vh;
+        cursor: pointer;
+        z-index: 1;
+        margin-left: 1vw;
+        margin-top: 12vh;
+        position: absolute;
+        
+    }
+
+    &-show {
+        opacity: 1;
+        transition: opacity 0.5s ease-in;
+    }
+
+    &-hide {
+        opacity: 0;
+        transition: opacity 0.5s ease-in;
+    }
 }
