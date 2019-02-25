@@ -5,6 +5,18 @@
 }
 
 .app-content {
-  padding-top: $navbarHeight;
+  padding-top: $navbarHeight+10vh;
   padding-left: $sidebarWidth;
+
+  &--no-sidebar {
+    transform: translateX(-$sidebarWidth) rotate(0deg);  
+    transition: all .75s ease;
+    padding-left: $sidebarWidth + 4vw;
+  }
+
+  &--sidebar {
+    transform: translateX(0) rotate(0deg);  
+    transition: all .75s ease;
+  }
 }
+
