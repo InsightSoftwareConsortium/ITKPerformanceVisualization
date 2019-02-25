@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import '../static/scss/SideBar.css';
+import '../../static/scss/SideBar.css';
 
 export default class SideBar extends Component {
   render() {

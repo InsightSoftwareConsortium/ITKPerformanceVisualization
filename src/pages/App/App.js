@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Button from '../../components/Button';
-import NavBar from '../../components/NavBar';
-import SideBar from "../../components/SideBar";
+import Button from '../../components/Button/Button';
+import NavBar from '../../components/NavBar/NavBar';
+import SideBar from "../../components/SideBar/SideBar";
 import '../../static/scss/App.css';
 
 class App extends Component {
@@ -10,8 +10,6 @@ class App extends Component {
     super(props);
     this.state = {
       navbarItems: {
-        left: [],
-        center: [],
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
