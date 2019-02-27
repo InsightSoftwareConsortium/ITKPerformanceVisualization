@@ -2,18 +2,21 @@
   position: fixed;
   width: 20vw;
   background-color: whitesmoke;
-  border-right: .1vw solid gainsboro;
-  border-top: .1vh solid gainsboro;
+  border-right: 0.1vw solid gainsboro;
+  border-top: 0.1vh solid gainsboro;
   height: 100vh;
   margin-top: 10vh;
   z-index: 1;
-  transition: opacity 0.5s ease-in; }
-  .sidebar-hide {
-    transform: translateX(-20vw) rotate(0deg);
-    transition: all .75s ease; }
-  .sidebar-show {
-    transform: translateX(0) rotate(0deg);
-    transition: all .75s ease; }
+  transition: opacity 0.5s ease-in;
+}
+.sidebar-hide {
+  transform: translateX(-20vw) rotate(0deg);
+  transition: all 0.75s ease;
+}
+.sidebar-show {
+  transform: translateX(0) rotate(0deg);
+  transition: all 0.75s ease;
+}
 
 .sidebar-button--left {
   float: right;
@@ -21,24 +24,30 @@
   font-size: 5vh;
   cursor: pointer;
   margin-right: 1vw;
-  margin-top: 1vh; }
-  .sidebar-button--left:hover {
-    color: grey; }
+  margin-top: 1vh;
+}
+.sidebar-button--left:hover {
+  color: grey;
+}
 .sidebar-button--right {
   color: black;
   font-size: 5vh;
   cursor: pointer;
   z-index: 1;
   margin-left: 1vw;
-  margin-top: 12vh;
-  position: absolute; }
-  .sidebar-button--right:hover {
-    color: grey; }
+  margin-top: 11vh;
+  position: absolute;
+}
+.sidebar-button--right:hover {
+  color: grey;
+}
 .sidebar-button-show {
   opacity: 1;
-  transition: opacity 0.5s ease-in; }
+  transition: opacity 0.5s ease-in;
+}
 .sidebar-button-hide {
   opacity: 0;
-  transition: opacity 0.5s ease-in; }
+  transition: opacity 0.5s ease-in;
+}
 
 /*# sourceMappingURL=SideBar.css.map */

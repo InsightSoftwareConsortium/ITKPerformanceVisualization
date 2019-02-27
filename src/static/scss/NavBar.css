@@ -2,16 +2,21 @@
   width: 100%;
   height: 10vh;
   background-color: whitesmoke;
-  border-bottom: .1vh solid gainsboro;
+  border-bottom: 0.1vh solid gainsboro;
   position: fixed;
   line-height: 10vh;
-  text-align: center; }
+  text-align: center;
+  z-index: 2;
+}
 
 .navitem {
-  display: inline-block; }
-  .navitem-right {
-    float: right; }
-  .navitem-left {
-    float: left; }
+  display: inline-block;
+}
+.navitem-right {
+  float: right;
+}
+.navitem-left {
+  float: left;
+}
 
 /*# sourceMappingURL=NavBar.css.map */

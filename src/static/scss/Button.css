@@ -1,5 +1,5 @@
 .green-button {
-  padding: .5vh .8vw .5vh .8vw;
+  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
   border: none;
   border-bottom: 0.7vh solid #007e33;
   background-color: #00c851;
@@ -9,15 +9,18 @@
   outline: none;
   font-size: 1.5vh;
   font-weight: bold;
-  cursor: pointer; }
-  .green-button:active {
-    border: none;
-    transform: translateY(0.7vh); }
-  .green-button::-moz-focus-inner {
-    border: 0; }
+  cursor: pointer;
+}
+.green-button:active {
+  border: none;
+  transform: translateY(0.7vh);
+}
+.green-button::-moz-focus-inner {
+  border: 0;
+}
 
 .blue-button {
-  padding: .5vh .8vw .5vh .8vw;
+  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
   border: none;
   border-bottom: 0.7vh solid #0080aa;
   background-color: #33b5e5;
@@ -27,15 +30,18 @@
   outline: none;
   font-size: 1.5vh;
   font-weight: bold;
-  cursor: pointer; }
-  .blue-button:active {
-    border: none;
-    transform: translateY(0.7vh); }
-  .blue-button::-moz-focus-inner {
-    border: 0; }
+  cursor: pointer;
+}
+.blue-button:active {
+  border: none;
+  transform: translateY(0.7vh);
+}
+.blue-button::-moz-focus-inner {
+  border: 0;
+}
 
 .red-button {
-  padding: .5vh .8vw .5vh .8vw;
+  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
   border: none;
   border-bottom: 0.7vh solid #cc0000;
   background-color: #ff4444;
@@ -45,15 +51,18 @@
   outline: none;
   font-size: 1.5vh;
   font-weight: bold;
-  cursor: pointer; }
-  .red-button:active {
-    border: none;
-    transform: translateY(0.7vh); }
-  .red-button::-moz-focus-inner {
-    border: 0; }
+  cursor: pointer;
+}
+.red-button:active {
+  border: none;
+  transform: translateY(0.7vh);
+}
+.red-button::-moz-focus-inner {
+  border: 0;
+}
 
 .yellow-button {
-  padding: .5vh .8vw .5vh .8vw;
+  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
   border: none;
   border-bottom: 0.7vh solid #ff8800;
   background-color: #ffbb33;
@@ -63,11 +72,14 @@
   outline: none;
   font-size: 1.5vh;
   font-weight: bold;
-  cursor: pointer; }
-  .yellow-button:active {
-    border: none;
-    transform: translateY(0.7vh); }
-  .yellow-button::-moz-focus-inner {
-    border: 0; }
+  cursor: pointer;
+}
+.yellow-button:active {
+  border: none;
+  transform: translateY(0.7vh);
+}
+.yellow-button::-moz-focus-inner {
+  border: 0;
+}
 
 /*# sourceMappingURL=Button.css.map */
