@@ -1,9 +1,9 @@
-$buttonBorderBottom: .7vh;
+$buttonBorderBottom: .2vh;
 
 @mixin button($bgcolor, $bordercolor) {
-    padding: .5vh .8vw .5vh .8vw;
+    padding: 1vh 1vh 1vh 1vh;
     border:none;
-    border-bottom: $buttonBorderBottom solid $bordercolor;
+    border: $buttonBorderBottom solid $bordercolor;
     background-color: $bgcolor;
     color: white;
     margin-left: 1vw;
@@ -15,6 +15,9 @@ $buttonBorderBottom: .7vh;
     &:active {
         border: none;
         transform: translateY($buttonBorderBottom);
+    }
+    &:hover {
+        background-color: $bordercolor;
     }
     &::-moz-focus-inner {
         border: 0;

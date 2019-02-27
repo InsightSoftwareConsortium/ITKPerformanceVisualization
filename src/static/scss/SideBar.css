@@ -7,6 +7,7 @@
   height: 100vh;
   margin-top: 10vh;
   z-index: 1;
+  top: 0;
   transition: opacity 0.5s ease-in;
 }
 .sidebar-hide {
@@ -35,7 +36,6 @@
   cursor: pointer;
   z-index: 1;
   margin-left: 1vw;
-  margin-top: 11vh;
   position: absolute;
 }
 .sidebar-button--right:hover {

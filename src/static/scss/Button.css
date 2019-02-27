@@ -1,7 +1,7 @@
 .green-button {
-  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
+  padding: 1vh 1vh 1vh 1vh;
   border: none;
-  border-bottom: 0.7vh solid #007e33;
+  border: 0.2vh solid #007e33;
   background-color: #00c851;
   color: white;
   margin-left: 1vw;
@@ -13,16 +13,19 @@
 }
 .green-button:active {
   border: none;
-  transform: translateY(0.7vh);
+  transform: translateY(0.2vh);
+}
+.green-button:hover {
+  background-color: #007e33;
 }
 .green-button::-moz-focus-inner {
   border: 0;
 }
 
 .blue-button {
-  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
+  padding: 1vh 1vh 1vh 1vh;
   border: none;
-  border-bottom: 0.7vh solid #0080aa;
+  border: 0.2vh solid #0080aa;
   background-color: #33b5e5;
   color: white;
   margin-left: 1vw;
@@ -34,16 +37,19 @@
 }
 .blue-button:active {
   border: none;
-  transform: translateY(0.7vh);
+  transform: translateY(0.2vh);
+}
+.blue-button:hover {
+  background-color: #0080aa;
 }
 .blue-button::-moz-focus-inner {
   border: 0;
 }
 
 .red-button {
-  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
+  padding: 1vh 1vh 1vh 1vh;
   border: none;
-  border-bottom: 0.7vh solid #cc0000;
+  border: 0.2vh solid #cc0000;
   background-color: #ff4444;
   color: white;
   margin-left: 1vw;
@@ -55,16 +61,19 @@
 }
 .red-button:active {
   border: none;
-  transform: translateY(0.7vh);
+  transform: translateY(0.2vh);
+}
+.red-button:hover {
+  background-color: #cc0000;
 }
 .red-button::-moz-focus-inner {
   border: 0;
 }
 
 .yellow-button {
-  padding: 0.5vh 0.8vw 0.5vh 0.8vw;
+  padding: 1vh 1vh 1vh 1vh;
   border: none;
-  border-bottom: 0.7vh solid #ff8800;
+  border: 0.2vh solid #ff8800;
   background-color: #ffbb33;
   color: white;
   margin-left: 1vw;
@@ -76,7 +85,10 @@
 }
 .yellow-button:active {
   border: none;
-  transform: translateY(0.7vh);
+  transform: translateY(0.2vh);
+}
+.yellow-button:hover {
+  background-color: #ff8800;
 }
 .yellow-button::-moz-focus-inner {
   border: 0;

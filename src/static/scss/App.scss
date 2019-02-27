@@ -5,12 +5,12 @@
 }
 
 .app-content {
-  padding-top: $navbarHeight+10vh;
-  padding-left: $sidebarWidth;
-  z-index: -1;
+  margin-top: $navbarHeight+1vh;
+  margin-left: $sidebarWidth;
+  padding: 1vh 4vw 1vh 4vw;
 
   &--no-sidebar {
-    transform: translateX(-$sidebarWidth) rotate(0deg);  
+    transform: translateX(-$sidebarWidth + (-20vw)) rotate(0deg);  
     transition: all .75s ease;
     padding-left: $sidebarWidth + 4vw;
   }
