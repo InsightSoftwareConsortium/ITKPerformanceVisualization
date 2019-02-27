@@ -1,8 +1,9 @@
 .sidebar {
   position: fixed;
   width: 20vw;
-  background-color: gainsboro;
-  border-right: .1vw solid grey;
+  background-color: whitesmoke;
+  border-right: .1vw solid gainsboro;
+  border-top: .1vh solid gainsboro;
   height: 100vh;
   margin-top: 10vh;
   z-index: 1;
@@ -16,13 +17,13 @@
 
 .sidebar-button--left {
   float: right;
-  color: white;
+  color: black;
   font-size: 5vh;
   cursor: pointer;
   margin-right: 1vw;
   margin-top: 1vh; }
   .sidebar-button--left:hover {
-    color: whitesmoke; }
+    color: grey; }
 .sidebar-button--right {
   color: black;
   font-size: 5vh;

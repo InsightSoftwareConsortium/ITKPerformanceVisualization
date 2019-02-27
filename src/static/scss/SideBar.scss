@@ -3,8 +3,9 @@
 .sidebar {
     position: fixed;
     width: $sidebarWidth;
-    background-color: gainsboro;
-    border-right: .1vw solid grey;
+    background-color: whitesmoke;
+    border-right: .1vw solid gainsboro;
+    border-top: .1vh solid gainsboro;
     height: 100vh;
     margin-top: $navbarHeight;
     z-index: 1;
@@ -25,11 +26,11 @@
 .sidebar-button {
     &--left {
         float:right;
-        color:white;
+        color:black;
         font-size: 5vh;
         cursor: pointer;
         &:hover {
-            color: whitesmoke;
+            color: grey;
         }
         margin-right: 1vw;
         margin-top: 1vh;

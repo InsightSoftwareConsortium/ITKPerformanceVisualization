@@ -3,7 +3,8 @@
 
 .app-content {
   padding-top: 20vh;
-  padding-left: 20vw; }
+  padding-left: 20vw;
+  z-index: -1; }
   .app-content--no-sidebar {
     transform: translateX(-20vw) rotate(0deg);
     transition: all .75s ease;

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import vegaEmbed from 'vega-embed';
+import 'canvas';
 import PropTypes from 'prop-types';
+
+const vegaEmbed = window.vegaEmbed;
 export default class SingleScatterplot extends Component {
 
 	static defaultProps = {
@@ -11,8 +13,9 @@ export default class SingleScatterplot extends Component {
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
-    return {
-        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+    
+    return {    
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
         "data": {"values": this.props.data},
         "transform": [
             {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
@@ -30,7 +33,7 @@ export default class SingleScatterplot extends Component {
                     "y": {
                       "field": this.props.dependentVar,
                       "type": "quantitative",
-                      "aggregate": "mean",
+                      "aggregate": "mean"
                     },
                   "color": {"value": "black"}
                 },
@@ -43,7 +46,7 @@ export default class SingleScatterplot extends Component {
                 "encoding": {
                     "y": {
                         "field": this.props.dependentVar,
-                        "type": "quantitative",
+                        "type": "quantitative"
                     }
                 }
             }

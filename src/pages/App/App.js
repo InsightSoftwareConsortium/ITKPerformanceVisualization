@@ -35,7 +35,6 @@ class App extends Component {
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}/>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
-            <Button color="red">test</Button>
             <SingleScatterplot data={Dti.parseBenchmarkJson(null, Api.getItem(null, () => {}))}
               selectedBenchmark="Linux" independentVar="CommitHash"/>
           </div>
