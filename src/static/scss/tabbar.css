@@ -1,0 +1,63 @@
+.tabbar {
+  width: 100%;
+  height: 2vw;
+  padding-bottom: 2vh;
+  overflow-x: hidden;
+}
+
+.tab {
+  height: 2vw;
+  font-size: 1.5vh;
+  width: 7vw;
+  text-align: center;
+  line-height: 2vw;
+  display: inline-block;
+}
+.tab--selected {
+  border-right: 0.2vh solid gainsboro;
+}
+.tab--unselected {
+  background-color: whitesmoke;
+  border-bottom: 0.1vh solid gainsboro;
+  cursor: pointer;
+}
+.tab--unselected:hover {
+  background-color: gainsboro;
+}
+
+.tabbar-plus {
+  display: inline-block;
+  padding-left: 1vw;
+  padding-top: 1.4vh;
+  padding-right: 1vw;
+  font-size: 1.5vh;
+  padding-bottom: 1.2vh;
+  cursor: pointer;
+}
+.tabbar-plus:hover {
+  background-color: gainsboro;
+  border-bottom: 0.1vh solid grey;
+}
+
+.tab-exit {
+  position: absolute;
+  color: grey;
+  line-height: 2.1vw;
+  font-size: 1.5vh;
+  margin-left: 2vw;
+  top: 0;
+  z-index: 1;
+  cursor: pointer;
+}
+.tab-exit:hover {
+  color: darkgrey;
+}
+
+.tab-edit-name {
+  border: none;
+  background-color: white;
+  text-align: center;
+  width: 6vw;
+}
+
+/*# sourceMappingURL=tabbar.css.map */

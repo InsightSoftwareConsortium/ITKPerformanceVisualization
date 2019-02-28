@@ -5,14 +5,13 @@
 }
 
 .app-content {
-  margin-top: $navbarHeight+1vh;
+  margin-top: $navbarHeight;
   margin-left: $sidebarWidth;
-  padding: 1vh 4vw 1vh 4vw;
 
   &--no-sidebar {
     transform: translateX(-$sidebarWidth + (-20vw)) rotate(0deg);  
     transition: all .75s ease;
-    padding-left: $sidebarWidth + 4vw;
+    padding-left: $sidebarWidth + 2vw;
   }
 
   &--sidebar {
@@ -21,3 +20,7 @@
   }
 }
 
+
+.app-content-viz {
+  padding: 1vh 4vw 1vh 4vw;
+}
