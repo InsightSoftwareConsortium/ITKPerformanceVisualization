@@ -59,9 +59,10 @@ class App extends Component {
     }
     if(count === 0){
       let index = this.state.tabs.indexOf(previousName);
-      this.state.tabs[index] = newName;
+      let clone = this.state.tabs.slice(0);
+      clone[index] = newName;
       this.setState({
-        tabs: this.state.tabs,
+        tabs: clone,
         selectedTab: newName,
       });
     }
