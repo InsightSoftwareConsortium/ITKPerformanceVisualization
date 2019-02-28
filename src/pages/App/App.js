@@ -5,11 +5,9 @@ import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/api_wrapper.js";
-import DataTransformationInstance from "../../api/data_transformation.js";
 import '../../static/scss/App.css';
 
 const Api = ApiInstance.instance;
-const Dti = DataTransformationInstance.instance;
 
 class App extends Component {
 
@@ -23,6 +21,8 @@ class App extends Component {
       tabs:["Default"],
       selectedTab: "Default",
       tabCounter: 1
+      data:null,
+      loading: true,
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -30,6 +30,17 @@ class App extends Component {
     this.handleTabAdd = this.handleTabAdd.bind(this);
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
+  }
+
+  componentDidMount() {
+    let _this = this;
+    let onSuccess = function(response) {
+      _this.setState({
+        data: response,
+        loading:false,
+      });
+    }
+    Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
   }
 
   setParentState(state) {
@@ -93,6 +104,12 @@ class App extends Component {
               selectedBenchmark="Linux" independentVar="CommitHash"/>
             </div>
           </div>
+          {!this.state.loading && 
+            <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
+              <SingleScatterplot data={this.state.data} selectedBenchmark=".51.05_"
+                independentVar="CommitHash"/>
+            </div>
+          }
       </div>
     );
   }

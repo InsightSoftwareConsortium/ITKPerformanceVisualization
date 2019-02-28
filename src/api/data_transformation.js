@@ -9,7 +9,6 @@ class DataTransformation {
       OSRelease: "SystemInformation.OperatingSystem.Release",
       NumThreads: "RunTimeInformation.GetGlobalDefaultNumberOfThreads",
       System: "SystemInformation.System",
-      BenchmarkName: "SystemInformation.OperatingSystem.Name",
     };
 
     this.sampleBenchmarkJson = {
@@ -2161,10 +2160,10 @@ For others:
     "ZScore": 1.21 //you would have to compute this based on means of all of same benchmark type
 }
      */
-  parseBenchmarkJson(benchmarkName, benchmarkJson) {
+  parseBenchmark(benchmarkName, benchmarkJson) {
     if (benchmarkJson == null) benchmarkJson = this.sampleBenchmarkJson;
 
-    let dict = {};
+    let dict = {BenchmarkName: benchmarkName};
     for (let key in this.scatterPlotDataKeys) {
       dict[key] = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
     }
@@ -2178,8 +2177,6 @@ For others:
       newDict["Value"] = values[index];
       result.push(newDict);
     }
-
-    console.log(result);
 
     return result;
   }
