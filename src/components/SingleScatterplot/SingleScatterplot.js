@@ -17,9 +17,9 @@ export default class SingleScatterplot extends Component {
     return {    
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
         "data": {"values": this.props.data},
-        "transform": [
-            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
-        ],
+        // "transform": [
+        //     {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+        // ],
         "encoding": {
             "x": {"field": this.props.independentVar, "type": "ordinal"}
         },
