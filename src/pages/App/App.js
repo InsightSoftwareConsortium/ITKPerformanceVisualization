@@ -3,8 +3,10 @@ import Button from '../../components/Button/Button';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
+import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/api_wrapper.js";
+import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 
 const Api = ApiInstance.instance;
@@ -100,9 +102,16 @@ class App extends Component {
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
             <div className="app-content-viz">
-            {!this.state.loading && 
-              <SingleScatterplot data={this.state.data} selectedBenchmark=".51.05_"
+            {!this.state.loading ?
+              <div>
+              <SingleScatterplot data={this.state.data}
                 independentVar="CommitHash"/>
+                <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
+              </div>
+              :
+              <div className="loader-wrapper">
+                <GridLoader/>
+              </div>
              }
              </div>
           </div>

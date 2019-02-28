@@ -81,6 +81,6 @@ export default class SingleScatterplot extends Component {
 SingleScatterplot.propTypes = {
   dependentVar: PropTypes.oneOf(["Value"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
-                  "OSPlatform", "OSRelease", "OSName", "CommitDate", 
+                  "OSPlatform", "OSRelease", "OSName", "CommitDate", "BenchmarkName",
                   "CommitHash"])
 }

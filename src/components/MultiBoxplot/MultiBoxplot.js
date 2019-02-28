@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import 'canvas';
-import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
+
+const vegaEmbed = window.vegaEmbed;
+
 export default class MultiBoxplot extends Component {
 
   static defaultProps = {

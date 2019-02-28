@@ -10,7 +10,7 @@ class Api {
   }
 
   getBenchmarkType(name) {
-    return name.substring(name.indexOf("_") + 1, name.indexOf("."));
+    return name.split("_").slice(-1)[0].split(".")[0];
   }
 
   getFolder(id, onSuccess) {
@@ -25,8 +25,11 @@ class Api {
         data.push(object);
       });
       count++;
-      if(count === folderLength)
+      if(count === folderLength) {
+        console.log(data);
         onSuccess(data);
+      }
+
     }
 
     fetch(URL, {
