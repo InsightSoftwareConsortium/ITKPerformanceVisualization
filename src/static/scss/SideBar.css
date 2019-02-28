@@ -33,9 +33,11 @@
 .sidebar-button--right {
   color: black;
   margin-left: 0.3vw;
+  margin-right: 0.3vw;
   font-size: 3vh;
   cursor: pointer;
   z-index: 1;
+  margin-top: 1vh;
   position: absolute;
 }
 .sidebar-button--right:hover {

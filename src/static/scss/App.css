@@ -3,9 +3,8 @@
 }
 
 .app-content {
-  margin-top: 11vh;
+  margin-top: 10vh;
   margin-left: 20vw;
-  padding: 1vh 4vw 1vh 4vw;
 }
 .app-content--no-sidebar {
   transform: translateX(-40vw) rotate(0deg);
@@ -15,6 +14,10 @@
 .app-content--sidebar {
   transform: translateX(0) rotate(0deg);
   transition: all 0.75s ease;
+}
+
+.app-content-viz {
+  padding: 1vh 4vw 1vh 4vw;
 }
 
 /*# sourceMappingURL=App.css.map */
