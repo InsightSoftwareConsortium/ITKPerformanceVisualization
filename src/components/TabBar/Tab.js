@@ -33,17 +33,17 @@ export default class Tab extends Component {
           {this.state.editName && this.props.name !== "Default" ? 
             <input className="tab-edit-name" type="text" onChange={(e)=>this.handleValueChange(e)} placeholder={this.props.name}/>
             :
-            <div>{this.props.name}</div>
+            <div>{this.props.name.length > 10 ? (this.props.name.slice(0,7)+"...") : this.props.name}</div>
           }
         </div>
-          {this.props.name !== "Default" && 
+          {(this.props.name !== "Default" && !this.state.editName) && 
               <i className="fas fa-times tab-exit" onClick={()=>this.props.handleTabRemove(this.props.name)}/>
           }
       </div>
     )
   }
 }
-
+ 
 Tab.propTypes = {
   handleTabSelect: PropTypes.func,
   handleTabRemove: PropTypes.func,
