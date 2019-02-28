@@ -20,7 +20,7 @@ class App extends Component {
       showSidebar:true,
       tabs:["Default"],
       selectedTab: "Default",
-      tabCounter: 1
+      tabCounter: 1,
       data:null,
       loading: true,
     }
@@ -100,16 +100,13 @@ class App extends Component {
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
             <div className="app-content-viz">
-             <SingleScatterplot data={Dti.parseBenchmarkJson(null, Api.getItem(null, () => {}))}
-              selectedBenchmark="Linux" independentVar="CommitHash"/>
-            </div>
-          </div>
-          {!this.state.loading && 
-            <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
+            {!this.state.loading && 
               <SingleScatterplot data={this.state.data} selectedBenchmark=".51.05_"
                 independentVar="CommitHash"/>
-            </div>
-          }
+             }
+             </div>
+          </div>
+
       </div>
     );
   }
