@@ -10,7 +10,12 @@ export default class TabBar extends Component {
   }
 
   addTab() {
-    let tabName = "Tab "+(this.props.tabCounter);
+    let tabName = "Tab " + this.props.tabCounter;
+    let i = 1;
+    while(this.props.tabs.indexOf(tabName) !== -1) {
+      tabName = "Tab " + (this.props.tabCounter+i);
+      i++;
+    }
     this.props.handleTabAdd(tabName);
   }
 
