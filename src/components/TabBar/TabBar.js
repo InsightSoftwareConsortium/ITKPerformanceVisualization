@@ -19,7 +19,7 @@ export default class TabBar extends Component {
     return (
       <div className="tabbar">
         {this.props.tabs.map((tab)=> {
-            return <Tab name={tab} key={tab} handleTabRemove={this.props.handleTabRemove} handleTabSelect={this.props.handleTabSelect} selected={this.props.selectedTab === tab}/>
+            return <Tab name={tab} key={tab} changeName={this.props.handleTabNameChange} handleTabRemove={this.props.handleTabRemove} handleTabSelect={this.props.handleTabSelect} selected={this.props.selectedTab === tab}/>
         })}
         <i className="fas fa-plus tabbar-plus" onClick={this.addTab}/>
       </div>
@@ -31,6 +31,7 @@ TabBar.propTypes = {
   handleTabAdd: PropTypes.func,
   handleTabRemove: PropTypes.func,
   handleTabSelect: PropTypes.func,
+  handleTabNameChange: PropTypes.func,
   selectedTab: PropTypes.string,
   tabCounter: PropTypes.number,
   tabs: PropTypes.array,

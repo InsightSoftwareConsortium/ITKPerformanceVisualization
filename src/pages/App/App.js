@@ -29,6 +29,7 @@ class App extends Component {
     this.handleTabSelect = this.handleTabSelect.bind(this);
     this.handleTabAdd = this.handleTabAdd.bind(this);
     this.handleTabRemove = this.handleTabRemove.bind(this);
+    this.handleTabNameChange = this.handleTabNameChange.bind(this);
   }
 
   setParentState(state) {
@@ -47,6 +48,23 @@ class App extends Component {
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
     });
+  }
+
+  handleTabNameChange(previousName, newName) {
+    let count = 0;
+    for(let i = 0; i < this.state.tabs.length; i++) {
+      if(newName === this.state.tabs[i]) {
+        count++;
+      }
+    }
+    if(count === 0){
+      let index = this.state.tabs.indexOf(previousName);
+      this.state.tabs[index] = newName;
+      this.setState({
+        tabs: this.state.tabs,
+        selectedTab: newName,
+      });
+    }
   }
 
   handleTabRemove(tabName) {
@@ -68,7 +86,7 @@ class App extends Component {
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}/>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
-            <TabBar selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
+            <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
             <div className="app-content-viz">
              <SingleScatterplot data={Dti.parseBenchmarkJson(null, Api.getItem(null, () => {}))}
               selectedBenchmark="Linux" independentVar="CommitHash"/>

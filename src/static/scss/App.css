@@ -9,7 +9,7 @@
 .app-content--no-sidebar {
   transform: translateX(-40vw) rotate(0deg);
   transition: all 0.75s ease;
-  padding-left: 24vw;
+  padding-left: 22vw;
 }
 .app-content--sidebar {
   transform: translateX(0) rotate(0deg);

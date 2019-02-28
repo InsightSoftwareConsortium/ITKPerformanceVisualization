@@ -1,4 +1,5 @@
 $tabBarHeight:2vw;
+$tabWidth: 7vw;
 
 .tabbar {
     width: 100%;
@@ -9,7 +10,7 @@ $tabBarHeight:2vw;
 .tab {
     height: $tabBarHeight;
     font-size: 1.5vh;
-    width: 7vw;
+    width: $tabWidth;
     text-align: center;
     line-height: $tabBarHeight;
     display: inline-block;
@@ -58,4 +59,11 @@ $tabBarHeight:2vw;
     &:hover {
         color:darkgrey;
     }
+}
+
+.tab-edit-name {
+    border:none;
+    background-color: white;
+    text-align: center;
+    width: ($tabWidth)-1;
 }

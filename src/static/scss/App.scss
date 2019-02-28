@@ -11,7 +11,7 @@
   &--no-sidebar {
     transform: translateX(-$sidebarWidth + (-20vw)) rotate(0deg);  
     transition: all .75s ease;
-    padding-left: $sidebarWidth + 4vw;
+    padding-left: $sidebarWidth + 2vw;
   }
 
   &--sidebar {

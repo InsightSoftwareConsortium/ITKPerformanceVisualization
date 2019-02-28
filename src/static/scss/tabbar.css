@@ -52,4 +52,11 @@
   color: darkgrey;
 }
 
+.tab-edit-name {
+  border: none;
+  background-color: white;
+  text-align: center;
+  width: 6vw;
+}
+
 /*# sourceMappingURL=tabbar.css.map */
