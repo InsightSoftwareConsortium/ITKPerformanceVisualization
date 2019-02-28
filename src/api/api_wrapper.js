@@ -4,8 +4,6 @@ const transformer = DataTransformationInstance.instance;
 
 class Api {
   constructor() {
-    this.promises = [];
-    this.data = [];
     this.url = "https://data.kitware.com/api/v1/";
     this.benchmarkCollectionID = "5af50c818d777f06857985e3";
     this.sampleBenchmark = "5afa58378d777f0685798c5c";
@@ -15,9 +13,22 @@ class Api {
     return name.substring(name.indexOf("_") + 1, name.indexOf("."));
   }
 
-  getFolder(id, callback) {
+  getFolder(id, onSuccess) {
     let _this = this;
     let URL = this.url + "item?folderId=" + id;
+    let data = [];
+    let count = 0;
+    let folderLength = 0;
+
+    let onBenchMarkSuccess = function(response) {
+      response.forEach(function(object) {
+        data.push(object);
+      });
+      count++;
+      if(count === folderLength)
+        onSuccess(data);
+    }
+
     fetch(URL, {
       method: "GET",
       headers: {
@@ -26,18 +37,18 @@ class Api {
     })
       .then(res => res.json())
       .then(function (folder){
-        for (let index in folder)
-          _this.promises.push(_this.getBenchmark(folder[index]["_id"], _this.getBenchmarkType(folder[index]["name"], callback)));
+        folderLength = folder.length;
+        for (let index in folder) {
+          _this.getBenchmark(folder[index]["_id"], _this.getBenchmarkType(folder[index]["name"]), onBenchMarkSuccess);
+        }
       })
       .catch(function(error) {
         console.log("Error:", error);
-        callback(null);
       });
   }
 
-  getBenchmark(id, name, callback) {
+  getBenchmark(id, name, onSuccess) {
     // Create Request
-    let _this = this;
     if (id == null) id = this.sampleBenchmark;
     let URL = this.url + "item/" + id + "/download";
 
@@ -49,11 +60,10 @@ class Api {
     })
       .then(res => res.json())
       .then(function (benchmark){
-        _this.data = _this.data.concat(transformer.parseBenchmark(name, benchmark));
+        onSuccess(transformer.parseBenchmark(name, benchmark));
       })
       .catch(function(error) {
         console.log("Error:", error);
-        callback(null);
     });
   }
 }
