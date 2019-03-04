@@ -5,17 +5,21 @@ import { render, cleanup } from 'react-testing-library'
 
 afterEach(cleanup)
 
+
 describe('Render Heatmap', () => {
-  it('renders correct HeatMap component with specified components', () => {
+  it('renders correct Heatmap component with given props', () => {
     const props = {
       data: mockData,
       independentVariable: "CommitHash",
       dependentVariable: "Value"
     }
-    const HeatMapComponent = render(<HeatMap {...props}/>);
     
-    const independentVariableNode =  getByText(props.independentVariable)
+    const vegaEmbedNode = render(<HeatMap {...props}/>);
+    expect(vegaEmbedNode).toBeDefined();
+  });
 
-    expect(independentVariableNode).toBeDefined()
+  it('renders correct component without specified props', () => {
+    const vegaEmbedNode = render(<HeatMap/>);
+    expect(vegaEmbedNode).toBeDefined();
   });
 });

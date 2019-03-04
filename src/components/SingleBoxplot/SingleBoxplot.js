@@ -14,7 +14,7 @@ export default class SingleBoxplot extends Component {
   //generates spec for vega-lite heatmap visualization
   _spec() {
     return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
       "description": "Box plots for each benchmark",
       "data": {"values": this.props.data},
       "title": this.props.selectedBenchmark,

@@ -14,16 +14,18 @@ export default class HeatMap extends Component {
   //generates spec for vega-lite heatmap visualization
   _spec() {
     return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+      "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
+      "title": "Heatmap of Normalized runtimes",
       "data": {"values": this.props.data},
       "selection": {
           "benchmarks": {
             "type": "single",
             "fields": ["BenchmarkName"],
-            "title:": "Isolate benchmark:",
-            "bind": {"input": "select", "options": 
-            Object.keys(_.groupBy(this.props.data, value => 
-              value.BenchmarkName)).sort()}
+            "bind": {
+              "input": "select", 
+              "options": Object.keys(_.groupBy(this.props.data, value => 
+                value.BenchmarkName)).sort(),
+              }
           },
           "grid": {
               "type": "interval", "bind": "scales"
@@ -36,6 +38,11 @@ export default class HeatMap extends Component {
             "op": "cume_dist",
             "field": this.props.dependentVar,
             "as": "valueDist"
+          },
+          {
+            "op": "mean",
+            "field": this.props.dependentVar,
+            "as": "meanBenchmarkValue"
           }
         ],
         "groupby": ["BenchmarkName"],
@@ -44,7 +51,9 @@ export default class HeatMap extends Component {
         "encoding": {
           "y": {
             "field": "BenchmarkName", 
-            "type": "nominal", "axis": {"title": "Benchmark"}
+            "type": "nominal", 
+            "axis": {"title": "Benchmark (listed longest running first)"},
+            "sort": {"field": "meanBenchmarkValue", "order": "descending"}
           },
           "x": {
             "field": this.props.independentVar, 
