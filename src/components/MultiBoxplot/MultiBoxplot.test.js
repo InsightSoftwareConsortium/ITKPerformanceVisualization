@@ -1,6 +1,6 @@
 import React from 'react';
 import MultiBoxplot from './MultiBoxplot';
-import mockData from './testingData.json';
+import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 
 afterEach(cleanup)

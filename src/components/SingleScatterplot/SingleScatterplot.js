@@ -1,25 +1,25 @@
 import React, { Component } from 'react';
 import 'canvas';
+import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
 
-const vegaEmbed = window.vegaEmbed;
 export default class SingleScatterplot extends Component {
 
 	static defaultProps = {
     independentVar: "ITKVersion",
     dependentVar: "Value",
-    selectedBenchmark: "DemonsRegistration"
+    selectedBenchmark: "ThreadOverheadBenchmark"
   }
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
-    
     return {    
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
+        "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
-        // "transform": [
-        //     {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
-        // ],
+        "transform": [
+            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+        ],
         "encoding": {
             "x": {"field": this.props.independentVar, "type": "ordinal"}
         },

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
@@ -6,8 +7,8 @@ import _ from 'lodash';
 export default class HeatMap extends Component {
 
   static defaultProps = {
-    dependentVar: "ZScore",
-    independentVar: "ITKVersion"
+    dependentVar: "Value",
+    independentVar: "CommitHash"
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -28,6 +29,17 @@ export default class HeatMap extends Component {
               "type": "interval", "bind": "scales"
           }
       },
+      "transform": [{
+        "sort": [{"field": this.props.dependentVar}],
+        "window": [
+          {
+            "op": "cume_dist",
+            "field": this.props.dependentVar,
+            "as": "valueDist"
+          }
+        ],
+        "groupby": ["BenchmarkName"],
+      }],
       "mark": "rect",
         "encoding": {
           "y": {
@@ -41,11 +53,21 @@ export default class HeatMap extends Component {
           "color": {
               "condition": {
                   "selection": "benchmarks",
-                  "field": this.props.dependentVar,
+                  "field": "valueDist",
                   "type": "quantitative",
-                  "axis": {"title": this.props.dependentVar}
+                  "axis": {"title": "Normalized " + this.props.dependentVar + " time"},
               },
-              "value": "white"
+              "value": "white",
+          }
+        },
+        "config": {
+          "range": {
+            "heatmap": {
+              "scheme": "blues"
+            }
+          },
+          "view": {
+            "stroke": "transparent"
           }
         }
       };
@@ -74,7 +96,7 @@ export default class HeatMap extends Component {
 }
 
 HeatMap.propTypes = {
-  dependentVar:  PropTypes.oneOf(["ZScore", "StandardDeviation", "Mean"]),
+  dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"])

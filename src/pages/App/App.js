@@ -4,6 +4,8 @@ import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
 import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
+import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
+import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/api_wrapper.js";
 import { GridLoader } from 'react-spinners';
@@ -104,9 +106,12 @@ class App extends Component {
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>
-              <SingleScatterplot data={this.state.data}
-                independentVar="CommitHash"/>
+                <SingleScatterplot data={this.state.data}
+                  independentVar="CommitHash"/>
                 <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
+                <SingleBoxplot data={this.state.data}
+                  independentVar="CommitHash"/>
+                <HeatMap data={this.state.data} />
               </div>
               :
               <div className="loader-wrapper">

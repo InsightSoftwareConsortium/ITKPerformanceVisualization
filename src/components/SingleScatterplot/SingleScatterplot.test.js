@@ -1,6 +1,6 @@
 import React from 'react';
 import SingleScatterplot from './SingleScatterplot';
-import mockData from './testingData.json';
+import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 
 afterEach(cleanup)
