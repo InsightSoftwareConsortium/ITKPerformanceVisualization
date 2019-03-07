@@ -15,7 +15,7 @@ export default class HeatMap extends Component {
   _spec() {
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
-      "title": "Heatmap of Normalized runtimes",
+      "title": "Normalized runtimes",
       "data": {"values": this.props.data},
       "selection": {
           "benchmarks": {
@@ -31,22 +31,27 @@ export default class HeatMap extends Component {
               "type": "interval", "bind": "scales"
           }
       },
-      "transform": [{
-        "sort": [{"field": this.props.dependentVar}],
-        "window": [
-          {
-            "op": "cume_dist",
-            "field": this.props.dependentVar,
-            "as": "valueDist"
-          },
-          {
-            "op": "mean",
-            "field": this.props.dependentVar,
-            "as": "meanBenchmarkValue"
-          }
-        ],
-        "groupby": ["BenchmarkName"],
-      }],
+      "transform": [
+        {
+          "sort": [{"field": this.props.dependentVar}],
+          "joinaggregate": [
+            {"op": "mean", "field": this.props.dependentVar, "as": "meanBenchmarkValue"},
+            {"op": "stdev", "field": this.props.dependentVar, "as": "stdevBenchmarkValue"}
+          ],
+          "groupby": ["BenchmarkName"]
+        },
+        {
+          "joinaggregate": [
+            {"op": "mean", "field": this.props.dependentVar, "as": "specificMeanBenchmarkValue"}
+          ],
+          "groupby": ["BenchmarkName", this.props.independentVar]
+        },
+        {
+          "calculate": 
+            "(datum.specificMeanBenchmarkValue-datum.meanBenchmarkValue)/(datum.stdevBenchmarkValue)", 
+            "as": "ZScore"
+        }
+      ],
       "mark": "rect",
         "encoding": {
           "y": {
@@ -62,9 +67,10 @@ export default class HeatMap extends Component {
           "color": {
               "condition": {
                   "selection": "benchmarks",
-                  "field": "valueDist",
+                  "field": "ZScore",
                   "type": "quantitative",
-                  "axis": {"title": "Normalized " + this.props.dependentVar + " time"},
+                  "sort": "descending",
+                  "axis": {"title": this.props.dependentVar + " Z-Score (lower is faster)"},
               },
               "value": "white",
           }
@@ -72,7 +78,7 @@ export default class HeatMap extends Component {
         "config": {
           "range": {
             "heatmap": {
-              "scheme": "blues"
+              "scheme": "redblue"
             }
           },
           "view": {
