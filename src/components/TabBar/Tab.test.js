@@ -6,7 +6,7 @@ afterEach(cleanup)
 
 describe('Render Tab', () => {
   it('renders correct Tab component', () => {
-    const TabComponent = render(<Tab/>);
+    const TabComponent = render(<Tab {...props}/>);
   });
 });
 

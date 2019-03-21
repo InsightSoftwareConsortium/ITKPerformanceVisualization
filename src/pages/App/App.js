@@ -108,10 +108,16 @@ class App extends Component {
               <div>
                 <SingleScatterplot data={this.state.data}
                   independentVar="CommitHash"/>
+                <SingleScatterplot data={this.state.data}
+                  independentVar="ITKVersion"/>
+                <MultiBoxplot selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} independentVar="CommitHash" data={this.state.data}/>
                 <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
+                <SingleBoxplot data={this.state.data} selected={["4.13.0"]}
+                  independentVar="ITKVersion"/>
                 <SingleBoxplot data={this.state.data}
-                  independentVar="CommitHash"/>
+                  independentVar="ITKVersion"/>
                 <HeatMap data={this.state.data} />
+                <HeatMap data={this.state.data} selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} />
               </div>
               :
               <div className="loader-wrapper">
