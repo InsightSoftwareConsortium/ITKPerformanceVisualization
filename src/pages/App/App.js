@@ -5,6 +5,7 @@ import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
 import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
+import Dashboard from "../../components/Dashboard/Dashboard";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/api_wrapper.js";
@@ -22,8 +23,8 @@ class App extends Component {
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
-      tabs:["Default"],
-      selectedTab: "Default",
+      tabs: [],
+      selectedTab: {},
       tabCounter: 1,
       data:null,
       loading: true,
@@ -42,7 +43,15 @@ class App extends Component {
       _this.setState({
         data: response,
         loading:false,
+        tabs: [
+          {
+            name:"Default", 
+            content: <Dashboard/>
+          }
+        ],
+        selectedTab: "Default"
       });
+
     }
     Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
   }
@@ -58,7 +67,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push(tabName)
+    this.state.tabs.push({name: tabName, content: <Dashboard/>})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -68,14 +77,14 @@ class App extends Component {
   handleTabNameChange(previousName, newName) {
     let count = 0;
     for(let i = 0; i < this.state.tabs.length; i++) {
-      if(newName === this.state.tabs[i]) {
+      if(newName === this.state.tabs[i].name) {
         count++;
       }
     }
     if(count === 0){
-      let index = this.state.tabs.indexOf(previousName);
+      let index = this.state.tabs.findIndex(tab => tab.name === previousName);
       let clone = this.state.tabs.slice(0);
-      clone[index] = newName;
+      clone[index].name = newName;
       this.setState({
         tabs: clone,
         selectedTab: newName,
@@ -85,11 +94,11 @@ class App extends Component {
 
   handleTabRemove(tabName) {
     let selectedTab = this.state.selectedTab;
-    if(selectedTab === tabName) {
-      selectedTab = this.state.tabs[this.state.tabs.indexOf(tabName)-1];
+    if(selectedTab.name === tabName) {
+      selectedTab = this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)-1].name;
     }
     this.setState({
-      tabs:this.state.tabs.filter(item => item !== tabName),
+      tabs:this.state.tabs.filter(tab => tab.name !== tabName),
       selectedTab: selectedTab
     });
   }
@@ -102,7 +111,7 @@ class App extends Component {
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}/>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
-            <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
+            {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>

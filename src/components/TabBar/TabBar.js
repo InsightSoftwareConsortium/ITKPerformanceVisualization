@@ -24,7 +24,7 @@ export default class TabBar extends Component {
     return (
       <div className="tabbar">
         {this.props.tabs.map((tab)=> {
-            return <Tab name={tab} key={tab} changeName={this.props.handleTabNameChange} handleTabRemove={this.props.handleTabRemove} handleTabSelect={this.props.handleTabSelect} selected={this.props.selectedTab === tab}/>
+            return <Tab name={tab.name} key={tab.name} changeName={this.props.handleTabNameChange} handleTabRemove={this.props.handleTabRemove} handleTabSelect={this.props.handleTabSelect} selected={this.props.selectedTab === tab.name}/>
         })}
         <i className="fas fa-plus tabbar-plus" onClick={this.addTab}/>
       </div>
