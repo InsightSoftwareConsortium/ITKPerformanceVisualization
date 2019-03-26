@@ -18,7 +18,7 @@ import { isNullOrUndefined } from 'util';
 export default class SingleScatterplot extends Component {
 
 	static defaultProps = {
-    independentVar: "ITKVersion",
+    independentVar: "CommitHash",
     dependentVar: "Value",
     selectedBenchmark: "ThreadOverheadBenchmark"
   }

@@ -10,7 +10,7 @@ export default class Checklist extends Component {
     Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().forEach((item) => {
       this.props.selection.push(item);
     });
-    this.props.changeTabFilters(this.props.selection);
+    this.props.changeTabFilter("selection", this.props.selection);
   }
 
   checkBoxClicked(value){
@@ -19,17 +19,17 @@ export default class Checklist extends Component {
       this.props.selection.splice(index, 1);
     else
       this.props.selection.push(value);
-    this.props.changeTabFilters(this.props.selection);
+    this.props.changeTabFilter("selection", this.props.selection);
   }
   
   render() {
     return (
-      <div id='container'>
-        <h id='label'>{this.props.type}</h>
-        <div id='listbox'>
+      <div id='checklist-container'>
+        <h id='checklist-label'>{this.props.type}</h>
+        <div id='checklist-box'>
           {Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().map((item) => {
               return <li key={item}><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox" 
-                        checked={this.props.selection.indexOf(item) > -1}/><label for={item}>{item.slice(0,26)}</label></li>
+                        checked={this.props.selection.includes(item)}/><label for={item}>{item.slice(0,26)}</label></li>
           })}
         </div>
       </div>
