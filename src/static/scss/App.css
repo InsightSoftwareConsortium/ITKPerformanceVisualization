@@ -21,12 +21,9 @@
 }
 
 .loader-wrapper {
-  text-align: center;
+  width: 7vw;
+  margin: auto;
   padding-top: 30vh;
-}
-
-.css-14mnv8s-wrapper {
-  display: inline-block;
 }
 
 /*# sourceMappingURL=App.css.map */

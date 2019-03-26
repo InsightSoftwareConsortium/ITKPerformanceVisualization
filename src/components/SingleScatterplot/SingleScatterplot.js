@@ -2,7 +2,19 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { isNullOrUndefined } from 'util';
 
+/**
+ * Component for scatterplot visualization for a single benchmark
+ * Accepted props:
+ *    --dependentVar: dependent variable for plot, such as value
+ *    --independentVar: independent variable for plot, such as commitHash
+ *    --selectedBenchmark: benchmark to create plot for
+ *    --selected: optional, can specify a subset of selected instances of the 
+ *                independent variable to chart (i.e. array of commitHashes).
+ *                If not specified, all instances will be used
+ */
 export default class SingleScatterplot extends Component {
 
 	static defaultProps = {
@@ -18,7 +30,11 @@ export default class SingleScatterplot extends Component {
         "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
         "transform": [
-            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
+            {"filter": {"field": this.props.independentVar, 
+            "oneOf": isNullOrUndefined(this.props.selected) ? 
+              Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+              this.props.selected}}
         ],
         "encoding": {
             "x": {"field": this.props.independentVar, "type": "ordinal"}

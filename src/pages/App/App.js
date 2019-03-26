@@ -5,6 +5,7 @@ import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
 import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
+import Dashboard from "../../components/Dashboard/Dashboard";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
 import Checklist from "../../components/Checklist/Checklist"
@@ -23,8 +24,8 @@ class App extends Component {
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
-      tabs:["Default"],
-      selectedTab: "Default",
+      tabs: [],
+      selectedTab: {},
       tabCounter: 1,
       data:null,
       loading: true,
@@ -44,7 +45,15 @@ class App extends Component {
       _this.setState({
         data: response,
         loading:false,
+        tabs: [
+          {
+            name:"Default", 
+            content: <Dashboard/>
+          }
+        ],
+        selectedTab: "Default"
       });
+
     }
     Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
   }
@@ -60,7 +69,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push(tabName)
+    this.state.tabs.push({name: tabName, content: <Dashboard/>})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -70,14 +79,14 @@ class App extends Component {
   handleTabNameChange(previousName, newName) {
     let count = 0;
     for(let i = 0; i < this.state.tabs.length; i++) {
-      if(newName === this.state.tabs[i]) {
+      if(newName === this.state.tabs[i].name) {
         count++;
       }
     }
     if(count === 0){
-      let index = this.state.tabs.indexOf(previousName);
+      let index = this.state.tabs.findIndex(tab => tab.name === previousName);
       let clone = this.state.tabs.slice(0);
-      clone[index] = newName;
+      clone[index].name = newName;
       this.setState({
         tabs: clone,
         selectedTab: newName,
@@ -87,11 +96,11 @@ class App extends Component {
 
   handleTabRemove(tabName) {
     let selectedTab = this.state.selectedTab;
-    if(selectedTab === tabName) {
-      selectedTab = this.state.tabs[this.state.tabs.indexOf(tabName)-1];
+    if(selectedTab.name === tabName) {
+      selectedTab = this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)-1].name;
     }
     this.setState({
-      tabs:this.state.tabs.filter(item => item !== tabName),
+      tabs:this.state.tabs.filter(tab => tab.name !== tabName),
       selectedTab: selectedTab
     });
   }
@@ -108,16 +117,22 @@ class App extends Component {
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
-            <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
+            {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>
                 <SingleScatterplot data={this.state.data}
                   independentVar="CommitHash"/>
+                <SingleScatterplot data={this.state.data}
+                  independentVar="ITKVersion"/>
+                <MultiBoxplot selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} independentVar="CommitHash" data={this.state.data}/>
                 <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
+                <SingleBoxplot data={this.state.data} selected={["4.13.0"]}
+                  independentVar="ITKVersion"/>
                 <SingleBoxplot data={this.state.data}
-                  independentVar="CommitHash"/>
+                  independentVar="ITKVersion"/>
                 <HeatMap data={this.state.data} />
+                <HeatMap data={this.state.data} selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} />
               </div>
               :
               <div className="loader-wrapper">

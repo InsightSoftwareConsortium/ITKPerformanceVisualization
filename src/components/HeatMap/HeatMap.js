@@ -3,7 +3,18 @@ import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { isNullOrUndefined } from 'util';
 
+/**
+ * Component for heatmap visualization for all benchmarks
+ * Accepted props:
+ *    --dependentVar: dependent variable for plot, such as value
+ *    --independentVar: independent variable for plot, such as commitHash
+ *    --selected: optional, can specify a subset of selected instances of the 
+ *                independent variable to chart in the form of an array
+ *                (i.e. array of commitHashes).
+ *                If not specified, all instances will be used
+ */
 export default class HeatMap extends Component {
 
   static defaultProps = {
@@ -32,6 +43,10 @@ export default class HeatMap extends Component {
           }
       },
       "transform": [
+        {"filter": {"field": this.props.independentVar, 
+        "oneOf": isNullOrUndefined(this.props.selected) ? 
+          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+          this.props.selected}},
         {
           "sort": [{"field": this.props.dependentVar}],
           "joinaggregate": [

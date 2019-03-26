@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { isNullOrUndefined } from 'util';
 
 export default class SingleBoxplot extends Component {
 
@@ -19,7 +21,11 @@ export default class SingleBoxplot extends Component {
       "data": {"values": this.props.data},
       "title": this.props.selectedBenchmark,
       "transform": [
-        {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+        {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
+        {"filter": {"field": this.props.independentVar, 
+        "oneOf": isNullOrUndefined(this.props.selected) ? 
+          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+          this.props.selected}}
       ],
       "mark": {
         "type": "boxplot",
