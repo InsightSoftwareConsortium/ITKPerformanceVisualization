@@ -15,3 +15,7 @@
 .MultiBoxplotSelection {
     @include graph-selection(#FFFF00)
 }
+
+.selected {
+    background-color: #999999 !important;
+}

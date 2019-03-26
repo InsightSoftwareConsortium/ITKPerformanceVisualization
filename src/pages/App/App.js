@@ -31,7 +31,7 @@ class App extends Component {
       data:null,
       loading: true,
       selection: [],
-      vizType: "HeatMapfvdgtg"
+      vizType: "HeatMap"
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -118,32 +118,25 @@ class App extends Component {
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               <div style={{marginTop: "4vh"}}>
-                <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType}></GraphSelection>
-                <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType}></GraphSelection>
+                <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.state.vizType === "HeatMap"}></GraphSelection>
+                <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.state.vizType === "SingleScatterplot"}></GraphSelection>
               </div>
               <div>
-                <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType}></GraphSelection>
-                <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType}></GraphSelection>
+                <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.state.vizType === "MultiBoxplot"}></GraphSelection>
+                <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.state.vizType === "SingleBoxplot"}></GraphSelection>
               </div>
-              <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
-            </SideBar>
+              {!this.state.loading ?
+                <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
+                :
+                null
+              }
+              </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>
-                {/*<SingleScatterplot data={this.state.data}
-                  independentVar="CommitHash"/>
-                <SingleScatterplot data={this.state.data}
-                  independentVar="ITKVersion"/>
-                <MultiBoxplot selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} independentVar="CommitHash" data={this.state.data}/>
-                <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
-                <SingleBoxplot data={this.state.data} selected={["4.13.0"]}
-                  independentVar="ITKVersion"/>
-                <SingleBoxplot data={this.state.data}
-                  independentVar="ITKVersion"/>
-                <HeatMap data={this.state.data} />*/}
                 {
                 (this.state.vizType === "HeatMap")?
                 <HeatMap data={this.state.data} selected={this.state.selection} />

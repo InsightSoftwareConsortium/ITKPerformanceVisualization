@@ -1,6 +1,6 @@
 .HeatMapSelection {
   margin: 1vh 0vh 1vh 2vh;
-  border: 0.2vh solid #888888;
+  border: 0.2vh solid #666666;
   border-radius: 0.5vh;
   width: 8vw;
   height: 8vw;
@@ -10,7 +10,7 @@
 
 .SingleScatterplotSelection {
   margin: 1vh 0vh 1vh 2vh;
-  border: 0.2vh solid #888888;
+  border: 0.2vh solid #666666;
   border-radius: 0.5vh;
   width: 8vw;
   height: 8vw;
@@ -20,7 +20,7 @@
 
 .SingleBoxplotSelection {
   margin: 1vh 0vh 1vh 2vh;
-  border: 0.2vh solid #888888;
+  border: 0.2vh solid #666666;
   border-radius: 0.5vh;
   width: 8vw;
   height: 8vw;
@@ -30,12 +30,16 @@
 
 .MultiBoxplotSelection {
   margin: 1vh 0vh 1vh 2vh;
-  border: 0.2vh solid #888888;
+  border: 0.2vh solid #666666;
   border-radius: 0.5vh;
   width: 8vw;
   height: 8vw;
   background-color: #CCCCCC;
   font-size: 12pt;
+}
+
+.selected {
+  background-color: #999999 !important;
 }
 
 /*# sourceMappingURL=GraphSelection.css.map */

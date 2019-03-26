@@ -5,7 +5,7 @@ import "../../../src/static/scss/GraphSelection.css";
 export default class GraphSelection extends Component {
   render() {
     return (
-      <button className={this.props.vizType + 'Selection'} onClick={()=>this.props.changeVizType(this.props.vizType)}>
+      <button className={this.props.vizType + 'Selection' + (this.props.selected ? " selected":"")} onClick={()=>this.props.changeVizType(this.props.vizType)}>
           {this.props.vizType}
       </button>
     )
@@ -13,6 +13,7 @@ export default class GraphSelection extends Component {
 }
 
 GraphSelection.propTypes = {
+  selected: PropTypes.bool,
   vizType:  PropTypes.oneOf(['HeatMap','SingleScatterplot','MultiBoxplot','SingleBoxplot']),
   changeVizType: PropTypes.func
 }
