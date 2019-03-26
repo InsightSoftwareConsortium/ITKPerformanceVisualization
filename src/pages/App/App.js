@@ -12,6 +12,7 @@ import Checklist from "../../components/Checklist/Checklist"
 import ApiInstance from "../../api/api_wrapper.js";
 import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
+import GraphSelection from '../../components/GraphSelection/GraphSelection';
 
 const Api = ApiInstance.instance;
 
@@ -29,7 +30,8 @@ class App extends Component {
       tabCounter: 1,
       data:null,
       loading: true,
-      selection: []
+      selection: [],
+      vizType: "HeatMapfvdgtg"
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -37,6 +39,7 @@ class App extends Component {
     this.handleTabAdd = this.handleTabAdd.bind(this);
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
+    this.changeVizType = this.changeVizType.bind(this);
   }
 
   componentDidMount() {
@@ -105,11 +108,23 @@ class App extends Component {
     });
   }
 
+  changeVizType(vizType){
+    this.setState({vizType: vizType});
+  }
+
   render() {
     return (
       <div className="app">
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
+              <div style={{marginTop: "4vh"}}>
+                <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType}></GraphSelection>
+                <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType}></GraphSelection>
+              </div>
+              <div>
+                <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType}></GraphSelection>
+                <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType}></GraphSelection>
+              </div>
               <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
@@ -129,7 +144,17 @@ class App extends Component {
                 <SingleBoxplot data={this.state.data}
                   independentVar="ITKVersion"/>
                 <HeatMap data={this.state.data} />*/}
+                {
+                (this.state.vizType === "HeatMap")?
                 <HeatMap data={this.state.data} selected={this.state.selection} />
+                :(this.state.vizType === "SingleScatterplot")?
+                <SingleScatterplot data={this.state.data} selected={this.state.selection} />
+                :(this.state.vizType === "MultiBoxplot")?
+                <MultiBoxplot data={this.state.data} selected={this.state.selection} />
+                :(this.state.vizType === "SingleBoxplot")?
+                <SingleBoxplot data={this.state.data} selected={this.state.selection} />
+                :<h>Invalid Graph Type</h>
+                }
               </div>
               :
               <div className="loader-wrapper">

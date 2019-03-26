@@ -4,14 +4,14 @@
     @include graph-selection(#FF0000)
 }
 
-.SingleScatterPlotSelection {
+.SingleScatterplotSelection {
     @include graph-selection(#00FF00)
 }
 
-.SingleBoxPlotSelection {
+.SingleBoxplotSelection {
     @include graph-selection(#0000FF)
 }
 
-.MultiBoxPlotSelection {
+.MultiBoxplotSelection {
     @include graph-selection(#FFFF00)
 }

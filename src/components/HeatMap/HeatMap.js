@@ -33,11 +33,11 @@ export default class HeatMap extends Component {
           "benchmarks": {
             "type": "single",
             "fields": ["BenchmarkName"],
-            "bind": {
+            /*"bind": {
               "input": "select", 
               "options": Object.keys(_.groupBy(this.props.data, value => 
                 value.BenchmarkName)).sort(),
-              }
+              }*/
           },
           "grid": {
               "type": "interval", "bind": "scales"

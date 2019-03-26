@@ -26,10 +26,11 @@ $buttonBorderBottom: .2vh;
 }
 
 @mixin graph-selection($bgcolor) {
-    margin: 5vh 5vh 5vh 5vh;
-    border: 1vh black;
+    margin: 1vh 0vh 1vh 2vh;
+    border: 0.2vh solid #888888;
+    border-radius: 0.5vh;
     width: 0.4 * $sidebarWidth;
     height: 0.4 * $sidebarWidth;
-    background-color: $bgcolor;
-    font-size: 2vh;
+    background-color: #CCCCCC;
+    font-size: 12pt;
 }
