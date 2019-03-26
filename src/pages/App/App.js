@@ -63,8 +63,9 @@ class App extends Component {
 
   changeTabFilter(attr, value) {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
-    this.state.tabs[index][attr] = value;
-    this.setState({tabs:this.state.tabs});
+    let clone = this.state.tabs.slice(0);
+    clone[index][attr] = value;
+    this.setState({tabs:clone});
   }
 
   setParentState(state) {
@@ -116,8 +117,9 @@ class App extends Component {
 
   changeVizType(vizType){ 
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
-    this.state.tabs[index].vizType = vizType;
-    this.setState({tabs:this.state.tabs});
+    let clone = this.state.tabs.slice(0);
+    clone[index].vizType = vizType;
+    this.setState({tabs:clone});
   }
 
   getTabByName(tabName) {
@@ -130,18 +132,28 @@ class App extends Component {
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               {!this.state.loading ?
-              <div>
-                <div style={{marginTop: "4vh"}}>
-                  <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
-                  <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
-                </div>
-                <div>
-                  <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
-                  <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
-                </div>
+              <div style={{marginTop: "4vh"}}>
+                <table style={{marginTop:'4vh'}}>
+                  <tr>
+                    <td>
+                    <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                    </td>
+                    <td>
+                    <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                    <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
+                    </td>
+                    <td>
+                    <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
+                    </td>
+                  </tr>
+                </table>
                 <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabFilter={this.changeTabFilter}></Dropdown>
                 <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabFilter={this.changeTabFilter} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
-              </div>
+                </div>
               :
               <div className="loader-wrapper">
                 <PacmanLoader/>
@@ -158,11 +170,11 @@ class App extends Component {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
                 <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot")?
-                <SingleScatterplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <SingleScatterplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot")?
-                <MultiBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <MultiBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot")?
-                <SingleBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <SingleBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>

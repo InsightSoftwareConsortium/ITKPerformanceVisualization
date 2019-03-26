@@ -26,6 +26,7 @@ $buttonBorderBottom: .2vh;
 }
 
 @mixin graph-selection($bgcolor) {
+    cursor: pointer;
     margin: 1vh 0vh 1vh 2vh;
     border: 0.2vh solid gainsboro;
     border-radius: 0.5vh;
@@ -33,4 +34,5 @@ $buttonBorderBottom: .2vh;
     height: 0.4 * $sidebarWidth;
     background-color: white;
     font-size: 12pt;
+    font-weight: bold;
 }
