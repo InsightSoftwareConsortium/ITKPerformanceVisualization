@@ -51,12 +51,8 @@ export default class SingleBoxplot extends Component {
 
   //re-render vega visualization if input has changed
   componentDidUpdate(prevProps) {
-    if(this.props.data !== prevProps.data
-      || this.props.independentVar !== prevProps.independentVar
-      || this.props.dependentVar !== prevProps.dependentVar) {
-        this.spec = this._spec();
-        vegaEmbed(this.refs.SingleBoxplotContainer, this.spec);
-    }
+    this.spec = this._spec();
+    vegaEmbed(this.refs.SingleBoxplotContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into

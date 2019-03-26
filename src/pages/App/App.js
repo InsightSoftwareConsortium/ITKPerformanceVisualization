@@ -111,7 +111,6 @@ class App extends Component {
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
-              <h>{this.state.selection.length}</h>
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>

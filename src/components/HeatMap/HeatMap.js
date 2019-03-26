@@ -110,13 +110,8 @@ export default class HeatMap extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.data !== prevProps.data
-      || this.props.independentVar !== prevProps.independentVar
-      || this.props.dependentVar !== prevProps.dependentVar
-      || this.props.selected !== prevProps.selected) {
-        this.spec = this._spec();
-        vegaEmbed(this.refs.HeatMapContainer, this.spec);
-    }
+    this.spec = this._spec();
+    vegaEmbed(this.refs.HeatMapContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into
