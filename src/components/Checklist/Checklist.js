@@ -23,7 +23,7 @@ export default class Checklist extends Component {
         <h id='label'>{this.props.type}</h>
         <div id='listbox'>
           {Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().map((item) => {
-              return <li key={item}><input onChange={()=>this.checkBoxClicked(item)} type="checkbox" name={item} value={item}/><label>{item.slice(0,17) + '...'}</label></li>
+              return <li key={item}><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox"/><label for={item}>{item.slice(0,26)}</label></li>
           })}
         </div>
       </div>

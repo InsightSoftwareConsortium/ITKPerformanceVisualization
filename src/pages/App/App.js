@@ -112,8 +112,6 @@ class App extends Component {
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               <Checklist data={this.state.data} type="CommitHash" selection={this.state.selection}></Checklist>
-              <Checklist data={this.state.data} type="CommitDate" selection={this.state.selection}></Checklist>
-              <Checklist data={this.state.data} type="OSName" selection={this.state.selection}></Checklist>
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
@@ -121,7 +119,7 @@ class App extends Component {
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>
-                <SingleScatterplot data={this.state.data}
+                {/*<SingleScatterplot data={this.state.data}
                   independentVar="CommitHash"/>
                 <SingleScatterplot data={this.state.data}
                   independentVar="ITKVersion"/>
@@ -131,8 +129,8 @@ class App extends Component {
                   independentVar="ITKVersion"/>
                 <SingleBoxplot data={this.state.data}
                   independentVar="ITKVersion"/>
-                <HeatMap data={this.state.data} />
-                <HeatMap data={this.state.data} selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} />
+                <HeatMap data={this.state.data} />*/}
+                <HeatMap data={this.state.data} selected={this.state.selection} />
               </div>
               :
               <div className="loader-wrapper">
