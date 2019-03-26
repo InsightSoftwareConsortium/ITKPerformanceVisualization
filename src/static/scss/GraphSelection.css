@@ -1,4 +1,5 @@
 .HeatMapSelection {
+  cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
@@ -6,9 +7,11 @@
   height: 8vw;
   background-color: white;
   font-size: 12pt;
+  font-weight: bold;
 }
 
 .SingleScatterplotSelection {
+  cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
@@ -16,9 +19,11 @@
   height: 8vw;
   background-color: white;
   font-size: 12pt;
+  font-weight: bold;
 }
 
 .SingleBoxplotSelection {
+  cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
@@ -26,9 +31,11 @@
   height: 8vw;
   background-color: white;
   font-size: 12pt;
+  font-weight: bold;
 }
 
 .MultiBoxplotSelection {
+  cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
@@ -36,10 +43,16 @@
   height: 8vw;
   background-color: white;
   font-size: 12pt;
+  font-weight: bold;
 }
 
 .selected {
   background-color: gainsboro !important;
+}
+
+.selection-image {
+  margin-top: 1.5vh;
+  width: 4vw;
 }
 
 /*# sourceMappingURL=GraphSelection.css.map */
