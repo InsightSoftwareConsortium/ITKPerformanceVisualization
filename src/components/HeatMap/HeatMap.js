@@ -73,7 +73,7 @@ export default class HeatMap extends Component {
           "y": {
             "field": "BenchmarkName", 
             "type": "nominal", 
-            "axis": {"title": "Benchmark (listed longest running first)"},
+            "axis": {"title": "Benchmark"},
             "sort": {"field": "meanBenchmarkValue", "order": "descending"}
           },
           "x": {
@@ -86,7 +86,7 @@ export default class HeatMap extends Component {
                   "field": "ZScore",
                   "type": "quantitative",
                   "sort": "descending",
-                  "axis": {"title": this.props.dependentVar + " Z-Score (lower is faster)"},
+                  "axis": {"title": this.props.dependentVar + " Z-Score"},
               },
               "value": "white",
           }

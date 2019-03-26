@@ -12,6 +12,7 @@ import ApiInstance from "../../api/api_wrapper.js";
 import { GridLoader, PacmanLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
+import Dropdown from '../../components/Dropdown/Dropdown';
 
 const Api = ApiInstance.instance;
 
@@ -29,13 +30,14 @@ class App extends Component {
           name:"Default", 
           vizType:"HeatMap",
           selection: [],
+          x_axis:"CommitHash",
+          y_axis:"Value"
         }
       ],
       selectedTab: "Default",
       tabCounter: 1,
       data:null,
-      loading: true,
-      selection: [],
+      loading: true
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -76,7 +78,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[]})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[], x_axis:"CommitHash", y_axis:"Value"})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -103,7 +105,7 @@ class App extends Component {
 
   handleTabRemove(tabName) {
     let selectedTab = this.state.selectedTab;
-    if(selectedTab.name === tabName) {
+    if(selectedTab === tabName) {
       selectedTab = this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)-1].name;
     }
     this.setState({
@@ -141,8 +143,9 @@ class App extends Component {
                     </td>
                   </tr>
                 </table>
-                <Checklist data={this.state.data} type="CommitHash" changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
-              </div>
+                <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
+                <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
+                </div>
               :
               <div className="loader-wrapper">
                 <PacmanLoader/>
@@ -157,13 +160,13 @@ class App extends Component {
               <div>
                 {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
-                <HeatMap data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot")?
-                <SingleScatterplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <SingleScatterplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot")?
-                <MultiBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <MultiBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot")?
-                <SingleBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <SingleBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>
