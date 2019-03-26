@@ -5,12 +5,11 @@ import SideBar from "../../components/SideBar/SideBar";
 import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
 import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
-import Dashboard from "../../components/Dashboard/Dashboard";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
 import Checklist from "../../components/Checklist/Checklist"
 import ApiInstance from "../../api/api_wrapper.js";
-import { GridLoader } from 'react-spinners';
+import { GridLoader, PacmanLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
 
@@ -25,13 +24,18 @@ class App extends Component {
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
-      tabs: [],
-      selectedTab: {},
+      tabs: [
+        {
+          name:"Default", 
+          vizType:"HeatMap",
+          selection: [],
+        }
+      ],
+      selectedTab: "Default",
       tabCounter: 1,
       data:null,
       loading: true,
       selection: [],
-      vizType: "HeatMap"
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -40,6 +44,7 @@ class App extends Component {
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
     this.changeVizType = this.changeVizType.bind(this);
+    this.changeTabFilters = this.changeTabFilters.bind(this);
   }
 
   componentDidMount() {
@@ -48,17 +53,16 @@ class App extends Component {
       _this.setState({
         data: response,
         loading:false,
-        tabs: [
-          {
-            name:"Default", 
-            content: <Dashboard/>
-          }
-        ],
-        selectedTab: "Default"
       });
 
     }
     Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
+  }
+
+  changeTabFilters(selection) {
+    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
+    this.state.tabs[index].selection = selection;
+    this.setState({tabs:this.state.tabs});
   }
 
   setParentState(state) {
@@ -72,7 +76,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, content: <Dashboard/>})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[]})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -108,8 +112,14 @@ class App extends Component {
     });
   }
 
-  changeVizType(vizType){
-    this.setState({vizType: vizType});
+  changeVizType(vizType){ 
+    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
+    this.state.tabs[index].vizType = vizType;
+    this.setState({tabs:this.state.tabs});
+  }
+
+  getTabByName(tabName) {
+    return this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)];
   }
 
   render() {
@@ -117,20 +127,24 @@ class App extends Component {
       <div className="app">
           <NavBar items={this.state.navbarItems}/>
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
-              <div style={{marginTop: "4vh"}}>
-                <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.state.vizType === "HeatMap"}></GraphSelection>
-                <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.state.vizType === "SingleScatterplot"}></GraphSelection>
-              </div>
-              <div>
-                <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.state.vizType === "MultiBoxplot"}></GraphSelection>
-                <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.state.vizType === "SingleBoxplot"}></GraphSelection>
-              </div>
               {!this.state.loading ?
-                <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
-                :
-                null
+              <div>
+                <div style={{marginTop: "4vh"}}>
+                  <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                  <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
+                </div>
+                <div>
+                  <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
+                  <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
+                </div>
+                <Checklist data={this.state.data} type="CommitHash" changeTabFilters={this.changeTabFilters} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
+              </div>
+              :
+              <div className="loader-wrapper">
+                <PacmanLoader/>
+              </div>
               }
-              </SideBar>
+            </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
@@ -138,14 +152,14 @@ class App extends Component {
             {!this.state.loading ?
               <div>
                 {
-                (this.state.vizType === "HeatMap")?
-                <HeatMap data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "SingleScatterplot")?
-                <SingleScatterplot data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "MultiBoxplot")?
-                <MultiBoxplot data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "SingleBoxplot")?
-                <SingleBoxplot data={this.state.data} selected={this.state.selection} />
+                (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
+                <HeatMap data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot")?
+                <SingleScatterplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot")?
+                <MultiBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot")?
+                <SingleBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>
