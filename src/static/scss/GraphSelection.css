@@ -1,0 +1,37 @@
+.HeatMapSelection {
+  margin: 5vh 5vh 5vh 5vh;
+  border: 1vh black;
+  width: 8vw;
+  height: 8vw;
+  background-color: #FF0000;
+  font-size: 2vh;
+}
+
+.SingleScatterPlotSelection {
+  margin: 5vh 5vh 5vh 5vh;
+  border: 1vh black;
+  width: 8vw;
+  height: 8vw;
+  background-color: #00FF00;
+  font-size: 2vh;
+}
+
+.SingleBoxPlotSelection {
+  margin: 5vh 5vh 5vh 5vh;
+  border: 1vh black;
+  width: 8vw;
+  height: 8vw;
+  background-color: #0000FF;
+  font-size: 2vh;
+}
+
+.MultiBoxPlotSelection {
+  margin: 5vh 5vh 5vh 5vh;
+  border: 1vh black;
+  width: 8vw;
+  height: 8vw;
+  background-color: #FFFF00;
+  font-size: 2vh;
+}
+
+/*# sourceMappingURL=GraphSelection.css.map */

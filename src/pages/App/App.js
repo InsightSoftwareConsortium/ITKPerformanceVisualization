@@ -7,6 +7,7 @@ import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
+import Checklist from "../../components/Checklist/Checklist"
 import ApiInstance from "../../api/api_wrapper.js";
 import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
@@ -27,6 +28,7 @@ class App extends Component {
       tabCounter: 1,
       data:null,
       loading: true,
+      selection: []
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -99,7 +101,11 @@ class App extends Component {
     return (
       <div className="app">
           <NavBar items={this.state.navbarItems}/>
-            <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}/>
+            <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
+              <Checklist data={this.state.data} type="CommitHash" selection={this.state.selection}></Checklist>
+              <Checklist data={this.state.data} type="CommitDate" selection={this.state.selection}></Checklist>
+              <Checklist data={this.state.data} type="OSName" selection={this.state.selection}></Checklist>
+            </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>

@@ -1,0 +1,17 @@
+@import 'mixins.scss';
+
+.HeatMapSelection {
+    @include graph-selection(#FF0000)
+}
+
+.SingleScatterPlotSelection {
+    @include graph-selection(#00FF00)
+}
+
+.SingleBoxPlotSelection {
+    @include graph-selection(#0000FF)
+}
+
+.MultiBoxPlotSelection {
+    @include graph-selection(#FFFF00)
+}

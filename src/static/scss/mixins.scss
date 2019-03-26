@@ -1,8 +1,9 @@
+@import "variables.scss";
 $buttonBorderBottom: .2vh;
 
 @mixin button($bgcolor, $bordercolor) {
     padding: 1vh 1vh 1vh 1vh;
-    border:none;
+    border: none;
     border: $buttonBorderBottom solid $bordercolor;
     background-color: $bgcolor;
     color: white;
@@ -22,4 +23,13 @@ $buttonBorderBottom: .2vh;
     &::-moz-focus-inner {
         border: 0;
     }
+}
+
+@mixin graph-selection($bgcolor) {
+    margin: 5vh 5vh 5vh 5vh;
+    border: 1vh black;
+    width: 0.4 * $sidebarWidth;
+    height: 0.4 * $sidebarWidth;
+    background-color: $bgcolor;
+    font-size: 2vh;
 }
