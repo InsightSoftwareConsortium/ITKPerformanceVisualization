@@ -10,7 +10,7 @@ export default class Checklist extends Component {
     Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().forEach((item) => {
       this.props.selection.push(item);
     });
-    this.props.changeTabFilters(this.props.selection);
+    this.props.changeTabData("selection", this.props.selection);
   }
 
   checkBoxClicked(value){
@@ -19,7 +19,7 @@ export default class Checklist extends Component {
       this.props.selection.splice(index, 1);
     else
       this.props.selection.push(value);
-    this.props.changeTabFilters(this.props.selection);
+    this.props.changeTabData("selection", this.props.selection);
   }
   
   render() {

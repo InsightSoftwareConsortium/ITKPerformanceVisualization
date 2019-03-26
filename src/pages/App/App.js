@@ -43,8 +43,7 @@ class App extends Component {
     this.handleTabAdd = this.handleTabAdd.bind(this);
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
-    this.changeVizType = this.changeVizType.bind(this);
-    this.changeTabFilters = this.changeTabFilters.bind(this);
+    this.changeTabData = this.changeTabData.bind(this);
   }
 
   componentDidMount() {
@@ -59,10 +58,10 @@ class App extends Component {
     Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
   }
 
-  changeTabFilters(selection) {
+  changeTabData(property, data) {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
     let clone = this.state.tabs.slice(0);
-    clone[index].selection = selection;
+    clone[index][property] = data;
     this.setState({tabs:clone});
   }
 
@@ -113,13 +112,6 @@ class App extends Component {
     });
   }
 
-  changeVizType(vizType){ 
-    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
-    let clone = this.state.tabs.slice(0);
-    clone[index].vizType = vizType;
-    this.setState({tabs:clone});
-  }
-
   getTabByName(tabName) {
     return this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)];
   }
@@ -134,22 +126,22 @@ class App extends Component {
                 <table style={{marginTop:'4vh'}}>
                   <tr>
                     <td>
-                    <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                    <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
                     </td>
                     <td>
-                    <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
+                    <GraphSelection vizType="SingleScatterplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                    <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
+                    <GraphSelection vizType="MultiBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
                     </td>
                     <td>
-                    <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
+                    <GraphSelection vizType="SingleBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
                     </td>
                   </tr>
                 </table>
-                <Checklist data={this.state.data} type="CommitHash" changeTabFilters={this.changeTabFilters} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
+                <Checklist data={this.state.data} type="CommitHash" changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
               </div>
               :
               <div className="loader-wrapper">
