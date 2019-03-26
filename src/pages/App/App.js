@@ -25,13 +25,18 @@ class App extends Component {
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
-      tabs: [],
-      selectedTab: {},
+      tabs: [
+        {
+          name:"Default", 
+          vizType:"HeatMap",
+          selection: [],
+        }
+      ],
+      selectedTab: "Default",
       tabCounter: 1,
       data:null,
       loading: true,
       selection: [],
-      vizType: "HeatMapfvdgtg"
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -40,6 +45,7 @@ class App extends Component {
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
     this.changeVizType = this.changeVizType.bind(this);
+    this.changeTabFilters = this.changeTabFilters.bind(this);
   }
 
   componentDidMount() {
@@ -48,17 +54,16 @@ class App extends Component {
       _this.setState({
         data: response,
         loading:false,
-        tabs: [
-          {
-            name:"Default", 
-            content: <Dashboard/>
-          }
-        ],
-        selectedTab: "Default"
       });
 
     }
     Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
+  }
+
+  changeTabFilters(selection) {
+    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
+    this.state.tabs[index].selection = selection;
+    this.setState({tabs:this.state.tabs});
   }
 
   setParentState(state) {
@@ -72,7 +77,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, content: <Dashboard/>})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[]})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -108,8 +113,14 @@ class App extends Component {
     });
   }
 
-  changeVizType(vizType){
-    this.setState({vizType: vizType});
+  changeVizType(vizType){ 
+    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
+    this.state.tabs[index].vizType = vizType;
+    this.setState({tabs:this.state.tabs});
+  }
+
+  getTabByName(tabName) {
+    return this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)];
   }
 
   render() {
@@ -125,7 +136,7 @@ class App extends Component {
                 <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType}></GraphSelection>
                 <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType}></GraphSelection>
               </div>
-              <Checklist data={this.state.data} type="CommitHash" setParentState={this.setParentState} selection={this.state.selection}></Checklist>
+              <Checklist data={this.state.data} type="CommitHash" changeTabFilters={this.changeTabFilters} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
@@ -133,26 +144,15 @@ class App extends Component {
             <div className="app-content-viz">
             {!this.state.loading ?
               <div>
-                {/*<SingleScatterplot data={this.state.data}
-                  independentVar="CommitHash"/>
-                <SingleScatterplot data={this.state.data}
-                  independentVar="ITKVersion"/>
-                <MultiBoxplot selected={["d92873e33e8a54e933e445b92151191f02feab42", "edfefcf84611084ecd9c5c3f96e71972b7b7ae4f"]} independentVar="CommitHash" data={this.state.data}/>
-                <MultiBoxplot independentVar="CommitHash" data={this.state.data}/>
-                <SingleBoxplot data={this.state.data} selected={["4.13.0"]}
-                  independentVar="ITKVersion"/>
-                <SingleBoxplot data={this.state.data}
-                  independentVar="ITKVersion"/>
-                <HeatMap data={this.state.data} />*/}
                 {
-                (this.state.vizType === "HeatMap")?
-                <HeatMap data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "SingleScatterplot")?
-                <SingleScatterplot data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "MultiBoxplot")?
-                <MultiBoxplot data={this.state.data} selected={this.state.selection} />
-                :(this.state.vizType === "SingleBoxplot")?
-                <SingleBoxplot data={this.state.data} selected={this.state.selection} />
+                (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
+                <HeatMap data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot")?
+                <SingleScatterplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot")?
+                <MultiBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot")?
+                <SingleBoxplot data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>

@@ -16,7 +16,7 @@ export default class Checklist extends Component {
       this.props.selection.splice(index, 1);
     else
       this.props.selection.push(value);
-    this.props.setParentState({"selection": this.props.selection});
+    this.props.changeTabFilters(this.props.selection);
   }
   
   render() {
