@@ -19,7 +19,8 @@ export default class HeatMap extends Component {
 
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash"
+    independentVar: "CommitHash",
+    selected: []
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -111,7 +112,8 @@ export default class HeatMap extends Component {
   componentDidUpdate(prevProps) {
     if(this.props.data !== prevProps.data
       || this.props.independentVar !== prevProps.independentVar
-      || this.props.dependentVar !== prevProps.dependentVar) {
+      || this.props.dependentVar !== prevProps.dependentVar
+      || this.props.selected !== prevProps.selected) {
         this.spec = this._spec();
         vegaEmbed(this.refs.HeatMapContainer, this.spec);
     }
@@ -129,5 +131,6 @@ HeatMap.propTypes = {
   dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"])
+                  "CommitHash"]),
+  selected: PropTypes.array
 }

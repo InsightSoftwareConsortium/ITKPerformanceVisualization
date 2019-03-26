@@ -7,6 +7,7 @@ export default class Checklist extends Component {
   constructor(){
     super();
     this.checkBoxClicked = this.checkBoxClicked.bind(this);
+    //Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().map((item) => { this.props.selection.push(item) });
   }
 
   checkBoxClicked(value){
@@ -15,6 +16,7 @@ export default class Checklist extends Component {
       this.props.selection.splice(index, 1);
     else
       this.props.selection.push(value);
+    this.props.setParentState({"selection": this.props.selection});
   }
   
   render() {
@@ -23,7 +25,7 @@ export default class Checklist extends Component {
         <h id='label'>{this.props.type}</h>
         <div id='listbox'>
           {Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort().map((item) => {
-              return <li key={item}><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox"/><label for={item}>{item.slice(0,26)}</label></li>
+              return <li key={item}><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox" checked={this.props.selection.includes(item)}/><label for={item}>{item.slice(0,26)}</label></li>
           })}
         </div>
       </div>
@@ -34,5 +36,6 @@ export default class Checklist extends Component {
 Checklist.propTypes = {
   type: PropTypes.string,
   data: PropTypes.any,
+  setParentState: PropTypes.func,
   selection: PropTypes.array
 }
