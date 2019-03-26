@@ -15,16 +15,17 @@
     "react-testing-library": "^6.0.0",
     "sass": "^1.17.0",
     "typescript": "^3.3.3333",
-    "vega": "^5.0.0-rc5",
-    "vega-embed": "^3.29.0",
-    "vega-lite": "^3.0.0-rc13"
+    "vega": "^5.3.0",
+    "vega-embed": "^4.0.0-rc1",
+    "vega-lite": "^3.0.0-rc15"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch-css": "sass --watch ./src"
+    "watch-css": "sass --watch ./src",
+    "debug": "node --inspect-brk=30547 --no-lazy react-scripts test"
   },
   "eslintConfig": {
     "extends": "react-app"

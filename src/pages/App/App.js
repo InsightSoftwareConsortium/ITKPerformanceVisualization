@@ -7,7 +7,7 @@ import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
 import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
-import ApiInstance from "../../api/api_wrapper.js";
+import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
 import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 
@@ -25,8 +25,10 @@ class App extends Component {
       tabs:["Default"],
       selectedTab: "Default",
       tabCounter: 1,
-      data:null,
+      data: null,
       loading: true,
+      error: false,
+      errorMessage: null
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -44,7 +46,13 @@ class App extends Component {
         loading:false,
       });
     }
-    Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
+    let onFailure = function(response) {
+      _this.setState({
+        error: true,
+        errorMessage: response
+      });
+    }
+    Api.getFolder("5afa58368d777f0685798c5b", onSuccess, onFailure);
   }
 
   setParentState(state) {
@@ -104,6 +112,11 @@ class App extends Component {
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>
             <div className="app-content-viz">
+            {this.state.error &&
+              <div>
+                Error: {this.state.errorMessage}
+              </div>
+            }
             {!this.state.loading ?
               <div>
                 <SingleScatterplot data={this.state.data}
