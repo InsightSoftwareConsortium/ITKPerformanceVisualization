@@ -56,9 +56,9 @@ class App extends Component {
         data: response,
         loading:false,
       });
-
     }
-    Api.getFolder("5afa58368d777f0685798c5b", onSuccess);
+    let ids = ["5afa58368d777f0685798c5b", "5c7aed3a8d777f072b766625", "5c82f0cf8d777f072b8abef3", "5c7b52c88d777f072b76a33b"];
+    Api.getFolders(ids, onSuccess);
   }
 
   changeTabFilter(attr, value) {

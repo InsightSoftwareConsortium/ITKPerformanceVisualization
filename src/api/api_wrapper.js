@@ -50,6 +50,20 @@ class Api {
       });
   }
 
+  getFolders(ids, onSuccess){
+    let _this = this;
+    let count = 0;
+    let data = [];
+    let onFolderSuccess = function(response){
+      data = data.concat(response);
+      count++;
+      if (count === ids.length)
+        onSuccess(data);
+    }
+    for (let index in ids)
+      _this.getFolder(ids[index], onFolderSuccess);
+  }
+
   getBenchmark(id, name, onSuccess) {
     // Create Request
     if (id == null) id = this.sampleBenchmark;
