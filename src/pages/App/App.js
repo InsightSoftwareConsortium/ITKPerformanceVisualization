@@ -22,6 +22,7 @@ class App extends Component {
     super(props);
     this.state = {
       navbarItems: {
+        left: [<h style={{marginLeft: "3vh", fontSize: "4vh"}}>ITK Performance Visualization</h>,],
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,

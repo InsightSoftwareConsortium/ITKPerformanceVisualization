@@ -4,12 +4,12 @@
 }
 
 #checklist-label {
-  font-size: 20pt;
+  font-size: 1.04vw;
 }
 
 #checklist-box {
   margin-top: 1vh;
-  font-size: 12pt;
+  font-size: 0.63vw;
   overflow: auto;
 }
 

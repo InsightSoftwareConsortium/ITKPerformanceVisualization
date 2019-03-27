@@ -4,12 +4,12 @@
 }
 
 #dropdown-label {
-  font-size: 14pt;
+  font-size: 0.73vw;
 }
 
 #dropdown-box {
   margin-left: 1vh;
-  font-size: 12pt;
+  font-size: 0.63vw;
   overflow: auto;
 }
 
