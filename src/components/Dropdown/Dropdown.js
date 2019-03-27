@@ -10,8 +10,8 @@ export default class Dropdown extends Component {
     }
   
   selectionChanged(event){
-    this.props.changeTabFilter(this.props.name, event.target.value);
-    this.props.changeTabFilter("selection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
+    this.props.changeTabData(this.props.name, event.target.value);
+    this.props.changeTabData("selection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
   }
   
   render() {
@@ -32,5 +32,5 @@ Dropdown.propTypes = {
   default: PropTypes.string,
   name: PropTypes.string,
   data: PropTypes.any,
-  changeTabFilters: PropTypes.func
+  changeTabData: PropTypes.func
 }

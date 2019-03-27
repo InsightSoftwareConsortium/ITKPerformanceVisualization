@@ -45,8 +45,7 @@ class App extends Component {
     this.handleTabAdd = this.handleTabAdd.bind(this);
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
-    this.changeVizType = this.changeVizType.bind(this);
-    this.changeTabFilter = this.changeTabFilter.bind(this);
+    this.changeTabData = this.changeTabData.bind(this);
   }
 
   componentDidMount() {
@@ -61,10 +60,10 @@ class App extends Component {
     Api.getFolders(ids, onSuccess);
   }
 
-  changeTabFilter(attr, value) {
+  changeTabData(property, data) {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
     let clone = this.state.tabs.slice(0);
-    clone[index][attr] = value;
+    clone[index][property] = data;
     this.setState({tabs:clone});
   }
 
@@ -79,7 +78,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[]})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[], x_axis:"CommitHash", y_axis:"Value"})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -106,20 +105,13 @@ class App extends Component {
 
   handleTabRemove(tabName) {
     let selectedTab = this.state.selectedTab;
-    if(selectedTab.name === tabName) {
+    if(selectedTab === tabName) {
       selectedTab = this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)-1].name;
     }
     this.setState({
       tabs:this.state.tabs.filter(tab => tab.name !== tabName),
       selectedTab: selectedTab
     });
-  }
-
-  changeVizType(vizType){ 
-    let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
-    let clone = this.state.tabs.slice(0);
-    clone[index].vizType = vizType;
-    this.setState({tabs:clone});
   }
 
   getTabByName(tabName) {
@@ -136,23 +128,23 @@ class App extends Component {
                 <table style={{marginTop:'4vh'}}>
                   <tr>
                     <td>
-                    <GraphSelection vizType="HeatMap" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                    <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
                     </td>
                     <td>
-                    <GraphSelection vizType="SingleScatterplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
+                    <GraphSelection vizType="SingleScatterplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                    <GraphSelection vizType="MultiBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
+                    <GraphSelection vizType="MultiBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
                     </td>
                     <td>
-                    <GraphSelection vizType="SingleBoxplot" changeVizType={this.changeVizType} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
+                    <GraphSelection vizType="SingleBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
                     </td>
                   </tr>
                 </table>
-                <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabFilter={this.changeTabFilter}></Dropdown>
-                <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabFilter={this.changeTabFilter} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
+                <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
+                <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
                 </div>
               :
               <div className="loader-wrapper">

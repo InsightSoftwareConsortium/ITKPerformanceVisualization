@@ -18,7 +18,7 @@ export default class GraphSelection extends Component {
     else
       image = singlescatterplotsample
     return (
-      <button className={this.props.vizType + 'Selection' + (this.props.selected ? " selected":"")} onClick={()=>this.props.changeVizType(this.props.vizType)}>
+      <button className={this.props.vizType + 'Selection' + (this.props.selected ? " selected":"")} onClick={()=>this.props.changeTabData("vizType", this.props.vizType)}>
           {this.props.vizType}
           <img alt="" className="selection-image" src={image}/>
       </button>
