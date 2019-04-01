@@ -17,12 +17,12 @@ steps:
 
 - script: |
     yarn install
-    CI=true yarn test --json --outputFile=TEST-RESULTS.json
+    CI=true yarn test --ci --coverage --reporters=default --reporters=jest-junit
     CI=true yarn run build
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: JUnit
-    testResultsFiles: '**/TEST-RESULTS.json'
-  displayName: 'yarn install, test and build'
+    testResultsFiles: '**/junit.xml'
+  displayName: 'Publish test results'
