@@ -17,8 +17,8 @@ steps:
 
 - script: |
     yarn install
-    yarn test
-    yarn run build
+    CI=true yarn test
+    CI=true yarn run build
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
