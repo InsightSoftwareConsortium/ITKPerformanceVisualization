@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+- dev
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -25,5 +25,4 @@ steps:
   inputs:
     testRunner: JUnit
     testResultsFiles: '**/TEST-RESULTS.xml'
-    
-displayName: 'npm install and build'
+  displayName: 'npm install and build'
