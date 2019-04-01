@@ -15,7 +15,7 @@ import { isNullOrUndefined } from 'util';
  *                independent variable to chart (i.e. array of commitHashes).
  *                If not specified, all instances will be used
  */
-export default class SingleScatterplot extends Component {
+export default class ScatterPlot extends Component {
 
 	static defaultProps = {
     independentVar: "CommitHash",
@@ -37,6 +37,11 @@ export default class SingleScatterplot extends Component {
               this.props.selected}}
         ],
         "encoding": {
+            "facet": {
+              "field": this.props.split, 
+              "type": "nominal", 
+              "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+            },
             "x": {"field": this.props.independentVar, "type": "ordinal"}
         },
         "layer": [
@@ -72,24 +77,24 @@ export default class SingleScatterplot extends Component {
 
   componentDidMount() {
     this.spec = this._spec();
-    vegaEmbed(this.refs.SingleScatterplotContainer, this.spec);
+    vegaEmbed(this.refs.ScatterPlotContainer, this.spec);
   }
 
   //re-render vega visualization if input has changed
   componentDidUpdate(prevProps) {
     this.spec = this._spec();
-    vegaEmbed(this.refs.SingleScatterplotContainer, this.spec);
+    vegaEmbed(this.refs.ScatterPlotContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into
   render() { 
     return (
-      <div ref='SingleScatterplotContainer'/>
+      <div ref='ScatterPlotContainer'/>
     );
   }
 }
 
-SingleScatterplot.propTypes = {
+ScatterPlot.propTypes = {
   dependentVar: PropTypes.oneOf(["Value"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", "BenchmarkName",

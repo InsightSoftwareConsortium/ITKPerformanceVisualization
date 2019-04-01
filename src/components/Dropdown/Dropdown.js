@@ -11,7 +11,8 @@ export default class Dropdown extends Component {
   
   selectionChanged(event){
     this.props.changeTabData(this.props.name, event.target.value);
-    this.props.changeTabData("selection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
+    if (this.props.name === "x_axis")
+      this.props.changeTabData("selection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
   }
   
   render() {

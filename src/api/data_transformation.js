@@ -2166,6 +2166,8 @@ For others:
     let dict = {BenchmarkName: benchmarkName};
     for (let key in this.scatterPlotDataKeys) {
       dict[key] = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
+      //if (dict[key].startsWith("b'"))
+      //  dict[key] = dict[key].substring(2, dict[key].length - 1);
     }
 
     let values = findValue(benchmarkJson, "Probes.Values");

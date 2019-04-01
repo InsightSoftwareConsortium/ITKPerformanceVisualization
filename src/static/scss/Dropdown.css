@@ -1,15 +1,15 @@
 #dropdown-container {
   margin-left: 2vh;
-  margin-top: 4vh;
+  margin-top: 1vh;
 }
 
 #dropdown-label {
-  font-size: 0.73vw;
+  font-size: 1vw;
 }
 
 #dropdown-box {
   margin-left: 1vh;
-  font-size: 0.63vw;
+  font-size: 0.9vw;
   overflow: auto;
 }
 

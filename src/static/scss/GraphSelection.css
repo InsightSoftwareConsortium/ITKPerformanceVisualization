@@ -6,11 +6,11 @@
   width: 8vw;
   height: 8vw;
   background-color: white;
-  font-size: 0.63vw;
+  font-size: 1.11vw;
   font-weight: bold;
 }
 
-.SingleScatterplotSelection {
+.ScatterPlotSelection {
   cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
@@ -18,7 +18,7 @@
   width: 8vw;
   height: 8vw;
   background-color: white;
-  font-size: 0.63vw;
+  font-size: 1.11vw;
   font-weight: bold;
 }
 
@@ -30,11 +30,11 @@
   width: 8vw;
   height: 8vw;
   background-color: white;
-  font-size: 0.63vw;
+  font-size: 1.11vw;
   font-weight: bold;
 }
 
-.MultiBoxplotSelection {
+.BoxPlotSelection {
   cursor: pointer;
   margin: 1vh 0vh 1vh 2vh;
   border: 0.2vh solid gainsboro;
@@ -42,7 +42,7 @@
   width: 8vw;
   height: 8vw;
   background-color: white;
-  font-size: 0.63vw;
+  font-size: 1.11vw;
   font-weight: bold;
 }
 

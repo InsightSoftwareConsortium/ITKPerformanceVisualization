@@ -4,7 +4,7 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
 trigger:
-- master
+- dev
 
 pool:
   vmImage: 'Ubuntu-16.04'
@@ -17,13 +17,12 @@ steps:
 
 - script: |
     yarn install
-    yarn test
-    yarn run build
+    CI=true yarn test --ci --coverage --reporters=default --reporters=jest-junit
+    CI=true yarn run build
 
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: JUnit
-    testResultsFiles: '**/TEST-RESULTS.xml'
-    
-displayName: 'npm install and build'
+    testResultsFiles: '**/junit.xml'
+  displayName: 'Publish test results'

@@ -1,15 +1,15 @@
 #checklist-container {
   margin-left: 2vh;
-  margin-top: 4vh;
+  margin-top: 1vh;
 }
 
 #checklist-label {
-  font-size: 1.04vw;
+  font-size: 1.4vw;
 }
 
 #checklist-box {
   margin-top: 1vh;
-  font-size: 0.63vw;
+  font-size: 0.9vw;
   overflow: auto;
 }
 

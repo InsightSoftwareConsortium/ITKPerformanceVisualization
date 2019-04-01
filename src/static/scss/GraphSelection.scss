@@ -4,7 +4,7 @@
     @include graph-selection(#FF0000)
 }
 
-.SingleScatterplotSelection {
+.ScatterPlotSelection {
     @include graph-selection(#00FF00)
 }
 
@@ -12,7 +12,7 @@
     @include graph-selection(#0000FF)
 }
 
-.MultiBoxplotSelection {
+.BoxPlotSelection {
     @include graph-selection(#FFFF00)
 }
 

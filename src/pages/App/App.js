@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import Button from '../../components/Button/Button';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
-import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
-import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
-import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
-import HeatMap from "../../components/HeatMap/HeatMap"
+import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
+import BoxPlot from "../../components/BoxPlot/BoxPlot";
+import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
 import Checklist from "../../components/Checklist/Checklist"
 import ApiInstance from "../../api/api_wrapper.js";
@@ -31,6 +30,7 @@ class App extends Component {
           name:"Default", 
           vizType:"HeatMap",
           selection: [],
+          split: null,
           x_axis:"CommitHash",
           y_axis:"Value"
         }
@@ -57,7 +57,7 @@ class App extends Component {
         loading:false,
       });
     }
-    let ids = ["5afa58368d777f0685798c5b", "5c7aed3a8d777f072b766625", "5c82f0cf8d777f072b8abef3", "5c7b52c88d777f072b76a33b"];
+    let ids = ["5afa58368d777f0685798c5b", "5c7aed3a8d777f072b766625", "5c82f0cf8d777f072b8abef3", "5c7b52c88d777f072b76a33b","5c8d51d48d777f072badc387","5c8e711a8d777f072bb224bc"];
     Api.getFolders(ids, onSuccess);
   }
 
@@ -132,18 +132,16 @@ class App extends Component {
                     <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
                     </td>
                     <td>
-                    <GraphSelection vizType="SingleScatterplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot"}></GraphSelection>
+                    <GraphSelection vizType="ScatterPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot"}></GraphSelection>
                     </td>
                   </tr>
                   <tr>
                     <td>
-                    <GraphSelection vizType="MultiBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot"}></GraphSelection>
-                    </td>
-                    <td>
-                    <GraphSelection vizType="SingleBoxplot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot"}></GraphSelection>
+                    <GraphSelection vizType="BoxPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "BoxPlot"}></GraphSelection>
                     </td>
                   </tr>
                 </table>
+                <Dropdown name="split" default={this.getTabByName(this.state.selectedTab).split} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
                 <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
                 <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
                 </div>
@@ -161,13 +159,11 @@ class App extends Component {
               <div>
                 {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
-                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
-                :(this.getTabByName(this.state.selectedTab).vizType === "SingleScatterplot")?
-                <SingleScatterplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
-                :(this.getTabByName(this.state.selectedTab).vizType === "MultiBoxplot")?
-                <MultiBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
-                :(this.getTabByName(this.state.selectedTab).vizType === "SingleBoxplot")?
-                <SingleBoxplot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} />
+                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot")?
+                <ScatterPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
+                :(this.getTabByName(this.state.selectedTab).vizType === "BoxPlot")?
+                <BoxPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>

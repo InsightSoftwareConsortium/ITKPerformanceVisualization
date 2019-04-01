@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import heatmapsample from "../../static/img/heatmapsample.png";
-import singleboxplotsample from "../../static/img/singleboxplotsample.png";
-import multiboxplotsample from "../../static/img/multiboxplotsample.png";
-import singlescatterplotsample from "../../static/img/singlescatterplotsample.png";
+import boxplotsample from "../../static/img/boxplotsample.png";
+import scatterplotsample from "../../static/img/scatterplotsample.png";
 import "../../static/scss/GraphSelection.css";
 
 export default class GraphSelection extends Component {
@@ -11,12 +10,12 @@ export default class GraphSelection extends Component {
     let image = "";
     if(this.props.vizType === "HeatMap")
       image = heatmapsample;
-    else if(this.props.vizType === "SingleBoxplot")
-      image = singleboxplotsample;
-    else if(this.props.vizType === "MultiBoxplot")
-      image = multiboxplotsample;
+    else if(this.props.vizType === "BoxPlot")
+      image = boxplotsample;
+    else if(this.props.vizType === "ScatterPlot")
+      image = scatterplotsample
     else
-      image = singlescatterplotsample
+      image = null;
     return (
       <button className={this.props.vizType + 'Selection' + (this.props.selected ? " selected":"")} onClick={()=>this.props.changeTabData("vizType", this.props.vizType)}>
           {this.props.vizType}
@@ -28,6 +27,6 @@ export default class GraphSelection extends Component {
 
 GraphSelection.propTypes = {
   selected: PropTypes.bool,
-  vizType:  PropTypes.oneOf(['HeatMap','SingleScatterplot','MultiBoxplot','SingleBoxplot']),
+  vizType:  PropTypes.oneOf(['HeatMap','ScatterPlot','BoxPlot']),
   changeVizType: PropTypes.func
 }
