@@ -25,4 +25,4 @@ steps:
   inputs:
     testRunner: JUnit
     testResultsFiles: '**/TEST-RESULTS.xml'
-  displayName: 'npm install and build'
+  displayName: 'yarn install, test and build'
