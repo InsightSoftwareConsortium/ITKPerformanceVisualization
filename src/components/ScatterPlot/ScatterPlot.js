@@ -30,18 +30,12 @@ export default class ScatterPlot extends Component {
         "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
         "transform": [
-            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
             {"filter": {"field": this.props.independentVar, 
             "oneOf": isNullOrUndefined(this.props.selected) ? 
               Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
               this.props.selected}}
         ],
         "encoding": {
-            "facet": {
-              "field": this.props.split, 
-              "type": "nominal", 
-              "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
-            },
             "x": {"field": this.props.independentVar, "type": "ordinal"}
         },
         "layer": [
@@ -51,6 +45,11 @@ export default class ScatterPlot extends Component {
                     "filled": "true"
                 },
                 "encoding": {
+                    "facet": {
+                      "field": this.props.split, 
+                      "type": "nominal", 
+                      "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+                    },
                     "y": {
                       "field": this.props.dependentVar,
                       "type": "quantitative",
