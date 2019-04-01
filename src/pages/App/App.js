@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import Button from '../../components/Button/Button';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
-import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
-import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
-import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
+// import SingleScatterplot from "../../components/SingleScatterplot/SingleScatterplot.js";
+// import MultiBoxplot from "../../components/MultiBoxplot/MultiBoxplot";
+// import SingleBoxplot from "../../components/SingleBoxplot/SingleBoxplot";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import HeatMap from "../../components/HeatMap/HeatMap"
 import TabBar from "../../components/TabBar/TabBar";
