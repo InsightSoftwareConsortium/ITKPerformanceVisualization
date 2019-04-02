@@ -5,7 +5,8 @@ class Api {
     this.transformer = DataTransformationInstance.instance;
     this.prefix = "https://data.kitware.com/api/v1/";
     this.suffix = {
-      folderById: "item?folderId=<>",
+      foldersByFolderId: "folder?parentType=folder&parentId=<>",
+      itemsByFolderId: "item?folderId=<>",
       itemById: "item/<>/download"
     }
     this.folderItemId = "_id";
@@ -13,44 +14,65 @@ class Api {
     this.benchmarkCollectionID = "5af50c818d777f06857985e3";
   }
 
-  getFolder(id, onSuccess, onFailure) {
+  getFoldersFromParent(id, onSuccess, onFailure) {
+    if(id == null) id = this.benchmarkCollectionID;
+
     let _this = this;
-    let URL = this.prefix + this.suffix.folderById.replace("<>", id);
+    let URL = this.prefix + this.suffix.foldersByFolderId.replace("<>", id);
+
+    this.GET(URL, function(folder) {
+      if (folder == null) {
+        onFailure("Error retreiving folders from parent with id: " + id);
+      }
+      else {
+        onSuccess(_this.transformer.parseFolderMetadata(folder));
+      }
+    }) 
+  }
+
+  getBenchmarkDataFromFolder(id, onSuccess, onFailure) {
+    let _this = this;
+    let URL = this.prefix + this.suffix.itemsByFolderId.replace("<>", id);
     let data = [];
     let count = 0;
     let folderLength = 0;
 
-    let onBenchmarkSuccess = function(response) {
-      response.forEach(function(object) {
+    let onBenchmarkSuccess = function(benchmarkList) {
+      benchmarkList.forEach(function(object) {
         data.push(object);
       });
-      benchmarkCallback(response);
+      benchmarkCallback();
     }
     let benchmarkCallback = function(response) {
+      if (response != null && response instanceof Error) {
+        console.error(response);
+      }
       count++;
       if(count === folderLength) {
         onSuccess(data);
       }
     }
 
-    this.GET(URL, function(folder) {
-      if (folder == null) {
-        onFailure("Error loading folder with id: " + id);
+    this.GET(URL, function(response) {
+      if (response == null) {
+        onFailure("Error retreiving benchmarks from folder with id: " + id);
       }
       else {
-        folderLength = folder.length;
-        for (let item in folder) {
-          _this.getBenchmark(folder[item][_this.folderItemId], folder[item][_this.folderItemName], onBenchmarkSuccess, benchmarkCallback);
+        let benchmarks = _this.transformer.parseMetadata(response);
+        folderLength = benchmarks.length;
+        for (let benchmark in benchmarks) {
+          let id = benchmarks[benchmark][_this.folderItemId];
+          let name = benchmarks[benchmark][_this.folderItemName];
+          _this.getBenchmarkData(id, name, onBenchmarkSuccess, benchmarkCallback);
         }
       }
-    });
+    })
   }
 
-  getBenchmark(id, name, onSuccess, onFailure) {
+  getBenchmarkData(id, name, onSuccess, onFailure) {
     // Create Request
     let _this = this;
     let URL = this.prefix + this.suffix.itemById.replace("<>", id);
-    name = name.split("_").slice(-1)[0].split(".")[0];
 
     this.GET(URL, function(benchmark) {
       if (benchmark == null) {

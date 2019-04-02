@@ -24,8 +24,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch-css": "sass --watch ./src",
-    "debug": "node --inspect-brk=30547 --no-lazy react-scripts test"
+    "watch-css": "sass --watch ./src"
   },
   "eslintConfig": {
     "extends": "react-app"

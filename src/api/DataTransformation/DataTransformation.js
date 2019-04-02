@@ -11,6 +11,31 @@ class DataTransformation {
       System: "SystemInformation.System",
     };
     this.valuesKey = "Probes.0.Values";
+
+    this.idKey = "_id";
+    this.nameKey = "name";
+    this.sizeKey = "size";
+  }
+
+  parseMetadata(list) {
+    let parsedList = [];
+    for(let folder in list) {
+      let data = list[folder];
+      let entry = {};
+      if (data && data[this.idKey] && data[this.nameKey]) {
+        entry[this.idKey] = data[this.idKey];
+        entry[this.nameKey] = data[this.nameKey];
+        parsedList.push(entry);
+      }
+    }
+    return parsedList;
+  }
+
+  parseFolderMetadata(folderList) {
+    //filter our empty folders
+    let sizeKey = this.sizeKey;
+    let filteredArray = folderList.filter((folder) => {return folder[sizeKey] > 0});
+    return this.parseMetadata(filteredArray);
   }
 
   /**
@@ -49,10 +74,20 @@ For others:
     if (benchmarkJson == null) {
       return null
     }
+    //parse benchmark name
+    //Name is found after second underscore in full name
+    let nameIndex = benchmarkName.indexOf("_", benchmarkName.indexOf("_") + 1) + 1;
+    benchmarkName = benchmarkName.slice(nameIndex).split(".")[0];
     
     let dict = {BenchmarkName: benchmarkName};
     for (let key in this.scatterPlotDataKeys) {
-      dict[key] = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
+      let val = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
+      //clean entries
+      if (typeof val === String && val.match(/b'.+'/)) {
+        //slice off excess characters
+        val = val.slice(2, val.length - 1);
+      }
+      dict[key] = val;
     }
 
     let values = findValue(benchmarkJson, this.valuesKey);
