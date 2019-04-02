@@ -30,7 +30,29 @@ class Api {
     }) 
   }
 
-  getBenchmarkDataFromFolder(id, onSuccess, onFailure) {
+  getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure){
+    let _this = this;
+    let count = 0;
+    let data = [];
+    let onFolderSuccess = function(response) {
+      data.push(response);
+      folderCallback();
+    }
+    let folderCallback = function(response) {
+      if (response != null && response instanceof Error) {
+        console.error(response);
+      }
+      count++;
+      if(count === ids.length) {
+        onSuccess(data);
+      }
+    }
+
+    for (let index in ids)
+      _this.getBenchmarkDataFromSingleFolder(ids[index], onFolderSuccess, folderCallback);
+  }
+
+  getBenchmarkDataFromSingleFolder(id, onSuccess, onFailure) {
     let _this = this;
     let URL = this.prefix + this.suffix.itemsByFolderId.replace("<>", id);
     let data = [];
@@ -55,7 +77,7 @@ class Api {
 
     this.GET(URL, function(response) {
       if (response == null) {
-        onFailure("Error retreiving benchmarks from folder with id: " + id);
+        onFailure(new Error("Error retreiving benchmarks from folder with id: " + id));
       }
       else {
         let benchmarks = _this.transformer.parseMetadata(response);
@@ -76,7 +98,7 @@ class Api {
 
     this.GET(URL, function(benchmark) {
       if (benchmark == null) {
-        onFailure("Failure retrieving benchmark with id: " + id)
+        onFailure(new Error("Failure retrieving benchmark with id: " + id));
       }
       else {
         onSuccess(_this.transformer.parseBenchmark(name, benchmark))

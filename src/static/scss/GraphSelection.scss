@@ -1,0 +1,26 @@
+@import 'mixins.scss';
+
+.HeatMapSelection {
+    @include graph-selection(#FF0000)
+}
+
+.ScatterPlotSelection {
+    @include graph-selection(#00FF00)
+}
+
+.SingleBoxplotSelection {
+    @include graph-selection(#0000FF)
+}
+
+.BoxPlotSelection {
+    @include graph-selection(#FFFF00)
+}
+
+.selected {
+    background-color: gainsboro !important;
+}
+
+.selection-image {
+    margin-top: 1.5vh;
+    width: 4vw;
+}

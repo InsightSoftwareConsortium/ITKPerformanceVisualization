@@ -1,0 +1,20 @@
+#checklist-container {
+  margin-left: 2vh;
+  margin-top: 1vh;
+}
+
+#checklist-label {
+  font-size: 1.4vw;
+}
+
+#checklist-box {
+  margin-top: 1vh;
+  font-size: 0.9vw;
+  overflow: auto;
+}
+
+label {
+  margin-left: 0.5vh;
+}
+
+/*# sourceMappingURL=Checklist.css.map */

@@ -2,11 +2,23 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
+import _ from 'lodash';
+import { isNullOrUndefined } from 'util';
 
-export default class SingleScatterplot extends Component {
+/**
+ * Component for scatterplot visualization for a single benchmark
+ * Accepted props:
+ *    --dependentVar: dependent variable for plot, such as value
+ *    --independentVar: independent variable for plot, such as commitHash
+ *    --selectedBenchmark: benchmark to create plot for
+ *    --selected: optional, can specify a subset of selected instances of the 
+ *                independent variable to chart (i.e. array of commitHashes).
+ *                If not specified, all instances will be used
+ */
+export default class ScatterPlot extends Component {
 
 	static defaultProps = {
-    independentVar: "ITKVersion",
+    independentVar: "CommitHash",
     dependentVar: "Value",
     selectedBenchmark: "ThreadOverheadBenchmark"
   }
@@ -18,7 +30,10 @@ export default class SingleScatterplot extends Component {
         "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
         "transform": [
-            {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+            {"filter": {"field": this.props.independentVar, 
+            "oneOf": isNullOrUndefined(this.props.selected) ? 
+              Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+              this.props.selected}}
         ],
         "encoding": {
             "x": {"field": this.props.independentVar, "type": "ordinal"}
@@ -30,6 +45,11 @@ export default class SingleScatterplot extends Component {
                     "filled": "true"
                 },
                 "encoding": {
+                    "facet": {
+                      "field": this.props.split, 
+                      "type": "nominal", 
+                      "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+                    },
                     "y": {
                       "field": this.props.dependentVar,
                       "type": "quantitative",
@@ -56,29 +76,24 @@ export default class SingleScatterplot extends Component {
 
   componentDidMount() {
     this.spec = this._spec();
-    vegaEmbed(this.refs.SingleScatterplotContainer, this.spec);
+    vegaEmbed(this.refs.ScatterPlotContainer, this.spec);
   }
 
   //re-render vega visualization if input has changed
   componentDidUpdate(prevProps) {
-    if(this.props.data !== prevProps.data
-      || this.props.independentVar !== prevProps.independentVar
-      || this.props.dependentVar !== prevProps.dependentVar
-      || this.props.selectedBenchmark !== prevProps.selectedBenchmark) {
-        this.spec = this._spec();
-        vegaEmbed(this.refs.SingleScatterplotContainer, this.spec);
-    }
+    this.spec = this._spec();
+    vegaEmbed(this.refs.ScatterPlotContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into
   render() { 
     return (
-      <div ref='SingleScatterplotContainer'/>
+      <div ref='ScatterPlotContainer'/>
     );
   }
 }
 
-SingleScatterplot.propTypes = {
+ScatterPlot.propTypes = {
   dependentVar: PropTypes.oneOf(["Value"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", "BenchmarkName",

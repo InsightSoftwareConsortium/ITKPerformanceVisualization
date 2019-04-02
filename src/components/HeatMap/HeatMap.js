@@ -3,12 +3,24 @@ import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
+import { isNullOrUndefined } from 'util';
 
+/**
+ * Component for heatmap visualization for all benchmarks
+ * Accepted props:
+ *    --dependentVar: dependent variable for plot, such as value
+ *    --independentVar: independent variable for plot, such as commitHash
+ *    --selected: optional, can specify a subset of selected instances of the 
+ *                independent variable to chart in the form of an array
+ *                (i.e. array of commitHashes).
+ *                If not specified, all instances will be used
+ */
 export default class HeatMap extends Component {
 
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash"
+    independentVar: "CommitHash",
+    selected: []
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -21,17 +33,21 @@ export default class HeatMap extends Component {
           "benchmarks": {
             "type": "single",
             "fields": ["BenchmarkName"],
-            "bind": {
+            /*"bind": {
               "input": "select", 
               "options": Object.keys(_.groupBy(this.props.data, value => 
                 value.BenchmarkName)).sort(),
-              }
+              }*/
           },
           "grid": {
               "type": "interval", "bind": "scales"
           }
       },
       "transform": [
+        {"filter": {"field": this.props.independentVar, 
+        "oneOf": isNullOrUndefined(this.props.selected) ? 
+          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+          this.props.selected}},
         {
           "sort": [{"field": this.props.dependentVar}],
           "joinaggregate": [
@@ -54,10 +70,15 @@ export default class HeatMap extends Component {
       ],
       "mark": "rect",
         "encoding": {
+          "facet": {
+            "field": this.props.split, 
+            "type": "nominal", 
+            "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+          },
           "y": {
             "field": "BenchmarkName", 
             "type": "nominal", 
-            "axis": {"title": "Benchmark (listed longest running first)"},
+            "axis": {"title": "Benchmark"},
             "sort": {"field": "meanBenchmarkValue", "order": "descending"}
           },
           "x": {
@@ -70,7 +91,7 @@ export default class HeatMap extends Component {
                   "field": "ZScore",
                   "type": "quantitative",
                   "sort": "descending",
-                  "axis": {"title": this.props.dependentVar + " Z-Score (lower is faster)"},
+                  "axis": {"title": this.props.dependentVar + " Z-Score"},
               },
               "value": "white",
           }
@@ -94,12 +115,8 @@ export default class HeatMap extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if(this.props.data !== prevProps.data
-      || this.props.independentVar !== prevProps.independentVar
-      || this.props.dependentVar !== prevProps.dependentVar) {
-        this.spec = this._spec();
-        vegaEmbed(this.refs.HeatMapContainer, this.spec);
-    }
+    this.spec = this._spec();
+    vegaEmbed(this.refs.HeatMapContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into
@@ -114,5 +131,6 @@ HeatMap.propTypes = {
   dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"])
+                  "CommitHash"]),
+  selected: PropTypes.array
 }
