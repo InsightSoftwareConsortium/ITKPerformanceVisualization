@@ -53,6 +53,8 @@ class App extends Component {
     let _this = this;
     let onSuccess = function(folders) {
       let folderIds = [];
+      /* Folder Selection here */
+      folders = folders.slice(folders.length - 5, folders.length - 1);
       for (let folder in folders) {
         folderIds.push(folders[folder]["_id"]);
       }

@@ -5,13 +5,31 @@ class Api {
     this.transformer = DataTransformationInstance.instance;
     this.prefix = "https://data.kitware.com/api/v1/";
     this.suffix = {
+      folderDetailsById: "folder/<>/details",
       foldersByFolderId: "folder?parentType=folder&parentId=<>",
       itemsByFolderId: "item?folderId=<>",
-      itemById: "item/<>/download"
+      itemById: "item/<>/download",
+      limit: "&limit=<>"
     }
     this.folderItemId = "_id";
     this.folderItemName = "name";
-    this.benchmarkCollectionID = "5af50c818d777f06857985e3";
+    this.folderDetailsSubFolders = "nFolders";
+    this.folderDetailsItems = "nItems";
+    this.benchmarkCollectionID = "5af50c818d777f06857985e3"; 
+    this.maxLimit = 100;
+  }
+
+  getFolderDetails(id, onSuccess, onFailure) {
+    let URL = this.prefix + this.suffix.folderDetailsById.replace("<>", id);
+
+    this.GET(URL, function(details) {
+      if (details == null) {
+        onFailure(new Error("Error retreiving folder details for folder id: " + id));
+      }
+      else {
+        onSuccess(details);
+      }
+    })
   }
 
   getFoldersFromParent(id, onSuccess, onFailure) {
@@ -20,14 +38,23 @@ class Api {
     let _this = this;
     let URL = this.prefix + this.suffix.foldersByFolderId.replace("<>", id);
 
-    this.GET(URL, function(folder) {
-      if (folder == null) {
-        onFailure("Error retreiving folders from parent with id: " + id);
+    //determine number of subfolders for limit parameter
+    let onDetailsSuccess = function(details) {
+      let subFolderCount = details[_this.folderDetailsSubFolders];
+      if (subFolderCount != null) {
+        URL = URL.concat(_this.suffix.limit.replace("<>", subFolderCount));
       }
-      else {
-        onSuccess(_this.transformer.parseFolderMetadata(folder));
-      }
-    }) 
+
+      _this.GET(URL, function(folder) {
+        if (folder == null) {
+          onFailure(new Error("Error retreiving folders from parent with id: " + id));
+        }
+        else {
+          onSuccess(_this.transformer.parseFolderMetadata(folder));
+        }
+      }) 
+    }
+    this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }
 
   getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure){
@@ -35,7 +62,7 @@ class Api {
     let count = 0;
     let data = [];
     let onFolderSuccess = function(response) {
-      data.push(response);
+      data = data.concat(response);
       folderCallback();
     }
     let folderCallback = function(response) {
@@ -44,7 +71,8 @@ class Api {
       }
       count++;
       if(count === ids.length) {
-        onSuccess(data);
+        if (data != null && data.length > 0) onSuccess(data);
+        else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))
       }
     }
 
@@ -59,36 +87,48 @@ class Api {
     let count = 0;
     let folderLength = 0;
 
-    let onBenchmarkSuccess = function(benchmarkList) {
-      benchmarkList.forEach(function(object) {
-        data.push(object);
-      });
-      benchmarkCallback();
-    }
-    let benchmarkCallback = function(response) {
-      if (response != null && response instanceof Error) {
-        console.error(response);
+    let onDetailsSuccess = function(details) {
+      let itemCount = Math.min(details[_this.folderDetailsItems], _this.maxLimit);
+      if (itemCount != null) {
+        URL = URL.concat(_this.suffix.limit.replace("<>", itemCount));
       }
-      count++;
-      if(count === folderLength) {
-        onSuccess(data);
-      }
-    }
 
-    this.GET(URL, function(response) {
-      if (response == null) {
-        onFailure(new Error("Error retreiving benchmarks from folder with id: " + id));
+      let onBenchmarkSuccess = function(benchmarkList) {
+        benchmarkList.forEach(function(object) {
+          data.push(object);
+        });
+        benchmarkCallback();
       }
-      else {
-        let benchmarks = _this.transformer.parseMetadata(response);
-        folderLength = benchmarks.length;
-        for (let benchmark in benchmarks) {
-          let id = benchmarks[benchmark][_this.folderItemId];
-          let name = benchmarks[benchmark][_this.folderItemName];
-          _this.getBenchmarkData(id, name, onBenchmarkSuccess, benchmarkCallback);
+      let benchmarkCallback = function(response) {
+        if (response != null && response instanceof Error) {
+          console.error(response);
+        }
+        count++;
+        if(count === folderLength) {
+          onSuccess(data);
         }
       }
-    })
+  
+      _this.GET(URL, function(response) {
+        if (response == null) {
+          onFailure(new Error("Error retreiving benchmarks from folder with id: " + id));
+        }
+        else {
+          let benchmarks = _this.transformer.parseMetadata(response);
+          folderLength = benchmarks.length;
+          if (id === "5c7b546e8d777f072b76ae0c") {
+            console.log("here");
+          }
+          for (let benchmark in benchmarks) {
+            let benchmarkId = benchmarks[benchmark][_this.folderItemId];
+            let benchmarkName = benchmarks[benchmark][_this.folderItemName];
+            _this.getBenchmarkData(benchmarkId, benchmarkName, onBenchmarkSuccess, benchmarkCallback);
+          }
+        }
+      })
+    }
+
+    this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }
 
   getBenchmarkData(id, name, onSuccess, onFailure) {
