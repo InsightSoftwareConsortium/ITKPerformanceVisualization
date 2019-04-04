@@ -7,7 +7,7 @@ import BoxPlot from "../../components/BoxPlot/BoxPlot";
 import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
 import Checklist from "../../components/Checklist/Checklist"
-import ApiInstance from "../../api/api_wrapper.js";
+import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
 import { GridLoader, PacmanLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
@@ -51,14 +51,41 @@ class App extends Component {
 
   componentDidMount() {
     let _this = this;
+    let onSuccess = function(folders) {
+      let folderIds = [];
+      /* Folder Selection here */
+      folders = folders.slice(folders.length - 5, folders.length - 1);
+      for (let folder in folders) {
+        folderIds.push(folders[folder]["_id"]);
+      }
+      _this.collectData(folderIds);
+    }
+    let onFailure = function(response) {
+      _this.setState({
+        error: true,
+        errorMessage: response
+      })
+    }
+    Api.getFoldersFromParent(null, onSuccess, onFailure);
+  }
+
+  collectData(folderIds) {
+    let _this = this;
     let onSuccess = function(response) {
       _this.setState({
         data: response,
-        loading:false,
+        loading: false,
       });
     }
-    let ids = ["5afa58368d777f0685798c5b", "5c7aed3a8d777f072b766625", "5c82f0cf8d777f072b8abef3", "5c7b52c88d777f072b76a33b","5c8d51d48d777f072badc387","5c8e711a8d777f072bb224bc"];
-    Api.getFolders(ids, onSuccess);
+    let onFailure = function(response) {
+      _this.setState({
+        error: true,
+        errorMessage: response,
+        data: null,
+        loading: false
+      });
+    }
+    Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure);
   }
 
   changeTabData(property, data) {
@@ -155,6 +182,11 @@ class App extends Component {
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
             {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
+            {this.state.error &&
+              <div>
+                Error: {this.state.errorMessage}
+              </div>
+            }
             {!this.state.loading ?
               <div>
                 {
