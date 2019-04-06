@@ -6,7 +6,6 @@ import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
 import BoxPlot from "../../components/BoxPlot/BoxPlot";
 import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
-import Checklist from "../../components/Checklist/Checklist"
 import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
 import { GridLoader, PacmanLoader } from 'react-spinners';
 import '../../static/scss/App.css';
