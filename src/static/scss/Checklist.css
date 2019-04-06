@@ -1,20 +1,78 @@
-#checklist-container {
-  margin-left: 2vh;
-  margin-top: 1vh;
+.checklist-container {
+  position: absolute;
+  background-color: white;
+  margin-left: 15vw;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 1%;
+  border: 0.1vw solid gainsboro;
+  margin-top: -46vh;
 }
 
-#checklist-label {
-  font-size: 1.4vw;
+.checklist-container::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-left: 0.1vw solid gainsboro;
+  border-bottom: 0.1vw solid gainsboro;
+  width: 2vw;
+  height: 5vh;
+  margin-left: -3vw;
+  margin-top: 37.5vh;
+  transform: rotate(45deg);
 }
 
 #checklist-box {
+  border: 0.1vh solid gainsboro;
   margin-top: 1vh;
   font-size: 0.9vw;
-  overflow: auto;
+  height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding-left: 1vw;
+  border-radius: 2vh;
 }
 
 label {
   margin-left: 0.5vh;
+}
+
+.search-box {
+  border: 0.1vh solid gainsboro;
+  border-radius: 1vh;
+  padding: 1vh 1vw 1vh 1vw;
+  font-size: 2vh;
+  width: 20vw;
+}
+
+.search-box-icon {
+  position: absolute;
+  margin-left: -2vw;
+  margin-top: 1.1vh;
+  font-size: 2.5vh;
+  color: grey;
+}
+
+.check-buttons-wrapper {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  text-align: center;
+}
+
+.checklist-row {
+  width: 90%;
+  padding: 1vh 0.1vw;
+  margin-top: 1vh;
+  border-bottom: 0.1vh solid whitesmoke;
+}
+
+.checklist-row label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.checklist-row input {
+  vertical-align: -1.1vh;
 }
 
 /*# sourceMappingURL=Checklist.css.map */

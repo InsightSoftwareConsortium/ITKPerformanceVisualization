@@ -5,7 +5,7 @@ import "../../../src/static/scss/Button.css";
 export default class Button extends Component {
   render() {
     return (
-      <button className={this.props.color + "-button"}>
+      <button className={this.props.color + "-button"} onClick={this.props.onClick}>
           {this.props.children}
       </button>
     )

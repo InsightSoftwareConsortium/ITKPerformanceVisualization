@@ -11,6 +11,8 @@ import { GridLoader, PacmanLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
 import Dropdown from '../../components/Dropdown/Dropdown';
+import itkvizlogo from "../../static/img/itkvizlogo.png";
+import _ from 'lodash';
 
 const Api = ApiInstance.instance;
 
@@ -20,16 +22,16 @@ class App extends Component {
     super(props);
     this.state = {
       navbarItems: {
-        left: [<h style={{marginLeft: "3vh", fontSize: "4vh"}}>ITK Performance Visualization</h>,],
+        left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
         right: [<Button color="blue">Upload Data</Button>,]
       },
       showSidebar:true,
       tabs: [
         {
           name:"Default", 
-          vizType:"HeatMap",
+          vizType:"ScatterPlot",
           selection: [],
-          split: null,
+          split: "BenchmarkName",
           x_axis:"CommitHash",
           y_axis:"Value"
         }
@@ -71,6 +73,7 @@ class App extends Component {
   collectData(folderIds) {
     let _this = this;
     let onSuccess = function(response) {
+      _this.changeTabData("selection", Object.keys(_.groupBy(response, value => value["CommitHash"])).sort());
       _this.setState({
         data: response,
         loading: false,
