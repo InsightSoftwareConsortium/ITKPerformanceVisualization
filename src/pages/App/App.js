@@ -143,7 +143,6 @@ class App extends Component {
                 </table>
                 <Dropdown name="split" default={this.getTabByName(this.state.selectedTab).split} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
                 <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
-                <Checklist data={this.state.data} type={this.getTabByName(this.state.selectedTab).x_axis} changeTabData={this.changeTabData} selection={this.getTabByName(this.state.selectedTab).selection}></Checklist>
                 </div>
               :
               <div className="loader-wrapper">

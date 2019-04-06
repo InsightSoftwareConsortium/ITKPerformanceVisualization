@@ -2,17 +2,25 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 import "../../../src/static/scss/Dropdown.css";
+import Checklist from '../Checklist/Checklist';
 
 export default class Dropdown extends Component {
-    constructor(){
-      super();
+    constructor(props){
+      super(props);
       this.selectionChanged = this.selectionChanged.bind(this);
+      this.filterButtonClicked = this.filterButtonClicked.bind(this);
+      this.filterOpen = false;
+      this.selection = this.props.default;
     }
   
   selectionChanged(event){
     this.props.changeTabData(this.props.name, event.target.value);
-    if (this.props.name === "x_axis")
-      this.props.changeTabData("selection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
+    this.selection = event.target.value;
+  }
+
+  filterButtonClicked(event){
+    this.filterOpen = !this.filterOpen;
+    this.forceUpdate();
   }
   
   render() {
@@ -24,6 +32,11 @@ export default class Dropdown extends Component {
               return <option value={item} selected={item === this.props.default}>{item}</option>
           })}
         </select>
+        <button id='filter-button' onClick={this.filterButtonClicked}>Filter</button>
+        {this.filterOpen ?
+          <Checklist type={this.selection} data={this.props.data} changeTabData={this.props.changeTabData}></Checklist>
+          :null
+        }
       </div>
     )
   }
