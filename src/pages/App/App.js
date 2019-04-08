@@ -30,9 +30,10 @@ class App extends Component {
         {
           name:"Default", 
           vizType:"ScatterPlot",
-          selection: [],
           split: "BenchmarkName",
+          splitSelection: [],
           x_axis:"CommitHash",
+          x_axisSelection: [],
           y_axis:"Value"
         }
       ],
@@ -73,7 +74,7 @@ class App extends Component {
   collectData(folderIds) {
     let _this = this;
     let onSuccess = function(response) {
-      _this.changeTabData("selection", Object.keys(_.groupBy(response, value => value["CommitHash"])).sort());
+      _this.changeTabData("x_axisSelection", Object.keys(_.groupBy(response, value => value["CommitHash"])).sort());
       _this.setState({
         data: response,
         loading: false,
@@ -108,7 +109,7 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", selection:[], x_axis:"CommitHash", y_axis:"Value"})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", splitSelection:[], x_axisSelection:[], x_axis:"CommitHash", y_axis:"Value"})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -156,19 +157,21 @@ class App extends Component {
               {!this.state.loading ?
               <div style={{marginTop: "4vh"}}>
                 <table style={{marginTop:'4vh'}}>
-                  <tr>
-                    <td>
-                    <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
-                    </td>
-                    <td>
-                    <GraphSelection vizType="ScatterPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot"}></GraphSelection>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                    <GraphSelection vizType="BoxPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "BoxPlot"}></GraphSelection>
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>
+                      <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                      </td>
+                      <td>
+                      <GraphSelection vizType="ScatterPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot"}></GraphSelection>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                      <GraphSelection vizType="BoxPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "BoxPlot"}></GraphSelection>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <Dropdown name="split" default={this.getTabByName(this.state.selectedTab).split} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
                 <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
@@ -192,11 +195,11 @@ class App extends Component {
               <div>
                 {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
-                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
+                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot")?
-                <ScatterPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
+                <ScatterPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
                 :(this.getTabByName(this.state.selectedTab).vizType === "BoxPlot")?
-                <BoxPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).selection} split={this.getTabByName(this.state.selectedTab).split} />
+                <BoxPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>

@@ -12,7 +12,7 @@ export default class Checklist extends Component {
       searchItems: Object.keys(_.groupBy(this.props.data, value => value[this.props.type])).sort()
     }
     
-    this.props.changeTabData("selection", this.state.selection);
+    this.props.changeTabData(this.props.name+"Selection", this.state.selection);
     this.checkBoxClicked = this.checkBoxClicked.bind(this);
     this.searchBoxChanged = this.searchBoxChanged.bind(this);
     this.checkAllClicked = this.checkAllClicked.bind(this);
@@ -34,7 +34,7 @@ export default class Checklist extends Component {
     this.setState({
       selection: this.state.selection
     })
-    this.props.changeTabData("selection", this.state.selection);
+    this.props.changeTabData(this.props.name+"Selection", this.state.selection);
   }
 
   checkAllClicked(value){
@@ -44,7 +44,7 @@ export default class Checklist extends Component {
     this.setState({
       selection: this.state.selection
     })
-    this.props.changeTabData("selection", this.state.selection);
+    this.props.changeTabData(this.props.name+"Selection", this.state.selection);
   }
   
   uncheckAllClicked(value){
@@ -54,7 +54,7 @@ export default class Checklist extends Component {
     this.setState({
       selection: this.state.selection
     })
-    this.props.changeTabData("selection", this.state.selection);
+    this.props.changeTabData(this.props.name+"Selection", this.state.selection);
   }
 
   render() {
