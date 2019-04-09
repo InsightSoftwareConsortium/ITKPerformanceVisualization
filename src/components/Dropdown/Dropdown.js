@@ -47,6 +47,7 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
+  title: PropTypes.string,
   default: PropTypes.string,
   name: PropTypes.string,
   data: PropTypes.any,
