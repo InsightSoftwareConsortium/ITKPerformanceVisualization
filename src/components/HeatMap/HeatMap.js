@@ -71,7 +71,8 @@ export default class HeatMap extends Component {
       "mark": "rect",
         "encoding": {
           "facet": {
-            "field": this.props.split, 
+            "field": "",
+            //"field": isNullOrUndefined(this.props.Benchmarkn) ? "" : this.props.split, 
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
