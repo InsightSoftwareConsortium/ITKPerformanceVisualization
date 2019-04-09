@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
+import mockData from '../visualizationTestData.json';
 import _ from 'lodash';
 import { isNullOrUndefined } from 'util';
 
@@ -14,7 +15,6 @@ import { isNullOrUndefined } from 'util';
  *    --selected: optional, can specify a subset of selected instances of the 
  *                independent variable to chart (i.e. array of commitHashes).
  *                If not specified, all instances will be used
- *    --split: specifies how to split charts based on a particular field 
  */
 export default class ScatterPlot extends Component {
 
@@ -33,38 +33,51 @@ export default class ScatterPlot extends Component {
           "transform": [
               {"filter": {"field": this.props.independentVar, 
               "oneOf": isNullOrUndefined(this.props.selected) ? 
-                Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+                Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])) :
                 this.props.selected}},
               {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
           ],
           "encoding": {
-              "x": {"field": this.props.independentVar, "type": "ordinal"}
+              "x": {
+                "field": this.props.independentVar, 
+                "type": "ordinal",
+                "sort": {"field": "CommitDate"}
+              }
           },
           "layer": [
             {
                 "mark": {
-                    "type": "point",
-                    "filled": "true"
+                    "type": "circle",
+                    "filled": "false"
                 },
                 "encoding": {
                     "y": {
                       "field": this.props.dependentVar,
                       "type": "quantitative",
-                      "aggregate": "mean"
                     },
-                  "color": {"value": "black"}
+                  "color": {
+                    // "condition": {
+                    //   "test": {"field": "isLocal", "equal": "true"},
+                    //   "value": "green"
+                    // },
+                    "value": "black"
+                  }
                 },
             },
             {
                 "mark": {
-                    "type": "errorbar",
-                    "extent": "stdev"
+                    "type": "square",
+                    "filled": "true"
                 },
                 "encoding": {
-                    "y": {
-                        "field": this.props.dependentVar,
-                        "type": "quantitative"
-                    }
+                  "y": {
+                    "field": this.props.dependentVar,
+                    "type": "quantitative",
+                    "aggregate": "median"
+                  },
+                  "color": {
+                    "value": "red"
+                  }
                 }
             }
           ]

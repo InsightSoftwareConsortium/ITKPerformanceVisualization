@@ -47,7 +47,8 @@ export default class BoxPlot extends Component {
         },
         "x": {
           "field": this.props.independentVar,
-          "type": "ordinal"
+          "type": "ordinal",
+          "sort": {"field": "CommitDate"}
         },
         "y": {
           "field": this.props.dependentVar,
