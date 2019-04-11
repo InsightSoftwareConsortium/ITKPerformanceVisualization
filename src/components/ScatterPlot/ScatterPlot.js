@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import mockData from '../visualizationTestData.json';
 import _ from 'lodash';
 import { isNullOrUndefined } from 'util';
 
@@ -35,48 +34,53 @@ export default class ScatterPlot extends Component {
               "oneOf": isNullOrUndefined(this.props.selected) ? 
                 Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])) :
                 this.props.selected}},
-              {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}}
+              {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
+              {
+                "joinaggregate": [
+                  {"op": "median", "field": this.props.dependentVar, "as": "values"},
+                ],
+                "groupby": [this.props.independentVar]
+              }
           ],
           "encoding": {
               "x": {
                 "field": this.props.independentVar, 
                 "type": "ordinal",
-                "sort": {"field": "CommitDate"}
+                "sort": {"op": "max", "field": "CommitDate"}
               }
           },
           "layer": [
             {
                 "mark": {
-                    "type": "circle",
-                    "filled": "false"
+                    "type": "point"
                 },
                 "encoding": {
                     "y": {
                       "field": this.props.dependentVar,
-                      "type": "quantitative",
+                      "type": "quantitative"
                     },
                   "color": {
-                    // "condition": {
-                    //   "test": {"field": "isLocal", "equal": "true"},
-                    //   "value": "green"
-                    // },
-                    "value": "black"
+                    "value": "#6d6460"
                   }
                 },
             },
             {
                 "mark": {
                     "type": "square",
-                    "filled": "true"
+                    "size": 50
                 },
                 "encoding": {
                   "y": {
-                    "field": this.props.dependentVar,
-                    "type": "quantitative",
-                    "aggregate": "median"
+                    "field": "values",
+                    "aggregate": "median",
                   },
                   "color": {
-                    "value": "red"
+                    "field": "values",
+                    "type": "quantitative",
+                    "scale": {"scheme": "blues"},
+                    "legend": {
+                      "title": "Median Value"
+                    }
                   }
                 }
             }

@@ -29,10 +29,14 @@ export default class BoxPlot extends Component {
       "description": "Box plots for each benchmark",
       "data": {"values": this.props.data},
       "transform": [
-        {"filter": {"field": this.props.independentVar, 
-        "oneOf": isNullOrUndefined(this.props.selected) ? 
-          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
-          this.props.selected}}
+        {
+          "filter": {
+            "field": this.props.independentVar, 
+            "oneOf": isNullOrUndefined(this.props.selected) ? 
+              Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
+              this.props.selected
+          }
+        }
       ],
       "mark": {
         "type": "boxplot",
@@ -48,7 +52,7 @@ export default class BoxPlot extends Component {
         "x": {
           "field": this.props.independentVar,
           "type": "ordinal",
-          "sort": {"field": "CommitDate"}
+          "sort": {"op": "max", "field": "CommitDate"}
         },
         "y": {
           "field": this.props.dependentVar,

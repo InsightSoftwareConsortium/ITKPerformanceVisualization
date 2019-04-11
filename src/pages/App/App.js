@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
 import Button from '../../components/Button/Button';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
@@ -193,6 +194,9 @@ class App extends Component {
             }
             {!this.state.loading ?
               <div>
+                <div>
+                  <LocalCommitAlert data={this.state.data}></LocalCommitAlert>
+                </div>
                 {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
                 <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />

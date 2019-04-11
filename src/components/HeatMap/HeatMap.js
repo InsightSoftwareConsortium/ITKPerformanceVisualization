@@ -73,7 +73,7 @@ export default class HeatMap extends Component {
         "encoding": {
           "facet": {
             "field": "",
-            //"field": isNullOrUndefined(this.props.Benchmarkn) ? "" : this.props.split, 
+            //"field": isNullOrUndefined(this.props.BenchmarkName) ? "" : this.props.split, 
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
@@ -86,7 +86,7 @@ export default class HeatMap extends Component {
           "x": {
             "field": this.props.independentVar, 
             "type": "ordinal",
-            "sort": {"field": "CommitDate"}
+            "sort": {"op": "max", "field": "CommitDate"}
           },
           "color": {
               "condition": {
