@@ -1,15 +1,17 @@
 .dropdown-container {
     margin-left: 2vh;
-    margin-top: 1vh;
+    margin-top: 0.5vh;
 }
 
 .dropdown-label {
+    cursor: default;
     font-size: 1vw;
-    margin-bottom: 1vh;
+    margin-bottom: 0.5vh;
     margin-left: 1vw;
 }
 
 .dropdown-box {
+    cursor: pointer;
     margin-left: 1vh;
     font-size: 0.9vw;
     overflow: auto;

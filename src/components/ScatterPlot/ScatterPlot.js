@@ -29,12 +29,6 @@ export default class ScatterPlot extends Component {
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
         "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
-        "transform": [
-            {"filter": {"field": this.props.independentVar, 
-            "oneOf": isNullOrUndefined(this.props.selected) ? 
-              Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
-              this.props.selected}}
-        ],
         "encoding": {
             "x": {"field": this.props.independentVar, "type": "ordinal"}
         },

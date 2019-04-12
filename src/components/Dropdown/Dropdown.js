@@ -2,27 +2,22 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import "../../../src/static/scss/Dropdown.css";
 import Checklist from '../Checklist/Checklist';
-import _ from 'lodash';
 
 export default class Dropdown extends Component {
     constructor(props){
       super(props);
       this.state = {
-        filterOpen: false,
-        selection: this.props.default
+        filterOpen: false
       }
+
+      if (!this.props.filterExists(this.props.selection))
+        this.props.updateFilterSelection(this.props.selection, this.props.getAttributeValues(this.props.selection));
       this.selectionChanged = this.selectionChanged.bind(this);
       this.filterButtonClicked = this.filterButtonClicked.bind(this);
     }
   
   selectionChanged(event){
-    this.props.changeTabData(this.props.name, event.target.value);
-    if(this.props.name === "x_axis") {
-      this.props.changeTabData("x_axisSelection", Object.keys(_.groupBy(this.props.data, value => value[event.target.value])).sort());
-    }
-    this.setState({
-      selection: event.target.value
-    });
+    this.props.updateAttributeSelection(this.props.selection, event.target.value, this.props.getAttributeValues(event.target.value));
   }
 
   filterButtonClicked(event){
@@ -34,15 +29,18 @@ export default class Dropdown extends Component {
   render() {
     return (
       <div className='dropdown-container'>
-        <div className='dropdown-label'>{this.props.name}</div>
-        <select className='dropdown-box' onChange={this.selectionChanged} defaultValue={this.props.default}>
-          {Object.keys(this.props.data[0]).map((item) => {
-              return <option key={item} value={item}>{item}</option>
+        <select className='dropdown-box' onChange={this.selectionChanged}>
+          {this.props.options.map((item) => {
+              return <option key={item} value={item} selected={item === this.props.selection}>{item}</option>
           })}
         </select>
         <button className='filter-button' onClick={this.filterButtonClicked}><i className="fas fa-sort-amount-down "></i></button>
         {this.state.filterOpen ?
-          <Checklist name={this.props.name} type={this.state.selection} data={this.props.data} changeTabData={this.props.changeTabData}></Checklist>
+          <Checklist name={this.props.selection} 
+                     options={this.props.getAttributeValues(this.props.selection)} 
+                     default={this.props.getAttributeSelection(this.props.selection)} 
+                     updateFilterSelection={this.props.updateFilterSelection}
+          ></Checklist>
           :null
         }
       </div>
@@ -51,9 +49,11 @@ export default class Dropdown extends Component {
 }
 
 Dropdown.propTypes = {
-  title: PropTypes.string,
-  default: PropTypes.string,
-  name: PropTypes.string,
-  data: PropTypes.any,
-  changeTabData: PropTypes.func
+  selection: PropTypes.string,
+  options: PropTypes.string,
+  getAttributeValues: PropTypes.func,
+  getAttributeSelection: PropTypes.func,
+  updateAttributeSelection: PropTypes.func,
+  updateFilterSelection: PropTypes.func,
+  filterExists: PropTypes.func
 }

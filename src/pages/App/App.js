@@ -7,12 +7,14 @@ import BoxPlot from "../../components/BoxPlot/BoxPlot";
 import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
-import { GridLoader, PacmanLoader } from 'react-spinners';
+import { GridLoader, BeatLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import itkvizlogo from "../../static/img/itkvizlogo.png";
 import _ from 'lodash';
+import FilterBox from '../../components/FilterBox/FilterBox';
+import { AST_ObjectKeyVal } from 'terser';
 
 const Api = ApiInstance.instance;
 
@@ -25,22 +27,14 @@ class App extends Component {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
         right: [<Button color="blue">Upload Data</Button>,]
       },
-      showSidebar:true,
-      tabs: [
-        {
-          name:"Default", 
-          vizType:"ScatterPlot",
-          split: "BenchmarkName",
-          splitSelection: [],
-          x_axis:"CommitHash",
-          x_axisSelection: [],
-          y_axis:"Value"
-        }
-      ],
+      showSidebar: true,
+      tabs: [],
       selectedTab: "Default",
       tabCounter: 1,
-      data:null,
-      loading: true
+      data: null,
+      filteredData: null,
+      loading: true,
+      changed: true
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -49,6 +43,17 @@ class App extends Component {
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
     this.changeTabData = this.changeTabData.bind(this);
+    this.loadViz = this.loadViz.bind(this);
+    this.getAttributeSelection = this.getAttributeSelection.bind(this);
+    this.getAttributeValues = this.getAttributeValues.bind(this);
+    this.getDataAttributes = this.getDataAttributes.bind(this);
+    this.updateFilterSelection = this.updateFilterSelection.bind(this);
+    this.updateAttributeSelection = this.updateAttributeSelection.bind(this);
+    this.deleteFilterSelection = this.deleteFilterSelection.bind(this);
+    this.getFilterSelection = this.getFilterSelection.bind(this);
+    this.filterExists = this.filterExists.bind(this);
+
+    this.handleTabAdd("Default");
   }
 
   componentDidMount() {
@@ -56,7 +61,7 @@ class App extends Component {
     let onSuccess = function(folders) {
       let folderIds = [];
       /* Folder Selection here */
-      folders = folders.slice(folders.length - 5, folders.length - 1);
+      folders = folders.slice(folders.length - 3, folders.length - 1);
       for (let folder in folders) {
         folderIds.push(folders[folder]["_id"]);
       }
@@ -95,7 +100,7 @@ class App extends Component {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
     let clone = this.state.tabs.slice(0);
     clone[index][property] = data;
-    this.setState({tabs:clone});
+    this.setState({tabs:clone, changed: true});
   }
 
   setParentState(state) {
@@ -104,12 +109,13 @@ class App extends Component {
 
   handleTabSelect(tabName) { 
     this.setState({
-      selectedTab:tabName
+      selectedTab:tabName,
+      changed: true
     });
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", splitSelection:[], x_axisSelection:[], x_axis:"CommitHash", y_axis:"Value"})
+    this.state.tabs.push({name: tabName, vizType:"HeatMap", splitVariable:"OSName", xAxisVariable:"CommitDate", yAxisVariable:"Value", filters:{}})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -149,6 +155,60 @@ class App extends Component {
     return this.state.tabs[this.state.tabs.findIndex(tab => tab.name === tabName)];
   }
 
+  getCurrentTab() {
+    return this.getTabByName(this.state.selectedTab);
+  }
+
+  loadViz() {
+    // this.setState({data: mySqlRemote.query("select * from myDataTable where {apply filters}")});
+    this.setState({filteredData: this.filterData(), changed: false});
+  }
+
+  getDataAttributes(){
+    // return mySqlRemote.query("select * from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME = N'myDataTable'");
+    return Object.keys(this.state.data[0]).sort();
+  }
+
+  getAttributeValues(attribute){
+    // return mySqlRemote.query("select distinct " + attribute + " from myDataTable");
+    return Object.keys(_.groupBy(this.state.data, value => value[attribute])).sort();
+  }
+
+  getAttributeSelection(attribute){
+    return this.getCurrentTab().filters[attribute];
+  }
+
+  getFilterSelection(attr){
+    return this.getCurrentTab().filters[attr];
+  }
+
+  updateAttributeSelection(oldAttr, attr, selection){
+    this.deleteFilterSelection(oldAttr);
+    this.updateFilterSelection(attr, selection);
+  }
+
+  updateFilterSelection(attr, selection){
+    this.getCurrentTab().filters[attr] = selection;
+    this.setState({changed: true});
+  }
+
+  deleteFilterSelection(attr){
+    delete this.getCurrentTab().filters[attr];
+    this.setState({changed: true});
+  }
+
+  filterExists(attr){
+    return Object.keys(this.getCurrentTab().filters).includes(attr) && this.getCurrentTab().filters[attr] != null;
+  }
+
+  filterData(){
+    let filteredData = this.state.data.slice(0);
+    Object.keys(this.getCurrentTab().filters).forEach((filter) => {
+      filteredData = filteredData.filter((elem) => this.getCurrentTab().filters[filter].includes(elem[filter].toString()));
+    });
+    return filteredData;
+  }
+
   render() {
     return (
       <div className="app">
@@ -160,25 +220,51 @@ class App extends Component {
                   <tbody>
                     <tr>
                       <td>
-                      <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "HeatMap"}></GraphSelection>
+                      <GraphSelection vizType="HeatMap" changeTabData={this.changeTabData} selected={this.getCurrentTab().vizType === "HeatMap"}></GraphSelection>
                       </td>
                       <td>
-                      <GraphSelection vizType="ScatterPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot"}></GraphSelection>
+                      <GraphSelection vizType="ScatterPlot" changeTabData={this.changeTabData} selected={this.getCurrentTab().vizType === "ScatterPlot"}></GraphSelection>
                       </td>
                     </tr>
                     <tr>
                       <td>
-                      <GraphSelection vizType="BoxPlot" changeTabData={this.changeTabData} selected={this.getTabByName(this.state.selectedTab).vizType === "BoxPlot"}></GraphSelection>
+                      <GraphSelection vizType="BoxPlot" changeTabData={this.changeTabData} selected={this.getCurrentTab().vizType === "BoxPlot"}></GraphSelection>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <Dropdown name="split" default={this.getTabByName(this.state.selectedTab).split} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
-                <Dropdown name="x_axis" default={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} changeTabData={this.changeTabData}></Dropdown>
+                <h style={{fontSize: "1vw", marginLeft: "2vw"}}>Split graphs by</h>
+                <Dropdown options={this.getDataAttributes()} 
+                          selection={this.getCurrentTab().splitVariable} 
+                          getAttributeValues={this.getAttributeValues} 
+                          getAttributeSelection={this.getFilterSelection} 
+                          updateAttributeSelection={(oldAttr, attr, selection) => {this.changeTabData("splitVariable", attr); this.updateAttributeSelection(oldAttr, attr, selection);}}
+                          updateFilterSelection={this.updateFilterSelection}
+                          filterExists={this.filterExists}
+                ></Dropdown>
+                <h style={{fontSize: "1vw", marginLeft: "2vw", marginTop: "1vh"}}>Graph X-axis as</h>
+                <Dropdown options={this.getDataAttributes()} 
+                          selection={this.getCurrentTab().xAxisVariable} 
+                          getAttributeValues={this.getAttributeValues} 
+                          getAttributeSelection={this.getFilterSelection} 
+                          updateAttributeSelection={(oldAttr, attr, selection) => {this.changeTabData("xAxisVariable", attr); this.updateAttributeSelection(oldAttr, attr, selection);}}
+                          updateFilterSelection={this.updateFilterSelection}
+                          filterExists={this.filterExists}
+                ></Dropdown>
+                <FilterBox filters={this.getCurrentTab().filters}
+                           options={this.getDataAttributes()}
+                           exclude={[this.getCurrentTab().xAxisVariable, this.getCurrentTab().splitVariable]}
+                           getAttributeValues={this.getAttributeValues} 
+                           getAttributeSelection={this.getFilterSelection} 
+                           updateAttributeSelection={this.updateAttributeSelection}
+                           updateFilterSelection={this.updateFilterSelection}
+                           deleteFilterSelection={this.deleteFilterSelection}
+                           filterExists={this.filterExists}
+                 ></FilterBox>
                 </div>
               :
               <div className="loader-wrapper">
-                <PacmanLoader/>
+                <BeatLoader/>
               </div>
               }
             </SideBar>
@@ -192,17 +278,20 @@ class App extends Component {
               </div>
             }
             {!this.state.loading ?
+              !this.state.changed ? 
               <div>
                 {
-                (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
-                <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
-                :(this.getTabByName(this.state.selectedTab).vizType === "ScatterPlot")?
-                <ScatterPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
-                :(this.getTabByName(this.state.selectedTab).vizType === "BoxPlot")?
-                <BoxPlot independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
+                (this.getCurrentTab().vizType === "HeatMap")?
+                <HeatMap independentVar={this.getCurrentTab().xAxisVariable} data={this.state.filteredData} split={this.getCurrentTab().splitVariable} />
+                :(this.getCurrentTab().vizType === "ScatterPlot")?
+                <ScatterPlot independentVar={this.getCurrentTab().xAxisVariable} data={this.state.filteredData} split={this.getCurrentTab().splitVariable} />
+                :(this.getCurrentTab().vizType === "BoxPlot")?
+                <BoxPlot independentVar={this.getCurrentTab().xAxisVariable} data={this.state.filteredData} split={this.getCurrentTab().splitVariable} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>
+              :
+              <Button color="green" onClick={this.loadViz}>Reload Vizualization</Button>
               :
               <div className="loader-wrapper">
                 <GridLoader/>

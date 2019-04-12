@@ -17,7 +17,7 @@ import { isNullOrUndefined } from 'util';
 export default class BoxPlot extends Component {
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash",
+    independentVar: "CommitHash"
   }
   
   //generates spec for vega-lite heatmap visualization
@@ -26,12 +26,6 @@ export default class BoxPlot extends Component {
       "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
       "description": "Box plots for each benchmark",
       "data": {"values": this.props.data},
-      "transform": [
-        {"filter": {"field": this.props.independentVar, 
-        "oneOf": isNullOrUndefined(this.props.selected) ? 
-          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
-          this.props.selected}}
-      ],
       "mark": {
         "type": "boxplot",
         "extent": "min-max"

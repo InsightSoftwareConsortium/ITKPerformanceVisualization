@@ -1,12 +1,13 @@
 @import "variables.scss";
 
 .sidebar {
+    // overflow-y: auto;
     position: fixed;
     width: $sidebarWidth;
     background-color: whitesmoke;
     border-right: .1vw solid gainsboro;
     border-top: .1vh solid gainsboro;
-    height: 100vh;
+    height: 90vh;
     margin-top: $navbarHeight;
     z-index: 1;
     top:0;

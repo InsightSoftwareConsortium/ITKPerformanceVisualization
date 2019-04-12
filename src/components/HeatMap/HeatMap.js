@@ -19,8 +19,7 @@ export default class HeatMap extends Component {
 
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash",
-    selected: []
+    independentVar: "CommitHash"
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -44,10 +43,6 @@ export default class HeatMap extends Component {
           }
       },
       "transform": [
-        {"filter": {"field": this.props.independentVar, 
-        "oneOf": isNullOrUndefined(this.props.selected) ? 
-          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
-          this.props.selected}},
         {
           "sort": [{"field": this.props.dependentVar}],
           "joinaggregate": [
@@ -131,6 +126,5 @@ HeatMap.propTypes = {
   dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"]),
-  selected: PropTypes.array
+                  "CommitHash"])
 }
