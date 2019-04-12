@@ -7,7 +7,7 @@ import BoxPlot from "../../components/BoxPlot/BoxPlot";
 import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
-import { GridLoader, PacmanLoader } from 'react-spinners';
+import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
 import Dropdown from '../../components/Dropdown/Dropdown';
@@ -40,7 +40,8 @@ class App extends Component {
       selectedTab: "Default",
       tabCounter: 1,
       data:null,
-      loading: true
+      loading: true,
+      loadingMessage: "Fetching Data...0 Folder(s)",
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -88,7 +89,13 @@ class App extends Component {
         loading: false
       });
     }
-    Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure);
+    let updateLoader = function(message) {
+      _this.setState({
+          loadingMessage: message
+      });
+    }
+
+    Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure, updateLoader);
   }
 
   changeTabData(property, data) {
@@ -178,7 +185,7 @@ class App extends Component {
                 </div>
               :
               <div className="loader-wrapper">
-                <PacmanLoader/>
+                <GridLoader/>
               </div>
               }
             </SideBar>
@@ -204,8 +211,13 @@ class App extends Component {
                 }
               </div>
               :
-              <div className="loader-wrapper">
-                <GridLoader/>
+              <div style={{width: "100%"}}>
+                <div className="loader-wrapper">
+                  <GridLoader/>
+                </div>
+                <div className="loader-text">
+                  {this.state.loadingMessage}
+                </div>
               </div>
              }
              </div>

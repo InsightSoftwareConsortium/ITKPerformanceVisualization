@@ -25,7 +25,7 @@ export default class Dropdown extends Component {
     });
   }
 
-  filterButtonClicked(event){
+  filterButtonClicked(){
     this.setState({
       filterOpen: !this.state.filterOpen
     })
@@ -42,7 +42,7 @@ export default class Dropdown extends Component {
         </select>
         <button className='filter-button' onClick={this.filterButtonClicked}><i className="fas fa-sort-amount-down "></i></button>
         {this.state.filterOpen ?
-          <Checklist name={this.props.name} type={this.state.selection} data={this.props.data} changeTabData={this.props.changeTabData}></Checklist>
+          <Checklist name={this.props.name} type={this.state.selection} data={this.props.data} hideChecklist={()=>{this.setState({filterOpen:false})}} changeTabData={this.props.changeTabData}></Checklist>
           :null
         }
       </div>

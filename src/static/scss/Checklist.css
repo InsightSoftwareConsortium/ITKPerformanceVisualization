@@ -8,6 +8,18 @@
   margin-top: -46vh;
 }
 
+.checklist-exit {
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+  margin-left: 27vw;
+  color: grey;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.checklist-exit:hover {
+  color: gainsboro;
+}
+
 .checklist-container::before {
   content: "";
   display: block;
@@ -29,12 +41,17 @@
   height: 30vh;
   overflow-y: scroll;
   overflow-x: hidden;
-  padding-left: 1vw;
   border-radius: 2vh;
 }
 
 label {
   margin-left: 0.5vh;
+}
+
+.search-box-wrapper {
+  width: 21vw;
+  display: block;
+  margin: auto;
 }
 
 .search-box {
@@ -43,12 +60,13 @@ label {
   padding: 1vh 1vw 1vh 1vw;
   font-size: 2vh;
   width: 20vw;
+  display: block;
+  margin: auto;
 }
 
 .search-box-icon {
-  position: absolute;
-  margin-left: -2vw;
-  margin-top: 1.1vh;
+  float: right;
+  margin-top: -3.5vh;
   font-size: 2.5vh;
   color: grey;
 }
@@ -60,9 +78,8 @@ label {
 }
 
 .checklist-row {
-  width: 90%;
-  padding: 1vh 0.1vw;
-  margin-top: 1vh;
+  padding: 2vh 0.1vw;
+  padding-left: 1vw;
   border-bottom: 0.1vh solid whitesmoke;
 }
 
@@ -72,7 +89,19 @@ label {
 }
 
 .checklist-row input {
-  vertical-align: -1.1vh;
+  vertical-align: middle;
+}
+
+.row-checked {
+  background-color: whitesmoke;
+}
+
+.commit-link {
+  color: black;
+  text-align: right;
+}
+.commit-link:hover {
+  color: gainsboro;
 }
 
 /*# sourceMappingURL=Checklist.css.map */

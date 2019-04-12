@@ -10,6 +10,7 @@
   transform: translateX(-40vw) rotate(0deg);
   transition: all 0.75s ease;
   padding-left: 22vw;
+  width: 100%;
 }
 .app-content--sidebar {
   transform: translateX(0) rotate(0deg);
@@ -18,12 +19,21 @@
 
 .app-content-viz {
   padding: 1vh 4vw 1vh 4vw;
+  text-align: center;
 }
 
 .loader-wrapper {
-  width: 7vw;
+  width: 3vw;
   margin: auto;
   padding-top: 30vh;
+}
+
+.loader-text {
+  margin: auto;
+  display: block;
+  margin-top: 2vh;
+  width: 20vw;
+  font-weight: bold;
 }
 
 /*# sourceMappingURL=App.css.map */

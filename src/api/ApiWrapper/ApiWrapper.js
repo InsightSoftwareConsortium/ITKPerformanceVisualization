@@ -57,7 +57,7 @@ class Api {
     this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }
 
-  getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure){
+  getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure, updateLoader){
     let _this = this;
     let count = 0;
     let data = [];
@@ -70,6 +70,7 @@ class Api {
         console.error(response);
       }
       count++;
+      updateLoader("Fetching Data..."+count+" Folder(s)")
       if(count === ids.length) {
         if (data != null && data.length > 0) onSuccess(data);
         else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))
