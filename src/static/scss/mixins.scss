@@ -1,0 +1,38 @@
+@import "variables.scss";
+$buttonBorderBottom: .2vh;
+
+@mixin button($bgcolor, $bordercolor) {
+    padding: 1vh 1vh 1vh 1vh;
+    border: none;
+    border: $buttonBorderBottom solid $bordercolor;
+    background-color: $bgcolor;
+    color: white;
+    margin-left: 1vw;
+    margin-right: 1vw;
+    outline: none;
+    font-size: 1.5vh;
+    font-weight: bold;
+    cursor: pointer;
+    &:active {
+        border: none;
+        transform: translateY($buttonBorderBottom);
+    }
+    &:hover {
+        background-color: $bordercolor;
+    }
+    &::-moz-focus-inner {
+        border: 0;
+    }
+}
+
+@mixin graph-selection($bgcolor) {
+    cursor: pointer;
+    margin: 1vh 0vh 1vh 2vh;
+    border: 0.2vh solid gainsboro;
+    border-radius: 0.5vh;
+    width: 0.4 * $sidebarWidth;
+    height: 0.4 * $sidebarWidth;
+    background-color: white;
+    font-size: 1.11vw;
+    font-weight: bold;
+}

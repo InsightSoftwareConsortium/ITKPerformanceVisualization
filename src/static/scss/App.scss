@@ -1,32 +1,41 @@
-.App {
+@import 'variables.scss';
+
+.app {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.app-content {
+  margin-top: $navbarHeight;
+  margin-left: $sidebarWidth;
+
+  &--no-sidebar {
+    transform: translateX(-$sidebarWidth + (-20vw)) rotate(0deg);  
+    transition: all .75s ease;
+    padding-left: $sidebarWidth + 2vw;
+    width:100%;
+  }
+
+  &--sidebar {
+    transform: translateX(0) rotate(0deg);  
+    transition: all .75s ease;
+  }
+}
+
+.app-content-viz {
+  padding: 1vh 4vw 1vh 4vw;
   text-align: center;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
+.loader-wrapper {
+  width:3vw;
+  margin:auto;
+  padding-top:30vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.loader-text {
+  margin: auto;
+  display: block;
+  margin-top: 2vh;
+  width: 20vw;
+  font-weight: bold;
 }

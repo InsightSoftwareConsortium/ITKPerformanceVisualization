@@ -1,0 +1,29 @@
+.navbar {
+  width: 100%;
+  height: 10vh;
+  background-color: whitesmoke;
+  border-bottom: 0.1vh solid gainsboro;
+  position: fixed;
+  line-height: 10vh;
+  text-align: center;
+  z-index: 2;
+  top: 0;
+}
+
+.navitem {
+  display: inline-block;
+}
+.navitem-right {
+  float: right;
+}
+.navitem-left {
+  float: left;
+}
+
+.nav-logo {
+  vertical-align: middle;
+  width: 7vw;
+  margin-left: 1vw;
+}
+
+/*# sourceMappingURL=NavBar.css.map */

@@ -1,0 +1,95 @@
+{
+    "ITK_MANUAL_BUILD_INFORMATION": {
+      "GIT_CONFIG_DATE": "2017-12-20 11:50:32 -0500",
+      "GIT_CONFIG_SHA1": "d92873e33e8a54e933e445b92151191f02feab42",
+      "GIT_LOCAL_MODIFICATIONS": ""
+    },
+    "PerformanceBenchmarkInformation": {
+      "CMAKE_BUILD_TYPE": "Release",
+      "CMAKE_BUILD_TYPE_description": "The build type requested.",
+      "CMAKE_CXX_COMPILER": "/usr/bin/c++",
+      "CMAKE_CXX_COMPILER_ID": "GNU",
+      "CMAKE_CXX_COMPILER_ID_description": "The CXX compiler ID used for building.",
+      "CMAKE_CXX_COMPILER_VERSION": "6.3.0",
+      "CMAKE_CXX_COMPILER_VERSION_description": "The CXX compiler version used for building.",
+      "CMAKE_CXX_COMPILER_description": "The CXX compiler.",
+      "CMAKE_CXX_FLAGS": "  -msse2 ",
+      "CMAKE_CXX_FLAGS_description": "The CXX compiler flags.",
+      "CMAKE_CXX_STANDARD": "11",
+      "CMAKE_CXX_STANDARD_description": "The CXX standard specified.",
+      "CMAKE_C_COMPILER": "/usr/bin/cc",
+      "CMAKE_C_COMPILER_ID": "GNU",
+      "CMAKE_C_COMPILER_ID_description": "The C compiler ID used for building.",
+      "CMAKE_C_COMPILER_VERSION": "6.3.0",
+      "CMAKE_C_COMPILER_VERSION_description": "The C compiler version used for building.",
+      "CMAKE_C_COMPILER_description": "The C compiler.",
+      "CMAKE_C_FLAGS": "  ",
+      "CMAKE_C_FLAGS_description": "The C compiler flags.",
+      "CMAKE_GENERATOR": "Ninja",
+      "CMAKE_GENERATOR_description": "The generator used for building.",
+      "CMAKE_VERSION": "3.11.1",
+      "CMAKE_VERSION_description": "The version of cmake used to configure.",
+      "CONFIGURE_DATE": "2018-05-14 21:50",
+      "CONFIGURE_DATE_description": "The date of configuration.",
+      "GIT_CONFIG_DATE": "2018-05-14 21:46:13 -0400",
+      "GIT_CONFIG_DATE_description": "The git HEAD date",
+      "GIT_CONFIG_REFSPEC": "refs/heads/visualize",
+      "GIT_CONFIG_REFSPEC_description": "The git HEAD ref spec.",
+      "GIT_CONFIG_SHA1": "5ef03a256d272cb298a1b125256bd30064a249c4",
+      "GIT_CONFIG_SHA1_description": "The git HEAD SHA1 has at configuration.",
+      "GIT_VERSION_DESC": "-128-NOTFOUND",
+      "GIT_VERSION_DESC_description": "The git HEAD version tag-commits-hash",
+      "PROJECT_URL": "https://github.com/InsightSoftwareConsortium/ITKPerformanceBenchmarking",
+      "PROJECT_URL_description": "The URL of project."
+    },
+    "Probes": [
+      {
+        "Iterations": 50,
+        "Maximum": 0.0263159,
+        "MaximumMeanDifference": 0.0107314,
+        "MaximumMeanDifferencePercent": 168.859,
+        "Mean": 0.0155846,
+        "MeanMinimumDifference": 0.00197849,
+        "MeanMinimumDifferencePercent": 114.541,
+        "Minimum": 0.0136061,
+        "Name": "Add",
+        "StandardDeviation": 0.00168612,
+        "StandardError": 0.000238453,
+        "Total": 0.779228,
+        "TotalDifference": 0.0127099,
+        "Type": "Time",
+        "Units": "s",
+        "Values": [
+          0.0263159,
+          0.0156341,
+          0.015666
+        ]
+      }
+    ],
+    "RunTimeInformation": {
+      "GetGlobalDefaultNumberOfThreads": 1,
+      "ReportWritingLoadAverage": 8.22
+    },
+    "SystemInformation": {
+      "ITKVersion": "4.13.0",
+      "OperatingSystem": {
+        "Bitness": "64 bit",
+        "Name": "Linux",
+        "Platform": "x86_64",
+        "Release": "4.9.0-6-amd64",
+        "Version": "#1 SMP Debian 4.9.82-1+deb9u3 (2018-03-02)"
+      },
+      "Processor": {
+        "Cache": 15360,
+        "Clock": 2948.01,
+        "Logical CPUs": 12,
+        "Name": "Unknown P6 family",
+        "Physical CPUs": 12,
+        "Physical Memory Available": 45424,
+        "Physical Memory Total": 64386,
+        "Virtual Memory Available": 0,
+        "Virtual Memory Total": 0
+      },
+      "System": "clay"
+    }
+  }

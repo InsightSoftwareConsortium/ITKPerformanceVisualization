@@ -1,0 +1,107 @@
+.checklist-container {
+  position: absolute;
+  background-color: white;
+  margin-left: 15vw;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 1%;
+  border: 0.1vw solid gainsboro;
+  margin-top: -46vh;
+}
+
+.checklist-exit {
+  cursor: pointer;
+  font-weight: bold;
+  float: right;
+  margin-left: 27vw;
+  color: grey;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+}
+.checklist-exit:hover {
+  color: gainsboro;
+}
+
+.checklist-container::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-left: 0.1vw solid gainsboro;
+  border-bottom: 0.1vw solid gainsboro;
+  width: 2vw;
+  height: 5vh;
+  margin-left: -3vw;
+  margin-top: 37.5vh;
+  transform: rotate(45deg);
+}
+
+#checklist-box {
+  border: 0.1vh solid gainsboro;
+  margin-top: 1vh;
+  font-size: 0.9vw;
+  height: 30vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  border-radius: 2vh;
+}
+
+label {
+  margin-left: 0.5vh;
+}
+
+.search-box-wrapper {
+  width: 21vw;
+  display: block;
+  margin: auto;
+}
+
+.search-box {
+  border: 0.1vh solid gainsboro;
+  border-radius: 1vh;
+  padding: 1vh 1vw 1vh 1vw;
+  font-size: 2vh;
+  width: 20vw;
+  display: block;
+  margin: auto;
+}
+
+.search-box-icon {
+  float: right;
+  margin-top: -3.5vh;
+  font-size: 2.5vh;
+  color: grey;
+}
+
+.check-buttons-wrapper {
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+  text-align: center;
+}
+
+.checklist-row {
+  padding: 2vh 0.1vw;
+  padding-left: 1vw;
+  border-bottom: 0.1vh solid whitesmoke;
+}
+
+.checklist-row label {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.checklist-row input {
+  vertical-align: middle;
+}
+
+.row-checked {
+  background-color: whitesmoke;
+}
+
+.commit-link {
+  color: black;
+  text-align: right;
+}
+.commit-link:hover {
+  color: gainsboro;
+}
+
+/*# sourceMappingURL=Checklist.css.map */

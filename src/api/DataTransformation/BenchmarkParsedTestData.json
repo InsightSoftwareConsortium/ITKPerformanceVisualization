@@ -1,0 +1,41 @@
+[
+    {
+      "BenchmarkName": "BinaryAddBenchmark",
+      "CommitDate": "2017-12-20 11:50:32 -0500",
+      "CommitHash": "d92873e33e8a54e933e445b92151191f02feab42",
+      "ITKVersion": "4.13.0",
+      "OSName": "Linux",
+      "OSPlatform": "x86_64",
+      "OSRelease": "4.9.0-6-amd64",
+      "NumThreads": 1,
+      "System": "clay",
+      "Value": 0.0263159,
+      "_local": false
+    },
+    {
+      "BenchmarkName": "BinaryAddBenchmark",
+      "CommitDate": "2017-12-20 11:50:32 -0500",
+      "CommitHash": "d92873e33e8a54e933e445b92151191f02feab42",
+      "ITKVersion": "4.13.0",
+      "OSName": "Linux",
+      "OSPlatform": "x86_64",
+      "OSRelease": "4.9.0-6-amd64",
+      "NumThreads": 1,
+      "System": "clay",
+      "Value": 0.0156341,
+      "_local": false
+    },
+    {
+      "BenchmarkName": "BinaryAddBenchmark",
+      "CommitDate": "2017-12-20 11:50:32 -0500",
+      "CommitHash": "d92873e33e8a54e933e445b92151191f02feab42",
+      "ITKVersion": "4.13.0",
+      "OSName": "Linux",
+      "OSPlatform": "x86_64",
+      "OSRelease": "4.9.0-6-amd64",
+      "NumThreads": 1,
+      "System": "clay",
+      "Value": 0.015666,
+      "_local": false
+    }
+]

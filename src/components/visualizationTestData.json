@@ -1,0 +1,402 @@
+[
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 1.0,
+    "Value": 0.0196052
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 1.0,
+    "Value": 0.00970411
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 1.0,
+    "Value": 0.00964999
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 1.0,
+    "Value": 0.0100029
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 1.0,
+    "Value": 1.56793
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 1.0,
+    "Value": 1.45733
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 1.0,
+    "Value": 1.55308
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 1.0,
+    "Value": 2.08249
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 1.0,
+    "Value": 2.10976
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 1.0,
+    "Value": 2.05874
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 2.0,
+    "Value": 0.0196052
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 2.0,
+    "Value": 0.970411
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 2.0,
+    "Value": 0.964999
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 2.0,
+    "Value": 0.100029
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 2.0,
+    "Value": 0.56793
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 2.0,
+    "Value": 0.45733
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 2.0,
+    "Value": 1.01
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 2.0,
+    "Value": 2.85
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 2.0,
+    "Value": 2.986
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 2.0,
+    "Value": 2.783
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 1.0,
+    "Value": 2.11
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 1.0,
+    "Value": 2.85
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 1.0,
+    "Value": 5.21
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 2.0,
+    "Value": 0.56
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 2.0,
+    "Value": 0.986
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 2.0,
+    "Value": 0.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 2.85
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 8.986
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 5.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 5.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 5.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 5.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 3.0,
+    "Value": 6.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 5.0,
+    "Value": 2.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 6.0,
+    "Value": 4.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 7.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 1.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 3.783
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 5.783
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 3.0,
+    "Value": 1.3
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 4.0,
+    "Value": 7.3
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 5.0,
+    "Value": 0.3
+    },
+    {
+    "BenchmarkName": "GradientMagnitude",
+    "CommitHash": 6.0,
+    "Value": 1.3
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 3.0,
+    "Value": 8.3
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 4.0,
+    "Value": 1.3
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 5.0,
+    "Value": 2.3
+    },
+    {
+    "BenchmarkName": "BinaryAdd",
+    "CommitHash": 6.0,
+    "Value": 7.3
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 3.0,
+    "Value": 1.3
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 4.0,
+    "Value": 2.3
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 5.0,
+    "Value": 2.3
+    },
+    {
+    "BenchmarkName": "NormalizedCorrelation",
+    "CommitHash": 6.0,
+    "Value": 0.3
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 3.0,
+    "Value": 0.783
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 4.0,
+    "Value": 3.783
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 5.0,
+    "Value": 0.783
+    },
+    {
+    "BenchmarkName": "WatershedBenchmark",
+    "CommitHash": 6.0,
+    "Value": 0.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 0.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 0.083
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 5.286
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 0.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 1.0,
+    "Value": 7.283
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 7.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 7.642
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 7.032
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 2.0,
+    "Value": 6.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 3.0,
+    "Value": 2.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 3.0,
+    "Value": 1.52
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 3.0,
+    "Value": 1.683
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 3.0,
+    "Value": 1.883
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 4.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 4.283
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 4.583
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 4.0,
+    "Value": 1.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 5.0,
+    "Value": 7.43
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 5.0,
+    "Value": 3.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 5.0,
+    "Value": 0.833
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 5.0,
+    "Value": 2.983
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 6.0,
+    "Value": 4.31
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 6.0,
+    "Value": 4.38
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 6.0,
+    "Value": 4.34
+    },
+    {
+    "BenchmarkName": "DemonsRegistration",
+    "CommitHash": 6.0,
+    "Value": 4.35
+    }
+]
