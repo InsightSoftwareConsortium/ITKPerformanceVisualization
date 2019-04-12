@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
-import Button from '../../components/Button/Button';
+import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
@@ -24,7 +24,7 @@ class App extends Component {
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
-        right: [<Button color="blue">Upload Data</Button>,]
+        right: [<UploadDataButton addLocalData={this.addLocalData}></UploadDataButton>,]
       },
       showSidebar:true,
       tabs: [
@@ -90,6 +90,15 @@ class App extends Component {
       });
     }
     Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure);
+  }
+
+  addLocalData = (localData) => {
+    let current = this.state.data.concat(localData);
+    this.setState({
+      data: current
+    })
+    console.log(this.state.data);
+    console.log("Local Data Added");
   }
 
   changeTabData(property, data) {

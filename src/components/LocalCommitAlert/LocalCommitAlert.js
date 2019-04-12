@@ -14,17 +14,20 @@ export default class LocalCommitAlert extends Component {
   constructor(props){
     super(props)
     this.localCommits = [];
-    var commitObjects = _.groupBy(this.props.data, value => value["CommitHash"]);
-    var commits = Object.keys(commitObjects);
-
-    for (var i = 0; i < commits.length; i++) {
-      if(commitObjects[commits[i]][0]["_local"]) {
-        this.localCommits.push(commits[i]);
-      }
-    }
   }
 
   render() {
+    var commitObjects = _.groupBy(this.props.data, value => value["CommitHash"]);
+
+    for(let commit in commitObjects) {
+      for (let i = 0; i < commitObjects[commit].length; i++) {
+        if (commitObjects[commit][i]["_local"]) {
+          this.localCommits = this.localCommits.concat(commit);
+          break;
+        }
+      }
+    }
+
     const localList = this.localCommits.map((commit) =>
       <li key={commit}>{commit}</li>
     );
