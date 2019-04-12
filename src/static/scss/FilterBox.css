@@ -1,5 +1,7 @@
 .filterbox-container {
   margin-bottom: 3vh;
+  overflow-y: scroll;
+  height: 12vh;
 }
 
 .circle-filter-button {
