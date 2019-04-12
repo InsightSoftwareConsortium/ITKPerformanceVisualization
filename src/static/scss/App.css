@@ -36,4 +36,30 @@
   font-weight: bold;
 }
 
+.quick-compare-popup {
+  right: 1vw;
+  z-index: 1001;
+  position: fixed;
+  width: 20vw;
+  height: 30vh;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 1%;
+  border: 0.1vw solid gainsboro;
+  background-color: white;
+  margin-top: 1.5vh;
+}
+.quick-compare-popup::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-left: 0.1vw solid gainsboro;
+  border-bottom: 0.1vw solid gainsboro;
+  width: 5vh;
+  height: 5vh;
+  margin-left: 10vw;
+  margin-top: -4.4vh;
+  transform: rotate(135deg);
+}
+
 /*# sourceMappingURL=App.css.map */

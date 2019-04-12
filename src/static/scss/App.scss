@@ -39,3 +39,31 @@
   width: 20vw;
   font-weight: bold;
 }
+
+.quick-compare-popup {
+  right: 1vw;
+  // vega embed thought it would be funny to have a z-index of 1000
+  z-index: 1001;
+  position: fixed;
+  width: 20vw;
+  height: 30vh;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 1%;
+  border: .1vw solid gainsboro;
+  background-color: white;
+  margin-top: 1.5vh;
+
+  &::before {
+    content: "";
+    display: block;
+    position:absolute;
+    background-color: white;
+    border-left: .1vw solid gainsboro;
+    border-bottom: .1vw solid gainsboro;
+    width: 5vh;
+    height: 5vh;
+    margin-left: 10vw;
+    margin-top:-4.4vh;
+    transform: rotate(135deg);
+  }
+}

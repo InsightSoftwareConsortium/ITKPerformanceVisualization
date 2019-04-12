@@ -25,7 +25,7 @@ class App extends Component {
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
-        right: [<UploadDataButton addLocalData={this.addLocalData}><i className="fas fa-file-upload"/></UploadDataButton>, <Button color="yellow">Quick Compare &nbsp; <i className="fas fa-exchange-alt"/></Button>]
+        right: [<UploadDataButton addLocalData={this.addLocalData}><i className="fas fa-file-upload"/></UploadDataButton>, <Button onClick={this.showQuickCompare} color="yellow">Quick Compare &nbsp; <i className="fas fa-exchange-alt"/></Button>]
       },
       showSidebar:true,
       tabs: [
@@ -44,6 +44,7 @@ class App extends Component {
       data:null,
       loading: true,
       loadingMessage: "Fetching Data...0 Folder(s)",
+      quickComparePopup: false,
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -52,6 +53,8 @@ class App extends Component {
     this.handleTabRemove = this.handleTabRemove.bind(this);
     this.handleTabNameChange = this.handleTabNameChange.bind(this);
     this.changeTabData = this.changeTabData.bind(this);
+    this.showQuickCompare = this.showQuickCompare.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
   }
 
   componentDidMount() {
@@ -72,6 +75,22 @@ class App extends Component {
       })
     }
     Api.getFoldersFromParent(null, onSuccess, onFailure);
+  }
+
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick(event) {
+    if(!this.node.contains(event.target)) 
+      this.setState({
+        quickComparePopup:false,
+      })
   }
 
   collectData(folderIds) {
@@ -107,6 +126,12 @@ class App extends Component {
     })
     console.log(this.state.data);
     console.log("Local Data Added");
+  }
+
+  showQuickCompare = () => {
+    this.setState({
+      quickComparePopup: true,
+    })
   }
 
   changeTabData(property, data) {
@@ -171,6 +196,10 @@ class App extends Component {
     return (
       <div className="app">
           <NavBar items={this.state.navbarItems}/>
+          {this.state.quickComparePopup &&
+            <div className="quick-compare-popup" ref={node=>this.node=node}>
+            </div>
+            }
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               {!this.state.loading ?
               <div style={{marginTop: "4vh"}}>
@@ -202,6 +231,7 @@ class App extends Component {
             </SideBar>
             <i onClick={()=>this.setState({showSidebar:true})} className={"sidebar-button-"+(this.state.showSidebar ? "hide":"show")+" sidebar-button--right fas fa-arrow-circle-right"}/>
           <div className={"app-content app-content--"+(this.state.showSidebar ? "sidebar" : "no-sidebar")}>
+  
             {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
             {this.state.error &&
