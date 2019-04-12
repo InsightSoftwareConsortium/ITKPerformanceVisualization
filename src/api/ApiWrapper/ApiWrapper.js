@@ -96,7 +96,7 @@ class Api {
 
       let onBenchmarkSuccess = function(benchmarkList) {
         benchmarkList.forEach(function(object) {
-          data.push(object);
+          data = data.concat(object);
         });
         benchmarkCallback();
       }
@@ -117,9 +117,6 @@ class Api {
         else {
           let benchmarks = _this.transformer.parseMetadata(response);
           folderLength = benchmarks.length;
-          if (id === "5c7b546e8d777f072b76ae0c") {
-            console.log("here");
-          }
           for (let benchmark in benchmarks) {
             let benchmarkId = benchmarks[benchmark][_this.folderItemId];
             let benchmarkName = benchmarks[benchmark][_this.folderItemName];

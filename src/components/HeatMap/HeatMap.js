@@ -14,6 +14,7 @@ import { isNullOrUndefined } from 'util';
  *                independent variable to chart in the form of an array
  *                (i.e. array of commitHashes).
  *                If not specified, all instances will be used
+ *    --split: specifies how to split charts based on a particular field
  */
 export default class HeatMap extends Component {
 
@@ -71,7 +72,8 @@ export default class HeatMap extends Component {
       "mark": "rect",
         "encoding": {
           "facet": {
-            "field": this.props.split, 
+            "field": "",
+            //"field": isNullOrUndefined(this.props.BenchmarkName) ? "" : this.props.split, 
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
@@ -83,7 +85,8 @@ export default class HeatMap extends Component {
           },
           "x": {
             "field": this.props.independentVar, 
-            "type": "ordinal"
+            "type": "ordinal",
+            "sort": {"op": "max", "field": "CommitDate"}
           },
           "color": {
               "condition": {

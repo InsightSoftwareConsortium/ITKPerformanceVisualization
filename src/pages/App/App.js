@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Button from '../../components/Button/Button';
+import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
+import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
@@ -23,7 +24,7 @@ class App extends Component {
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
-        right: [<Button color="blue">Upload Data</Button>,]
+        right: [<UploadDataButton addLocalData={this.addLocalData}></UploadDataButton>,]
       },
       showSidebar:true,
       tabs: [
@@ -96,6 +97,15 @@ class App extends Component {
     }
 
     Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure, updateLoader);
+  }
+
+  addLocalData = (localData) => {
+    let current = this.state.data.concat(localData);
+    this.setState({
+      data: current
+    })
+    console.log(this.state.data);
+    console.log("Local Data Added");
   }
 
   changeTabData(property, data) {
@@ -200,6 +210,9 @@ class App extends Component {
             }
             {!this.state.loading ?
               <div>
+                <div>
+                  <LocalCommitAlert data={this.state.data}></LocalCommitAlert>
+                </div>
                 {
                 (this.getTabByName(this.state.selectedTab).vizType === "HeatMap")?
                 <HeatMap independentVar={this.getTabByName(this.state.selectedTab).x_axis} data={this.state.data} selected={this.getTabByName(this.state.selectedTab).x_axisSelection} split={this.getTabByName(this.state.selectedTab).split} />
