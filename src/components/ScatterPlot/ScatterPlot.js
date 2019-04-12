@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { isNullOrUndefined } from 'util';
 
 /**
  * Component for scatterplot visualization for a single benchmark
@@ -30,10 +28,6 @@ export default class ScatterPlot extends Component {
         "data": {"values": this.props.data},
         "title": this.props.selectedBenchmark,
           "transform": [
-              {"filter": {"field": this.props.independentVar, 
-              "oneOf": isNullOrUndefined(this.props.selected) ? 
-                Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])) :
-                this.props.selected}},
               {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
               {
                 "joinaggregate": [

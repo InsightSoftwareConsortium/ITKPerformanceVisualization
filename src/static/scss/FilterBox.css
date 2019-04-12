@@ -1,0 +1,36 @@
+.filterbox-container {
+  margin-bottom: 3vh;
+}
+
+.circle-filter-button {
+  margin-top: 1.3vh;
+  float: right;
+  text-align: center;
+  width: 1.5vw;
+  height: 1.5vw;
+  border-radius: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vw;
+  padding-bottom: 1.5vh;
+  color: white;
+  font-weight: bold;
+}
+.circle-filter-button:hover::after {
+  content: "-";
+}
+
+.add-filter-button {
+  display: block;
+  margin: auto;
+}
+
+.no-filters-msg {
+  font-size: 2vh;
+  text-align: center;
+  margin-top: 1vh;
+}
+
+/*# sourceMappingURL=FilterBox.css.map */

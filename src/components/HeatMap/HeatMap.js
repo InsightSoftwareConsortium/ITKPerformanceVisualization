@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { isNullOrUndefined } from 'util';
 
 /**
  * Component for heatmap visualization for all benchmarks
@@ -20,8 +18,7 @@ export default class HeatMap extends Component {
 
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash",
-    selected: []
+    independentVar: "CommitHash"
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -33,22 +30,13 @@ export default class HeatMap extends Component {
       "selection": {
           "benchmarks": {
             "type": "single",
-            "fields": ["BenchmarkName"],
-            /*"bind": {
-              "input": "select", 
-              "options": Object.keys(_.groupBy(this.props.data, value => 
-                value.BenchmarkName)).sort(),
-              }*/
+            "fields": ["BenchmarkName"]
           },
           "grid": {
               "type": "interval", "bind": "scales"
           }
       },
       "transform": [
-        {"filter": {"field": this.props.independentVar, 
-        "oneOf": isNullOrUndefined(this.props.selected) ? 
-          Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])).sort() :
-          this.props.selected}},
         {
           "sort": [{"field": this.props.dependentVar}],
           "joinaggregate": [
@@ -134,6 +122,5 @@ HeatMap.propTypes = {
   dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"]),
-  selected: PropTypes.array
+                  "CommitHash"])
 }
