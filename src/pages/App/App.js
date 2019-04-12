@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import Button from '../../components/Button/Button';
+import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
+import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
+import Button from "../../components/Button/Button";
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
@@ -7,14 +9,14 @@ import BoxPlot from "../../components/BoxPlot/BoxPlot";
 import HeatMap from "../../components/HeatMap/HeatMap";
 import TabBar from "../../components/TabBar/TabBar";
 import ApiInstance from "../../api/ApiWrapper/ApiWrapper.js";
-import { GridLoader, BeatLoader } from 'react-spinners';
+import { GridLoader } from 'react-spinners';
 import '../../static/scss/App.css';
 import GraphSelection from '../../components/GraphSelection/GraphSelection';
 import Dropdown from '../../components/Dropdown/Dropdown';
 import itkvizlogo from "../../static/img/itkvizlogo.png";
 import _ from 'lodash';
 import FilterBox from '../../components/FilterBox/FilterBox';
-import { AST_ObjectKeyVal } from 'terser';
+// import { AST_ObjectKeyVal } from 'terser';
 
 const Api = ApiInstance.instance;
 
@@ -25,7 +27,7 @@ class App extends Component {
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
-        right: [<Button color="blue">Upload Data</Button>,]
+        right: [<UploadDataButton addLocalData={this.addLocalData}><i className="fas fa-file-upload"/></UploadDataButton>, <Button color="yellow">Quick Compare &nbsp; <i className="fas fa-exchange-alt"/></Button>]
       },
       showSidebar: true,
       tabs: [],
@@ -33,8 +35,9 @@ class App extends Component {
       tabCounter: 1,
       data: null,
       filteredData: null,
+      changed: true,
       loading: true,
-      changed: true
+      loadingMessage: "Fetching Data...0 Folder(s)",
     }
 
     this.setParentState = this.setParentState.bind(this);
@@ -93,7 +96,22 @@ class App extends Component {
         loading: false
       });
     }
-    Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure);
+    let updateLoader = function(message) {
+      _this.setState({
+          loadingMessage: message
+      });
+    }
+
+    Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure, updateLoader);
+  }
+
+  addLocalData = (localData) => {
+    let current = this.state.data.concat(localData);
+    this.setState({
+      data: current
+    })
+    console.log(this.state.data);
+    console.log("Local Data Added");
   }
 
   changeTabData(property, data) {
@@ -264,7 +282,7 @@ class App extends Component {
                 </div>
               :
               <div className="loader-wrapper">
-                <BeatLoader/>
+                <GridLoader/>
               </div>
               }
             </SideBar>
@@ -280,6 +298,9 @@ class App extends Component {
             {!this.state.loading ?
               !this.state.changed ? 
               <div>
+                <div>
+                  <LocalCommitAlert data={this.state.data}></LocalCommitAlert>
+                </div>
                 {
                 (this.getCurrentTab().vizType === "HeatMap")?
                 <HeatMap independentVar={this.getCurrentTab().xAxisVariable} data={this.state.filteredData} split={this.getCurrentTab().splitVariable} />
@@ -293,8 +314,13 @@ class App extends Component {
               :
               <Button color="green" onClick={this.loadViz}>Reload Vizualization</Button>
               :
-              <div className="loader-wrapper">
-                <GridLoader/>
+              <div style={{width: "100%"}}>
+                <div className="loader-wrapper">
+                  <GridLoader/>
+                </div>
+                <div className="loader-text">
+                  {this.state.loadingMessage}
+                </div>
               </div>
              }
              </div>

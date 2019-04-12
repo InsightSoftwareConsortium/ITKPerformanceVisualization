@@ -57,7 +57,7 @@ class Api {
     this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }
 
-  getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure){
+  getBenchmarkDataFromMultipleFolders(ids, onSuccess, onFailure, updateLoader){
     let _this = this;
     let count = 0;
     let data = [];
@@ -70,6 +70,7 @@ class Api {
         console.error(response);
       }
       count++;
+      updateLoader("Fetching Data..."+count+" Folder(s)")
       if(count === ids.length) {
         if (data != null && data.length > 0) onSuccess(data);
         else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))
@@ -95,7 +96,7 @@ class Api {
 
       let onBenchmarkSuccess = function(benchmarkList) {
         benchmarkList.forEach(function(object) {
-          data.push(object);
+          data = data.concat(object);
         });
         benchmarkCallback();
       }
@@ -116,9 +117,6 @@ class Api {
         else {
           let benchmarks = _this.transformer.parseMetadata(response);
           folderLength = benchmarks.length;
-          if (id === "5c7b546e8d777f072b76ae0c") {
-            console.log("here");
-          }
           for (let benchmark in benchmarks) {
             let benchmarkId = benchmarks[benchmark][_this.folderItemId];
             let benchmarkName = benchmarks[benchmark][_this.folderItemName];

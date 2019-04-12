@@ -20,7 +20,7 @@ export default class Dropdown extends Component {
     this.props.updateAttributeSelection(this.props.selection, event.target.value, this.props.getAttributeValues(event.target.value));
   }
 
-  filterButtonClicked(event){
+  filterButtonClicked(){
     this.setState({
       filterOpen: !this.state.filterOpen
     })
@@ -40,6 +40,7 @@ export default class Dropdown extends Component {
                      options={this.props.getAttributeValues(this.props.selection)} 
                      default={this.props.getAttributeSelection(this.props.selection)} 
                      updateFilterSelection={this.props.updateFilterSelection}
+                     hideChecklist={() => {this.setState({filterOpen: false})}}
           ></Checklist>
           :null
         }

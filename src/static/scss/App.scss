@@ -12,6 +12,7 @@
     transform: translateX(-$sidebarWidth + (-20vw)) rotate(0deg);  
     transition: all .75s ease;
     padding-left: $sidebarWidth + 2vw;
+    width:100%;
   }
 
   &--sidebar {
@@ -22,10 +23,19 @@
 
 .app-content-viz {
   padding: 1vh 4vw 1vh 4vw;
+  text-align: center;
 }
 
 .loader-wrapper {
-  width:7vw;
+  width:3vw;
   margin:auto;
   padding-top:30vh;
+}
+
+.loader-text {
+  margin: auto;
+  display: block;
+  margin-top: 2vh;
+  width: 20vw;
+  font-weight: bold;
 }

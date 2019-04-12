@@ -2,15 +2,13 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { isNullOrUndefined } from 'util';
 
 /**
  * Component for scatterplot visualization for a single benchmark
  * Accepted props:
  *    --dependentVar: dependent variable for plot, such as value
  *    --independentVar: independent variable for plot, such as commitHash
- *    --selectedBenchmark: benchmark to create plot for
+ *    --selectedBenchmark: optional, benchmark to create plot for
  *    --selected: optional, can specify a subset of selected instances of the 
  *                independent variable to chart (i.e. array of commitHashes).
  *                If not specified, all instances will be used
@@ -20,51 +18,67 @@ export default class ScatterPlot extends Component {
 	static defaultProps = {
     independentVar: "CommitHash",
     dependentVar: "Value",
-    selectedBenchmark: "ThreadOverheadBenchmark"
+    selectedBenchmark: "ThreadOverheadBenchmark",
   }
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
     return {    
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
-        "title": this.props.selectedBenchmark,
         "data": {"values": this.props.data},
-        "encoding": {
-            "x": {"field": this.props.independentVar, "type": "ordinal"}
-        },
-        "layer": [
+        "title": this.props.selectedBenchmark,
+          "transform": [
+              {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
+              {
+                "joinaggregate": [
+                  {"op": "median", "field": this.props.dependentVar, "as": "values"},
+                ],
+                "groupby": [this.props.independentVar]
+              }
+          ],
+          "encoding": {
+              "x": {
+                "field": this.props.independentVar, 
+                "type": "ordinal",
+                "sort": {"op": "max", "field": "CommitDate"}
+              }
+          },
+          "layer": [
             {
                 "mark": {
-                    "type": "point",
-                    "filled": "true"
+                    "type": "point"
                 },
                 "encoding": {
-                    "facet": {
-                      "field": this.props.split, 
-                      "type": "nominal", 
-                      "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
-                    },
                     "y": {
                       "field": this.props.dependentVar,
-                      "type": "quantitative",
-                      "aggregate": "mean"
+                      "type": "quantitative"
                     },
-                  "color": {"value": "black"}
+                  "color": {
+                    "value": "#6d6460"
+                  }
                 },
             },
             {
                 "mark": {
-                    "type": "errorbar",
-                    "extent": "stdev"
+                    "type": "square",
+                    "size": 50
                 },
                 "encoding": {
-                    "y": {
-                        "field": this.props.dependentVar,
-                        "type": "quantitative"
+                  "y": {
+                    "field": "values",
+                    "aggregate": "median",
+                  },
+                  "color": {
+                    "field": "values",
+                    "type": "quantitative",
+                    "scale": {"scheme": "blues"},
+                    "legend": {
+                      "title": "Median Value"
                     }
+                  }
                 }
             }
-        ]
+          ]
     };
   }
 

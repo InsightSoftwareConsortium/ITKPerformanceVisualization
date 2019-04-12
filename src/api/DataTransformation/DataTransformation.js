@@ -1,3 +1,6 @@
+import Ajv from 'ajv'
+import BenchmarkSchema from './BenchmarkSchema.json'
+
 class DataTransformation {
   constructor() {
     this.scatterPlotDataKeys = {
@@ -15,6 +18,9 @@ class DataTransformation {
     this.idKey = "_id";
     this.nameKey = "name";
     this.sizeKey = "size";
+
+    let ajv = new Ajv();
+    this.validate = ajv.compile(BenchmarkSchema);
   }
 
   parseMetadata(list) {
@@ -70,16 +76,31 @@ For others:
     "ZScore": 1.21 //you would have to compute this based on means of all of same benchmark type
 }
      */
-  parseBenchmark(benchmarkName, benchmarkJson) {
-    if (benchmarkJson == null) {
-      return null
+  parseBenchmark(benchmarkName, benchmarkJson, isLocal = false) {
+    /*if (benchmarkJson == null) {
+      return [];
+    }*/
+
+    //Validate json
+    var valid = this.validate(benchmarkJson);
+    if (!valid) {
+      console.error(
+        "Invalid benchmark JSON: " + this.validate.errors[0].message + "\n",
+        benchmarkJson,
+        this.validate.errors
+      )
+      return [];
     }
+
     //parse benchmark name
     //Name is found after second underscore in full name
     let nameIndex = benchmarkName.indexOf("_", benchmarkName.indexOf("_") + 1) + 1;
     benchmarkName = benchmarkName.slice(nameIndex).split(".")[0];
     
-    let dict = {BenchmarkName: benchmarkName};
+    let dict = {
+      _local: isLocal,
+      BenchmarkName: benchmarkName, 
+    };
     for (let key in this.scatterPlotDataKeys) {
       let val = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
       //clean entries

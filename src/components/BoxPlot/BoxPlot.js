@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { isNullOrUndefined } from 'util';
 
 /**
  * Component for boxplot visualization for all Benchmarks
@@ -13,11 +11,13 @@ import { isNullOrUndefined } from 'util';
  *    --selected: optional, can specify a subset of selected instances of the 
  *                independent variable to chart (i.e. array of commitHashes).
  *                If not specified, all instances will be used
+ *    --split: specifies how to split charts based on a particular field 
  */
 export default class BoxPlot extends Component {
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash"
+    independentVar: "CommitHash",
+    split: "BenchmarkName"
   }
   
   //generates spec for vega-lite heatmap visualization
@@ -39,7 +39,8 @@ export default class BoxPlot extends Component {
         },
         "x": {
           "field": this.props.independentVar,
-          "type": "ordinal"
+          "type": "ordinal",
+          "sort": {"op": "max", "field": "CommitDate"}
         },
         "y": {
           "field": this.props.dependentVar,

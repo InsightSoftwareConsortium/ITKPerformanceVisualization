@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 import Button from "../Button/Button";
 import "../../../src/static/scss/Checklist.css";
 
@@ -16,6 +15,20 @@ export default class Checklist extends Component {
     this.searchBoxChanged = this.searchBoxChanged.bind(this);
     this.checkAllClicked = this.checkAllClicked.bind(this);
     this.uncheckAllClicked = this.uncheckAllClicked.bind(this);
+    this.handleOutsideClick = this.handleOutsideClick.bind(this);
+  }
+
+  componentWillMount() {
+    document.addEventListener('mousedown', this.handleOutsideClick, false);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleOutsideClick, false);
+  }
+
+  handleOutsideClick(event) {
+    if(!this.node.contains(event.target)) 
+      this.props.hideChecklist();
   }
 
   searchBoxChanged(event){
@@ -56,9 +69,12 @@ export default class Checklist extends Component {
 
   render() {
     return (
-      <div class='checklist-container'>
+      <div class='checklist-container' ref={node=>this.node=node}>
+        <div onClick={this.props.hideChecklist} className="checklist-exit">X</div>
         <div id='filter-menu'>
-          <input class='search-box' placeholder={"Search " + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
+          <div className="search-box-wrapper">
+            <input class='search-box' placeholder={"Search " + this.props.type} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
+          </div>
           <div className="check-buttons-wrapper">
             <h>{this.state.selection.length + " item" + ((this.state.selection.length === 1)?"":"s") + " selected"}</h>
             <Button color="blue" onClick={this.checkAllClicked}>Check All</Button>
@@ -67,8 +83,23 @@ export default class Checklist extends Component {
         </div>
         <div id='checklist-box'>
           {this.state.searchItems.map((item) => {
-              return <div key={item} className="checklist-row"><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox" 
-                        checked={this.state.selection.includes(item)}/><label for={item}>{item}</label></div>;
+          return <div key={item} className={"checklist-row "+(this.state.selection.includes(item) ? "row-checked":"")}><input id={item} onChange={()=>this.checkBoxClicked(item)} type="checkbox" 
+                        checked={this.state.selection.includes(item)}/>
+                        <label for={item}>
+                          {this.props.type === "CommitHash" ?
+                            <div>
+                              <div style={{display:"inline-block", width: '4vw'}}>
+                              {item.substring(0,7)}
+                              </div>
+                              <div style={{display:"inline-block", marginLeft: '.1vw'}}>
+                               <a className="commit-link" target="_blank" rel="noopener noreferrer" href={"https://github.com/InsightSoftwareConsortium/ITK/commit/"+item}><i className="fas fa-external-link-alt"/></a>
+                              </div>
+                            </div> 
+                           : 
+                           item
+                           }
+                        </label>
+                  </div>;
           })}
         </div>
       </div>
@@ -80,5 +111,6 @@ Checklist.propTypes = {
   name: PropTypes.string,
   options: PropTypes.array,
   default: PropTypes.array,
-  updateFilterSelection: PropTypes.func
+  updateFilterSelection: PropTypes.func,
+  hideChecklist: PropTypes.func
 }
