@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
 import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
+import Button from "../../components/Button/Button";
 import NavBar from '../../components/NavBar/NavBar';
 import SideBar from "../../components/SideBar/SideBar";
 import ScatterPlot from "../../components/ScatterPlot/ScatterPlot.js";
@@ -24,7 +25,7 @@ class App extends Component {
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
-        right: [<UploadDataButton addLocalData={this.addLocalData}></UploadDataButton>,]
+        right: [<UploadDataButton addLocalData={this.addLocalData}><i className="fas fa-file-upload"/></UploadDataButton>, <Button color="yellow">Quick Compare &nbsp; <i className="fas fa-exchange-alt"/></Button>]
       },
       showSidebar:true,
       tabs: [
