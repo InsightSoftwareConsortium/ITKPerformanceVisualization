@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import heatmapsample from "../../static/img/heatmapsample.png";
 import boxplotsample from "../../static/img/boxplotsample.png";
 import scatterplotsample from "../../static/img/scatterplotsample.png";
+import linechartsample from "../../static/img/linechartsample.png";
 import "../../static/scss/GraphSelection.css";
 
 export default class GraphSelection extends Component {
@@ -14,6 +15,8 @@ export default class GraphSelection extends Component {
       image = boxplotsample;
     else if(this.props.vizType === "ScatterPlot")
       image = scatterplotsample
+    else if(this.props.vizType === "LineChart")
+      image = linechartsample;
     else
       image = null;
     return (
@@ -27,6 +30,6 @@ export default class GraphSelection extends Component {
 
 GraphSelection.propTypes = {
   selected: PropTypes.bool,
-  vizType:  PropTypes.oneOf(['HeatMap','ScatterPlot','BoxPlot']),
+  vizType:  PropTypes.oneOf(['HeatMap','ScatterPlot','BoxPlot','LineChart']),
   changeVizType: PropTypes.func
 }

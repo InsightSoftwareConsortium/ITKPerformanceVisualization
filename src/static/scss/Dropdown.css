@@ -1,13 +1,6 @@
 .dropdown-container {
-  margin-left: 2vh;
+  margin-left: 1vh;
   margin-top: 0.5vh;
-}
-
-.dropdown-label {
-  cursor: default;
-  font-size: 1vw;
-  margin-bottom: 0.5vh;
-  margin-left: 1vw;
 }
 
 .dropdown-box {
@@ -15,7 +8,8 @@
   margin-left: 1vh;
   font-size: 0.9vw;
   overflow: auto;
-  padding: 1vh 1vw 1vh 1vw;
+  width: 9vw;
+  padding: 0.7vh 0.7vw 0.7vh 0.7vw;
   border: 0.1vh solid gainsboro;
   border-bottom: 0.5vh solid gainsboro;
   background-color: white;
@@ -26,7 +20,7 @@
 
 .filter-button {
   font-size: 1vw;
-  padding: 1vh 0.8vw 1vh 0.8vw;
+  padding: 0.7vh 0.55vw 0.7vh 0.55vw;
   border: 0.1vh solid gainsboro;
   border-bottom: 0.5vh solid gainsboro;
   background-color: white;
