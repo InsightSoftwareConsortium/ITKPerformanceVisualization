@@ -68,7 +68,7 @@ class App extends Component {
     let onSuccess = function(folders) {
       let folderIds = [];
       /* Folder Selection here */
-      folders = folders.slice(folders.length - 6, folders.length - 1);
+      folders = folders.slice(folders.length - 3, folders.length - 1);
       for (let folder in folders) {
         folderIds.push(folders[folder]["_id"]);
       }
@@ -265,7 +265,9 @@ class App extends Component {
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
               {!this.state.loading ?
               <div style={{marginTop: "4vh"}}>
-                <table style={{marginTop:'4vh'}}>
+                <h className="box-title">Graph Type</h>
+                <div className="graph-selection-box">
+                <table style={{marginLeft: "1vw"}}>
                   <tbody>
                     <tr>
                       <td>
@@ -285,8 +287,12 @@ class App extends Component {
                     </tr>
                   </tbody>
                 </table>
-                <h style={{fontSize: "1vw", marginLeft: "2vw"}}>Split graphs by</h>
-                <Dropdown options={this.getDataAttributes()} 
+                </div>
+                <h className="box-title">Parameters</h>
+                <div className="graph-selection-box">
+                <div style={{display: "inline-flex"}}>
+                <h style={{fontSize: "1vw", marginLeft: "0vw"}}>Split</h>
+                <Dropdown options={this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().splitVariable)} 
                           selection={this.getCurrentTab().splitVariable} 
                           getAttributeValues={this.getAttributeValues} 
                           getAttributeSelection={this.getAttributeSelection} 
@@ -294,9 +300,10 @@ class App extends Component {
                           updateFilterSelection={this.updateFilterSelection}
                           filterExists={this.filterExists}
                 ></Dropdown>
-                <h style={{fontSize: "1vw", marginLeft: "2vw", marginTop: "1vh"}}>Graph {this.getCurrentTab().valuesOnYAxis?"X":"Y"}-axis as</h>
+                </div>
                 <div style={{display: "inline-flex"}}>
-                <Dropdown options={this.getDataAttributes()} 
+                <h style={{fontSize: "1vw", marginLeft: "0vw"}}>{this.getCurrentTab().valuesOnYAxis?"X":"Y"}-axis</h>
+                <Dropdown options={this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().xAxisVariable)} 
                           selection={this.getCurrentTab().xAxisVariable} 
                           getAttributeValues={this.getAttributeValues} 
                           getAttributeSelection={this.getAttributeSelection} 
@@ -304,8 +311,11 @@ class App extends Component {
                           updateFilterSelection={this.updateFilterSelection}
                           filterExists={this.filterExists}
                 ></Dropdown>
+                </div>
                 <Button color="blue" onClick={this.flipAxes}> Flip Axes </Button>
                 </div>
+                <h className="box-title">Filters</h>
+                <div className="filter-selection-box">
                 <FilterBox filters={this.getCurrentTab().filters}
                            options={this.getDataAttributes()}
                            exclude={[this.getCurrentTab().xAxisVariable, this.getCurrentTab().splitVariable]}
@@ -316,6 +326,7 @@ class App extends Component {
                            deleteFilterSelection={this.deleteFilterSelection}
                            filterExists={this.filterExists}
                  ></FilterBox>
+                 </div>
                 </div>
               :
               <div className="loader-wrapper">

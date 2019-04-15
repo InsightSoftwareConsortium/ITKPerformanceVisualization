@@ -1,13 +1,7 @@
-.filterbox-container {
-    border: .1vh solid gainsboro;
-    border-radius: .5vh;
-    margin-bottom: 3vh;
-    margin-left: 3vh;
-    margin-top: 1vh;
-    padding-top: 1vh;
+.filter-box-container {
     overflow-y: scroll;
-    width: 16.5vw;
-    height: 24vh;
+    margin-top: 0;
+    height: 18vh;
 }
 
 .filterbox-item {
@@ -31,28 +25,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    font-size: 2vw;
+    font-size: 1vw;
     padding-bottom: 1.5vh;
     color: white;
     font-weight: bold;
 
-    &:hover {
+    /*&:hover {
       &::after {
           content: "-";
       }
-    }
+    }*/
 }
 
 
 .add-filter-button {
-    display: inline-flex;
-    float: right;
-    margin-right: 2vw;
-    margin-bottom: 0.5vh;
+    position: absolute;
+    margin-left: 14.4vw;
+    margin-top: -3vh;
+    border-radius: 100%;
+    padding: 0vh 0vh 0.15vh 0vh;
+    width: 3vh;
+    height: 3vh;
 }
 
 .no-filters-msg {
     font-size: 2vh;
-    text-align: center;
     margin-top: 1vh;
+    margin-left: 4vw;
 }

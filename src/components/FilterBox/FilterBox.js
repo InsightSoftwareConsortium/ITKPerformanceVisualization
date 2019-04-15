@@ -7,24 +7,30 @@ import "../../../src/static/scss/FilterBox.css";
 export default class FilterBox extends Component {
     constructor(props){
         super(props);
+        this.state = {filterAdded: false};
         this.addButtonClicked = this.addButtonClicked.bind(this);
     }
 
   addButtonClicked(event){
     let selection = this.props.options.find((item) => {return !Object.keys(this.props.filters).includes(item)});
     this.props.filters[selection] = null;
+    this.setState({filterAdded: true});
     this.forceUpdate();
+  }
+
+  componentDidUpdate(){
+    if (this.state.filterAdded){
+      let scrollBox = document.getElementsByClassName("filter-box-container")[0];
+      scrollBox.scrollTop = scrollBox.scrollHeight;
+      this.setState({filterAdded: false});
+    }
   }
   
   render() {
     console.log(Object.keys(this.props.filters).filter((item) => !this.props.exclude.includes(item)));
     return (
-      <div style={{marginTop: '2vh', marginBottom: '5vh'}}>
-        <div>
-          <h className="filterbox-label">Filters</h>
-          <Button color='green' className="add-filter-button" onClick={this.addButtonClicked}> Add Filter </Button>
-        </div>
-        <div className='filterbox-container'>
+        <div className="filter-box-container">
+          <Button color='green' className="add-filter-button" onClick={this.addButtonClicked}> + </Button>
           {Object.keys(this.props.filters).filter((item) => !this.props.exclude.includes(item)).length === 0 ? 
             <div className="no-filters-msg">No Filters Applied</div>
             :
@@ -46,7 +52,6 @@ export default class FilterBox extends Component {
             </div>
           }
         </div>
-      </div>
     )
   }
 }

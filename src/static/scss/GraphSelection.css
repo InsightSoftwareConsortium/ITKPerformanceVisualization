@@ -1,60 +1,60 @@
 .HeatMapSelection {
   cursor: pointer;
-  margin: 1vh 0vh 1vh 2vh;
+  margin: 0vh 0vh 0.5vh 1vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
-  width: 8vw;
-  height: 8vw;
+  width: 6vw;
+  height: 6vw;
   background-color: white;
-  font-size: 1.11vw;
+  font-size: 0.9vw;
   font-weight: bold;
 }
 
 .ScatterPlotSelection {
   cursor: pointer;
-  margin: 1vh 0vh 1vh 2vh;
+  margin: 0vh 0vh 0.5vh 1vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
-  width: 8vw;
-  height: 8vw;
+  width: 6vw;
+  height: 6vw;
   background-color: white;
-  font-size: 1.11vw;
+  font-size: 0.9vw;
   font-weight: bold;
 }
 
 .SingleBoxplotSelection {
   cursor: pointer;
-  margin: 1vh 0vh 1vh 2vh;
+  margin: 0vh 0vh 0.5vh 1vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
-  width: 8vw;
-  height: 8vw;
+  width: 6vw;
+  height: 6vw;
   background-color: white;
-  font-size: 1.11vw;
+  font-size: 0.9vw;
   font-weight: bold;
 }
 
 .BoxPlotSelection {
   cursor: pointer;
-  margin: 1vh 0vh 1vh 2vh;
+  margin: 0vh 0vh 0.5vh 1vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
-  width: 8vw;
-  height: 8vw;
+  width: 6vw;
+  height: 6vw;
   background-color: white;
-  font-size: 1.11vw;
+  font-size: 0.9vw;
   font-weight: bold;
 }
 
 .LineChartSelection {
   cursor: pointer;
-  margin: 1vh 0vh 1vh 2vh;
+  margin: 0vh 0vh 0.5vh 1vh;
   border: 0.2vh solid gainsboro;
   border-radius: 0.5vh;
-  width: 8vw;
-  height: 8vw;
+  width: 6vw;
+  height: 6vw;
   background-color: white;
-  font-size: 1.11vw;
+  font-size: 0.9vw;
   font-weight: bold;
 }
 
@@ -64,7 +64,7 @@
 
 .selection-image {
   margin-top: 1.5vh;
-  width: 4vw;
+  width: 3vw;
 }
 
 /*# sourceMappingURL=GraphSelection.css.map */

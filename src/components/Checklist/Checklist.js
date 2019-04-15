@@ -26,6 +26,10 @@ export default class Checklist extends Component {
     document.removeEventListener('mousedown', this.handleOutsideClick, false);
   }
 
+  componentDidMount() {
+    document.getElementById("filter-search-box").focus(); 
+  }
+
   handleOutsideClick(event) {
     if(!this.node.contains(event.target)) 
       this.props.hideChecklist();
@@ -73,12 +77,14 @@ export default class Checklist extends Component {
         <div onClick={this.props.hideChecklist} className="checklist-exit">X</div>
         <div id='filter-menu'>
           <div className="search-box-wrapper">
-            <input class='search-box' placeholder={"Search " + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
+            <input id="filter-search-box" class='search-box' placeholder={"Search " + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
           </div>
           <div className="check-buttons-wrapper">
             <h>{this.state.selection.length + " item" + ((this.state.selection.length === 1)?"":"s") + " selected"}</h>
-            <Button color="blue" onClick={this.checkAllClicked}>Check All</Button>
-            <Button color="red" onClick={this.uncheckAllClicked}>Uncheck All</Button>
+            <div style={{float: "right"}}>
+              <Button color="blue" onClick={this.checkAllClicked}> Check All </Button>
+              <Button color="red" onClick={this.uncheckAllClicked}> Uncheck All </Button>
+            </div>
           </div>
         </div>
         <div id='checklist-box'>

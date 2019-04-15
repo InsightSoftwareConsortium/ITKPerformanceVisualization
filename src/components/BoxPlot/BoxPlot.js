@@ -34,7 +34,7 @@ export default class BoxPlot extends Component {
         "type": "boxplot",
         "extent": "min-max"
       },
-      "columns": 5,
+      "columns": 4,
       "encoding": {
         "facet": {
           "field": this.props.split, 

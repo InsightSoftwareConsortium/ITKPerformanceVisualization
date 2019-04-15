@@ -32,8 +32,9 @@ export default class LineChart extends Component {
         "data": {"values": this.props.data},
         "mark": {
           "type": "line",
-          "interpolate": "step-after"
+          "interpolate": "monotone" //"step-after"
         },
+        "columns": 4,
         "encoding": {
           "facet": {
             "field": this.props.split, 
@@ -49,6 +50,10 @@ export default class LineChart extends Component {
             "field": this.props.dependentVar,
             "aggregate": "mean"
           }
+        },
+        "resolve": {
+          "axis": {[v1]: "independent", [v2]: "independent"},
+          "scale": {[v2]: "independent"}
         }
       };
   }

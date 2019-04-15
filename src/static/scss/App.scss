@@ -67,3 +67,32 @@
     transform: rotate(135deg);
   }
 }
+
+.graph-selection-box {
+  border: .1vh solid gainsboro;
+  border-radius: .5vh;
+  margin-bottom: 2vh;
+  margin-left: 3vh;
+  margin-top: -0.9vh;
+  padding-top: 1.5vh;
+  overflow-y: scroll;
+  width: 16.5vw;
+  height: 26vh;
+}
+
+.filter-selection-box {
+  border: .1vh solid gainsboro;
+  border-radius: .5vh;
+  margin-bottom: 2vh;
+  margin-left: 3vh;
+  margin-top: -0.9vh;
+  padding-top: 1.5vh;
+  scroll-margin-top: 1.5vh;
+  width: 16.5vw;
+  height: 19vh;
+}
+
+.box-title {
+  margin-left: 4.2vh;
+  background-color: whitesmoke;
+}
