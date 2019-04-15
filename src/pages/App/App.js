@@ -259,6 +259,11 @@ class App extends Component {
           <NavBar items={this.state.navbarItems}/>
           {this.state.quickComparePopup &&
             <div className="quick-compare-popup" ref={node=>this.node=node}>
+              <div className="quick-compare-input-wrapper">
+                <input type="text" placeholder="Commit Hash 1" className="quick-compare-input"/>
+                <input type="text" placeholder="Commit Hash 2" className="quick-compare-input"/>
+              </div>
+              <Button color="green" className="quick-compare-button">Submit  <i className="fas fa-exchange-alt"/></Button>
             </div>
             }
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>

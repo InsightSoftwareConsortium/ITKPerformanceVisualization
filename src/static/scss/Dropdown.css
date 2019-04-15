@@ -13,12 +13,12 @@
 .dropdown-box {
   cursor: pointer;
   margin-left: 1vh;
-  font-size: 0.9vw;
   overflow: auto;
   padding: 1vh 1vw 1vh 1vw;
   border: 0.1vh solid gainsboro;
   border-bottom: 0.5vh solid gainsboro;
   background-color: white;
+  font-size: 0.9vw;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
