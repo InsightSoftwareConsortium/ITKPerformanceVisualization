@@ -59,6 +59,7 @@ class App extends Component {
     this.deleteFilterSelection = this.deleteFilterSelection.bind(this);
     this.filterExists = this.filterExists.bind(this);
     this.flipAxes = this.flipAxes.bind(this);
+    this.updateSelectedBenchmark = this.updateSelectedBenchmark.bind(this);
 
     this.handleTabAdd("Default");
   }
@@ -68,7 +69,7 @@ class App extends Component {
     let onSuccess = function(folders) {
       let folderIds = [];
       /* Folder Selection here */
-      folders = folders.slice(folders.length - 3, folders.length - 1);
+      folders = folders.slice(folders.length - 6, folders.length - 1);
       for (let folder in folders) {
         folderIds.push(folders[folder]["_id"]);
       }
@@ -160,7 +161,15 @@ class App extends Component {
   }
 
   handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", splitVariable:"OSName", xAxisVariable:"CommitDate", yAxisVariable:"Value", filters:{}, valuesOnYAxis: true})
+    this.state.tabs.push({name: tabName, 
+                          vizType:"BoxPlot", 
+                          splitVariable:"", 
+                          xAxisVariable:"CommitDate", 
+                          yAxisVariable:"Value", 
+                          colorVariable:"", 
+                          selectedBenchmark:"BinaryAddBenchmark", 
+                          filters:{}, 
+                          valuesOnYAxis: true})
     this.setState({
       tabs: this.state.tabs,
       tabCounter: this.state.tabCounter + 1,
@@ -233,7 +242,8 @@ class App extends Component {
   }
 
   updateFilterSelection(attr, selection){
-    this.getCurrentTab().filters[attr] = selection;
+    if (attr !== "")
+      this.getCurrentTab().filters[attr] = selection;
     this.setState({changed: true});
   }
 
@@ -251,7 +261,16 @@ class App extends Component {
     Object.keys(this.getCurrentTab().filters).forEach((filter) => {
       filteredData = filteredData.filter((elem) => this.getCurrentTab().filters[filter].includes(elem[filter].toString()));
     });
+    if (this.getCurrentTab().xAxisVariable !== "BenchmarkName" && 
+        this.getCurrentTab().splitVariable !== "BenchmarkName" && 
+        !(this.getCurrentTab().vizType === "HeatMap" && this.getCurrentTab().yAxisVariable === "BenchmarkName") &&
+        !(this.getCurrentTab().vizType !== "HeatMap" && this.getCurrentTab().colorVariable === "BenchmarkName"))
+      filteredData = filteredData.filter((elem) => this.getCurrentTab().selectedBenchmark === elem["BenchmarkName"]);
     return filteredData;
+  }
+
+  updateSelectedBenchmark(event){
+    this.changeTabData("selectedBenchmark", event.target.value);
   }
 
   render() {
@@ -290,9 +309,9 @@ class App extends Component {
                 </div>
                 <h className="box-title">Parameters</h>
                 <div className="graph-selection-box">
-                <div style={{display: "inline-flex"}}>
-                <h style={{fontSize: "1vw", marginLeft: "0vw"}}>Split</h>
-                <Dropdown options={this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().splitVariable)} 
+                <div className="param-container">
+                <h className="param-label">Split</h>
+                <Dropdown options={[""].concat(this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().splitVariable))} 
                           selection={this.getCurrentTab().splitVariable} 
                           getAttributeValues={this.getAttributeValues} 
                           getAttributeSelection={this.getAttributeSelection} 
@@ -301,8 +320,33 @@ class App extends Component {
                           filterExists={this.filterExists}
                 ></Dropdown>
                 </div>
-                <div style={{display: "inline-flex"}}>
-                <h style={{fontSize: "1vw", marginLeft: "0vw"}}>{this.getCurrentTab().valuesOnYAxis?"X":"Y"}-axis</h>
+                {(this.getCurrentTab().vizType !== "HeatMap")?
+                <div className="param-container">
+                <h className="param-label">Color</h>
+                <Dropdown options={[""].concat(this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().colorVariable))} 
+                          selection={this.getCurrentTab().colorVariable} 
+                          getAttributeValues={this.getAttributeValues} 
+                          getAttributeSelection={this.getAttributeSelection} 
+                          updateAttributeSelection={(oldAttr, attr, selection) => {this.changeTabData("colorVariable", attr); this.updateAttributeSelection(oldAttr, attr, selection);}}
+                          updateFilterSelection={this.updateFilterSelection}
+                          filterExists={this.filterExists}
+                ></Dropdown>
+                </div>
+                :
+                <div className="param-container">
+                <h className="param-label">{this.getCurrentTab().valuesOnYAxis?"Y":"X"}-axis</h>
+                <Dropdown options={this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().yAxisVariable)} 
+                          selection={this.getCurrentTab().yAxisVariable} 
+                          getAttributeValues={this.getAttributeValues} 
+                          getAttributeSelection={this.getAttributeSelection} 
+                          updateAttributeSelection={(oldAttr, attr, selection) => {this.changeTabData("yAxisVariable", attr); this.updateAttributeSelection(oldAttr, attr, selection);}}
+                          updateFilterSelection={this.updateFilterSelection}
+                          filterExists={this.filterExists}
+                ></Dropdown>
+                </div>
+                }
+                <div className="param-container">
+                <h className="param-label">{this.getCurrentTab().valuesOnYAxis?"X":"Y"}-axis</h>
                 <Dropdown options={this.getDataAttributes().filter((option) => !Object.keys(this.getCurrentTab().filters).includes(option) || option === this.getCurrentTab().xAxisVariable)} 
                           selection={this.getCurrentTab().xAxisVariable} 
                           getAttributeValues={this.getAttributeValues} 
@@ -312,13 +356,25 @@ class App extends Component {
                           filterExists={this.filterExists}
                 ></Dropdown>
                 </div>
-                <Button color="blue" onClick={this.flipAxes}> Flip Axes </Button>
+                {(this.getCurrentTab().xAxisVariable !== "BenchmarkName" && this.getCurrentTab().splitVariable !== "BenchmarkName" && this.getCurrentTab().extraVariable !== "BenchmarkName")?
+                  <div className="param-container">
+                  <h className="benchmark-param-label">Benchmark</h>
+                  <select className="benchmark-selector" onChange={this.updateSelectedBenchmark}>
+                    {this.getAttributeValues("BenchmarkName").map((item) => {
+                      return <option key={item} value={item} selected={item === this.getCurrentTab().selectedBenchmark}>{item.split("Benchmark")[0]}</option>
+                    })}
+                  </select>
+                  </div>
+                  :
+                  null
+                }
+                <Button className="flip-axes-button" color="blue" onClick={this.flipAxes}> Flip Axes </Button>
                 </div>
                 <h className="box-title">Filters</h>
                 <div className="filter-selection-box">
                 <FilterBox filters={this.getCurrentTab().filters}
                            options={this.getDataAttributes()}
-                           exclude={[this.getCurrentTab().xAxisVariable, this.getCurrentTab().splitVariable]}
+                           exclude={[this.getCurrentTab().xAxisVariable, this.getCurrentTab().yAxisVariable, this.getCurrentTab().splitVariable, this.getCurrentTab().colorVariable]}
                            getAttributeValues={this.getAttributeValues} 
                            getAttributeSelection={this.getAttributeSelection} 
                            updateAttributeSelection={this.updateAttributeSelection}
@@ -360,17 +416,21 @@ class App extends Component {
                 <ScatterPlot independentVar={this.getCurrentTab().xAxisVariable} 
                              data={this.state.filteredData} 
                              split={this.getCurrentTab().splitVariable}
+                             selectedBenchmark={this.getCurrentTab().selectedBenchmark}
                              valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
                 :(this.getCurrentTab().vizType === "BoxPlot")?
                 <BoxPlot independentVar={this.getCurrentTab().xAxisVariable} 
                          data={this.state.filteredData} 
                          split={this.getCurrentTab().splitVariable}
-                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
+                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis}
+                         selectedBenchmark={this.getCurrentTab().selectedBenchmark} />
                 :(this.getCurrentTab().vizType === "LineChart")?
                 <LineChart independentVar={this.getCurrentTab().xAxisVariable}
                            data={this.state.filteredData}
                            split={this.getCurrentTab().splitVariable}
-                           valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
+                           selectedBenchmark={this.getCurrentTab().selectedBenchmark}
+                           valuesOnYAxis={this.getCurrentTab().valuesOnYAxis}
+                           color={this.getCurrentTab().colorVariable} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>

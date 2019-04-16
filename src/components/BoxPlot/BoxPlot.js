@@ -17,14 +17,22 @@ export default class BoxPlot extends Component {
   static defaultProps = {
     dependentVar: "Value",
     independentVar: "CommitHash",
-    split: "BenchmarkName",
-    valuesOnYAxis: true
+    color: "",
+    split: "",
+    valuesOnYAxis: true,
+    selectedBenchmark: "BinaryAddBenchmark"
   }
   
   //generates spec for vega-lite heatmap visualization
   _spec() {
     let v1 = this.props.valuesOnYAxis?"x":"y",
         v2 = this.props.valuesOnYAxis?"y":"x";
+
+    let resolveOption = (this.props.split !== "")?
+        {
+          "axis": {[v1]: "independent", [v2]: "independent"},
+          "scale": {[v2]: "independent"}
+        }:{};
 
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
@@ -51,10 +59,7 @@ export default class BoxPlot extends Component {
           "type": "quantitative",
         }
       },
-      "resolve": {
-        "axis": {[v1]: "independent", [v2]: "independent"},
-        "scale": {[v2]: "independent"}
-      }
+      "resolve": resolveOption
     };
   }
 
@@ -83,5 +88,6 @@ BoxPlot.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string,
-  valuesOnYAxis: PropTypes.bool
+  valuesOnYAxis: PropTypes.bool,
+  selectedBenchmark: PropTypes.string
 }

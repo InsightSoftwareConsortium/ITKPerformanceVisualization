@@ -17,7 +17,9 @@ export default class LineChart extends Component {
   static defaultProps = {
     dependentVar: "Value",
     independentVar: "CommitHash",
-    split: "BenchmarkName",
+    split: "",
+    color: "",
+    selectedBenchmark: "BinaryAddBenchmark",
     valuesOnYAxis: true
   }
   
@@ -28,7 +30,6 @@ export default class LineChart extends Component {
 
     return {
         "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
-        "description": "Google's stock price over time.",
         "data": {"values": this.props.data},
         "mark": {
           "type": "line",
@@ -48,7 +49,11 @@ export default class LineChart extends Component {
           },
           [v2]: {
             "field": this.props.dependentVar,
-            "aggregate": "mean"
+            "aggregate": "median"
+          },
+          "color": {
+            "field": this.props.color,
+            "type": "nominal"
           }
         },
         "resolve": {
@@ -83,5 +88,6 @@ LineChart.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string,
-  valuesOnYAxis: PropTypes.bool
+  valuesOnYAxis: PropTypes.bool,
+  selectedBenchmark: PropTypes.string
 }

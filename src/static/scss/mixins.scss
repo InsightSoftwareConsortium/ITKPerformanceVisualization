@@ -27,10 +27,10 @@ $buttonBorderBottom: .2vh;
 
 @mixin graph-selection($bgcolor) {
     cursor: pointer;
-    margin: 0vh 0vh 0.5vh 1vh;
+    margin: 0vh 1.4vh 0.5vh -0.5vh;
     border: 0.2vh solid gainsboro;
     border-radius: 0.5vh;
-    width: 0.3 * $sidebarWidth;
+    width: 0.35 * $sidebarWidth;
     height: 0.3 * $sidebarWidth;
     background-color: white;
     font-size: 0.9vw;

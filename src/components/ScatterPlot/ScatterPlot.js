@@ -18,7 +18,7 @@ export default class ScatterPlot extends Component {
 	static defaultProps = {
     independentVar: "CommitHash",
     dependentVar: "Value",
-    selectedBenchmark: "ThreadOverheadBenchmark",
+    selectedBenchmark: "BinaryAddBenchmark",
     valuesOnYAxis: true
   }
 
@@ -32,7 +32,6 @@ export default class ScatterPlot extends Component {
         "data": {"values": this.props.data},
         "title": this.props.selectedBenchmark,
           "transform": [
-              {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
               {
                 "joinaggregate": [
                   {"op": "median", "field": this.props.dependentVar, "as": "values"},

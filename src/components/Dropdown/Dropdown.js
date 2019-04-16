@@ -21,9 +21,11 @@ export default class Dropdown extends Component {
   }
 
   filterButtonClicked(){
-    this.setState({
-      filterOpen: !this.state.filterOpen
-    })
+    if (this.props.selection !== "" && !this.state.filterOpen){
+      this.setState({
+        filterOpen: !this.state.filterOpen
+      });
+    }
   }
   
   render() {
@@ -31,7 +33,7 @@ export default class Dropdown extends Component {
       <div className='dropdown-container' style={this.props.style}>
         <select className='dropdown-box' onChange={this.selectionChanged}>
           {this.props.options.map((item) => {
-              return <option key={item} value={item} selected={item === this.props.selection}>{item}</option>
+              return <option key={item} value={item} selected={item === this.props.selection}>{(item === "")?"None":item}</option>
           })}
         </select>
         <button className='filter-button' onClick={this.filterButtonClicked}><i className="fas fa-sort-amount-down "></i></button>

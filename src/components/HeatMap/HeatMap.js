@@ -19,7 +19,8 @@ export default class HeatMap extends Component {
   static defaultProps = {
     dependentVar: "Value",
     independentVar: "CommitHash",
-    valuesOnYAxis: true
+    valuesOnYAxis: true,
+    selectedBenchmark: "BinaryAddBenchmark"
   }
 
   //generates spec for vega-lite heatmap visualization
@@ -64,8 +65,7 @@ export default class HeatMap extends Component {
       "mark": "rect",
         "encoding": {
           "facet": {
-            "field": "",
-            //"field": isNullOrUndefined(this.props.BenchmarkName) ? "" : this.props.split, 
+            "field": this.props.split, 
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
@@ -127,5 +127,6 @@ HeatMap.propTypes = {
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
-  valuesOnYAxis: PropTypes.bool
+  valuesOnYAxis: PropTypes.bool,
+  selectedBenchmark: PropTypes.string
 }

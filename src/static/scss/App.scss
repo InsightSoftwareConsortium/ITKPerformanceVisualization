@@ -75,9 +75,15 @@
   margin-left: 3vh;
   margin-top: -0.9vh;
   padding-top: 1.5vh;
+  overflow-x: hidden;
   overflow-y: scroll;
   width: 16.5vw;
   height: 26vh;
+}
+
+.param-container {
+  display: inline-flex;
+  margin-bottom: 0.3vh;
 }
 
 .filter-selection-box {
@@ -95,4 +101,40 @@
 .box-title {
   margin-left: 4.2vh;
   background-color: whitesmoke;
+}
+
+.param-label {
+  margin-left: 1.2vw;
+  font-size: 0.9vw;
+  margin-top: 1.7vh;
+  width: 2vw;
+}
+
+.benchmark-param-label {
+  margin-left: 1.2vw;
+  font-size: 0.9vw;
+  margin-top: 1.7vh;
+  width: 4.75vw;
+}
+
+.flip-axes-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 0.5vh;
+}
+
+.benchmark-selector {
+  cursor: pointer;
+  margin-top: 0.5vh;
+  margin-left: 1vh;
+  font-size: 0.7vw;
+  overflow: auto;
+  width: 9vw;
+  padding: 1.1vh 0.7vw 0.9vh 0.7vw;
+  border:.1vh solid gainsboro;
+  border-bottom: .5vh solid gainsboro;
+  background-color: white;
+  -webkit-appearance: none; 
+  -moz-appearance: none;
+  appearance: none;
 }
