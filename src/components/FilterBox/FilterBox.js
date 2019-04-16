@@ -19,7 +19,10 @@ export default class FilterBox extends Component {
   render() {
     return (
       <div style={{marginTop: '2vh', marginBottom: '5vh'}}>
-        <h style={{fontSize: "1vw", marginLeft: "2vw"}}>Filters</h>
+        <div>
+          <h className="filterbox-label">Filters</h>
+          <Button color='green' className="add-filter-button" onClick={this.addButtonClicked}> Add Filter </Button>
+        </div>
         <div className='filterbox-container'>
           {Object.keys(this.props.filters).filter((item) => !this.props.exclude.includes(item)).length === 0 ? 
             <div className="no-filters-msg">No Filters Applied</div>
@@ -42,7 +45,6 @@ export default class FilterBox extends Component {
             </div>
           }
         </div>
-        <Button color='green' className="add-filter-button" onClick={this.addButtonClicked}> Add Filter </Button>
       </div>
     )
   }

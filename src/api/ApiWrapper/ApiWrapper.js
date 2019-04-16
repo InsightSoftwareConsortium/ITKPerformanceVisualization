@@ -70,7 +70,7 @@ class Api {
         console.error(response);
       }
       count++;
-      updateLoader("Fetching Data..."+count+" Folder(s)")
+      updateLoader("Fetching Data... "+count+" Folder(s)")
       if(count === ids.length) {
         if (data != null && data.length > 0) onSuccess(data);
         else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))

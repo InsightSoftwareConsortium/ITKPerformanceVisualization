@@ -18,11 +18,15 @@ export default class HeatMap extends Component {
 
   static defaultProps = {
     dependentVar: "Value",
-    independentVar: "CommitHash"
+    independentVar: "CommitHash",
+    valuesOnYAxis: true
   }
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
+    let v1 = this.props.valuesOnYAxis?"x":"y",
+        v2 = this.props.valuesOnYAxis?"y":"x";
+
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
       "title": "Normalized runtimes",
@@ -65,16 +69,16 @@ export default class HeatMap extends Component {
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
-          "y": {
+          [v1]: {
+            "field": this.props.independentVar, 
+            "type": "ordinal",
+            "sort": {"op": "max", "field": "CommitDate"}
+          },
+          [v2]: {
             "field": "BenchmarkName", 
             "type": "nominal", 
             "axis": {"title": "Benchmark"},
             "sort": {"field": "meanBenchmarkValue", "order": "descending"}
-          },
-          "x": {
-            "field": this.props.independentVar, 
-            "type": "ordinal",
-            "sort": {"op": "max", "field": "CommitDate"}
           },
           "color": {
               "condition": {
@@ -122,5 +126,6 @@ HeatMap.propTypes = {
   dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"])
+                  "CommitHash"]),
+  valuesOnYAxis: PropTypes.bool
 }

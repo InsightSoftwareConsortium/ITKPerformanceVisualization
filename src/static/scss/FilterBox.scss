@@ -1,12 +1,28 @@
 .filterbox-container {
+    border: .1vh solid gainsboro;
+    border-radius: .5vh;
     margin-bottom: 3vh;
+    margin-left: 3vh;
+    margin-top: 1vh;
+    padding-top: 1vh;
     overflow-y: scroll;
-    height: 12vh;
+    width: 16.5vw;
+    height: 24vh;
+}
+
+.filterbox-item {
+    display: inline-flex;
+}
+
+.filterbox-label {
+    margin-left: 2vw;
+    font-size: 1vw;
 }
 
 .circle-filter-button {
-    margin-top: 1.3vh;
-    float:right;
+    margin-left: 0.8vw;
+    margin-right: 0;
+    margin-top: 1vh;
     text-align: center;
     width: 1.5vw;
     height: 1.5vw;
@@ -29,8 +45,10 @@
 
 
 .add-filter-button {
-    display: block;
-    margin: auto;
+    display: inline-flex;
+    float: right;
+    margin-right: 2vw;
+    margin-bottom: 0.5vh;
 }
 
 .no-filters-msg {

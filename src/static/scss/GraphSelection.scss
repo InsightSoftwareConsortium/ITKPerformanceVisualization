@@ -16,6 +16,10 @@
     @include graph-selection(#FFFF00)
 }
 
+.LineChartSelection {
+    @include graph-selection(#FFFFFF)
+}
+
 .selected {
     background-color: gainsboro !important;
 }

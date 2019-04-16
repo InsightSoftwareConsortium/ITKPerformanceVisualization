@@ -1,15 +1,8 @@
 @import 'mixins.scss';
 
 .dropdown-container {
-    margin-left: 2vh;
+    margin-left: 1vh;
     margin-top: 0.5vh;
-}
-
-.dropdown-label {
-    cursor: default;
-    font-size: 1vw;
-    margin-bottom: 0.5vh;
-    margin-left: 1vw;
 }
 
 .dropdown-box {
@@ -22,7 +15,7 @@
 
 .filter-button {
     font-size: 1vw;
-    padding: 1vh .8vw 1vh .8vw;
+    padding: .7vh .55vw .7vh .55vw;
     border:.1vh solid gainsboro;
     border-bottom: .5vh solid gainsboro;
     background-color: white;
