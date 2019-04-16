@@ -10,11 +10,14 @@ export default class Dropdown extends Component {
         filterOpen: false
       }
 
-      if (!this.props.filterExists(this.props.selection))
-        this.props.updateFilterSelection(this.props.selection, this.props.getAttributeValues(this.props.selection));
       this.selectionChanged = this.selectionChanged.bind(this);
       this.filterButtonClicked = this.filterButtonClicked.bind(this);
     }
+  
+  componentDidUpdate() {
+    if (this.props.selection !== "" && !this.props.filterExists(this.props.selection))
+      this.props.updateFilterSelection(this.props.selection, this.props.getAttributeValues(this.props.selection));
+  }
   
   selectionChanged(event){
     this.props.updateAttributeSelection(this.props.selection, event.target.value, this.props.getAttributeValues(event.target.value));
@@ -31,7 +34,7 @@ export default class Dropdown extends Component {
   render() {
     return (
       <div className='dropdown-container' style={this.props.style}>
-        <select className='dropdown-box' onChange={this.selectionChanged}>
+        <select className='dropdown-box' value={this.props.selection} onChange={this.selectionChanged}>
           {this.props.options.map((item) => {
               return <option key={item} value={item} selected={item === this.props.selection}>{(item === "")?"None":item}</option>
           })}

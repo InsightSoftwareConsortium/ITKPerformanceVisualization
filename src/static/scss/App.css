@@ -37,11 +37,11 @@
 }
 
 .quick-compare-popup {
-  right: 1vw;
+  right: 6vw;
   z-index: 1001;
   position: fixed;
-  width: 20vw;
-  height: 30vh;
+  width: 15vw;
+  height: 20vh;
   padding: 2vh 2vw 2vh 2vw;
   border-radius: 1%;
   border: 0.1vw solid gainsboro;
@@ -131,6 +131,32 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+.quick-compare-input {
+  padding: 0.82vh 0.7vw 0.6vh 0.7vw;
+  border: 0.1vh solid gainsboro;
+  border-bottom: 0.5vh solid gainsboro;
+  background-color: white;
+  font-size: 0.9vw;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+.quick-compare-button {
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+.quick-compare-info {
+  position: absolute;
+  right: 0.5vw;
+  top: 1vh;
 }
 
 /*# sourceMappingURL=App.css.map */

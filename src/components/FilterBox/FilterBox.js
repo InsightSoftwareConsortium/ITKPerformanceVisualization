@@ -27,7 +27,6 @@ export default class FilterBox extends Component {
   }
   
   render() {
-    console.log(Object.keys(this.props.filters).filter((item) => !this.props.exclude.includes(item)));
     return (
         <div className="filter-box-container">
           <Button color='green' className="add-filter-button" onClick={this.addButtonClicked}> + </Button>

@@ -94,4 +94,16 @@
   border: 0;
 }
 
+.button:disabled {
+  cursor: not-allowed;
+}
+.button:disabled:hover {
+  background-color: grey;
+  border: grey 0.2vh solid;
+}
+.button:disabled:hover:active {
+  border: grey 0.2vh solid;
+  transform: translateY(0);
+}
+
 /*# sourceMappingURL=Button.css.map */

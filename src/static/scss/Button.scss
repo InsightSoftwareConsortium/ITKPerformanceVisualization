@@ -1,4 +1,5 @@
 @import 'mixins.scss';
+@import 'variables.scss';
 
 .green-button {
     @include button(#00c851, #007e33);
@@ -14,4 +15,17 @@
 
 .yellow-button {
     @include button(#ffbb33, #ff8800);
+}
+
+.button:disabled {
+    cursor: not-allowed;
+
+    &:hover {
+        background-color: grey;
+        border: grey $buttonBorderBottom solid;
+        &:active {
+            border: grey $buttonBorderBottom solid;
+            transform: translateY(0);
+        }
+    }
 }
