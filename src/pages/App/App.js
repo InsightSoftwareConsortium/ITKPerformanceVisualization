@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
+import Alert from "react-bootstrap/Alert";
 import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
 import Button from "../../components/Button/Button";
 import NavBar from '../../components/NavBar/NavBar';
@@ -19,11 +20,26 @@ import FilterBox from '../../components/FilterBox/FilterBox';
 // import { AST_ObjectKeyVal } from 'terser';
 
 const Api = ApiInstance.instance;
+const defaultTabConfig = {
+  vizType:"HeatMap", 
+  splitVariable:"OSName",
+  xAxisVariable:"CommitDate", 
+  yAxisVariable:"Value", 
+  filters:{}
+}
+const quickCompareTabConfig = {
+  vizType:"BoxPlot", 
+  splitVariable:"BenchmarkName", 
+  xAxisVariable:"CommitHash", 
+  yAxisVariable:"Value", 
+  filters:{}
+}
 
 class App extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       navbarItems: {
         left: [<img src={itkvizlogo} alt="ITK Vizualization Tool" className="nav-logo"/>,],
@@ -31,14 +47,18 @@ class App extends Component {
       },
       showSidebar: true,
       tabs: [],
-      selectedTab: "Default",
+      selectedTab: "",
       tabCounter: 1,
       data: null,
       filteredData: null,
       changed: true,
       loading: true,
+      error: false,
+      errorMessage: "",
       loadingMessage: "Fetching Data...0 Folder(s)",
       quickComparePopup: false,
+      quickCompareHash1: "",
+      quickCompareHash2: "",
     }
     this.node = null;
     this.setParentState = this.setParentState.bind(this);
@@ -58,11 +78,11 @@ class App extends Component {
     this.deleteFilterSelection = this.deleteFilterSelection.bind(this);
     this.getFilterSelection = this.getFilterSelection.bind(this);
     this.filterExists = this.filterExists.bind(this);
-
-    this.handleTabAdd("Default");
+    this.handleQuickCompareSubmit = this.handleQuickCompareSubmit.bind(this);
   }
 
   componentDidMount() {
+    this.handleTabAdd("Default");
     let _this = this;
     let onSuccess = function(folders) {
       let folderIds = [];
@@ -81,7 +101,6 @@ class App extends Component {
     }
     Api.getFoldersFromParent(null, onSuccess, onFailure);
   }
-
 
   componentWillMount() {
     document.addEventListener('mousedown', this.handleOutsideClick, false);
@@ -140,6 +159,21 @@ class App extends Component {
     })
   }
 
+  handleQuickCompareSubmit() {
+    if((this.state.quickCompareHash1.length !== 7 && this.state.quickCompareHash1.length !== 14) || (this.state.quickCompareHash2.length !== 7 && this.state.quickCompareHash2.length !== 14)) {
+      this.setState({
+        error: true,
+        errorMessage: "Please enter valid commit hashes to compare",
+        quickComparePopup: false,
+      })
+    } else {
+      this.handleTabAdd("Quick Compare "+ this.state.tabCounter, "quickCompare");
+      this.setState({
+        quickComparePopup:false,
+      });
+     }
+  }
+
   changeTabData(property, data) {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
     let clone = this.state.tabs.slice(0);
@@ -158,11 +192,16 @@ class App extends Component {
     });
   }
 
-  handleTabAdd(tabName) {
-    this.state.tabs.push({name: tabName, vizType:"HeatMap", splitVariable:"OSName", xAxisVariable:"CommitDate", yAxisVariable:"Value", filters:{}})
+  handleTabAdd(tabName, configType) {
+    let clone = this.state.tabs.slice(0);
+    let configObj = configType === "quickCompare" ? quickCompareTabConfig : defaultTabConfig;
+    let configClone = JSON.parse(JSON.stringify(configObj));
+    configClone['name'] = tabName;
+    clone.push(configClone);
     this.setState({
-      tabs: this.state.tabs,
+      tabs: clone,
       tabCounter: this.state.tabCounter + 1,
+      selectedTab: tabName,
     });
   }
 
@@ -260,10 +299,11 @@ class App extends Component {
           {this.state.quickComparePopup &&
             <div className="quick-compare-popup" ref={node=>this.node=node}>
               <div className="quick-compare-input-wrapper">
-                <input type="text" placeholder="Commit Hash 1" className="quick-compare-input"/>
-                <input type="text" placeholder="Commit Hash 2" className="quick-compare-input"/>
+                <i className="fas fa-info-circle quick-compare-info" title="Enter 7 character or full commit hash"></i>
+                <input type="text" value={this.state.quickCompareHash1} onChange={(e)=>{this.setState({quickCompareHash1:e.target.value})}} placeholder="Commit Hash 1" className="quick-compare-input"/>
+                <input type="text" value={this.state.quickCompareHash2} onChange={(e)=>{this.setState({quickCompareHash2:e.target.value})}} placeholder="Commit Hash 2" className="quick-compare-input"/>
               </div>
-              <Button color="green" className="quick-compare-button">Submit  <i className="fas fa-exchange-alt"/></Button>
+              <Button color="green" isDisabled={this.state.loading} className="quick-compare-button" onClick={this.handleQuickCompareSubmit}>Compare  <i className="fas fa-exchange-alt"/></Button>
             </div>
             }
             <SideBar setParentState = {this.setParentState} showSidebar = {this.state.showSidebar}>
@@ -327,9 +367,9 @@ class App extends Component {
             {!this.state.loading && <TabBar handleTabNameChange={this.handleTabNameChange} selectedTab={this.state.selectedTab} tabCounter={this.state.tabCounter} tabs={this.state.tabs} handleTabRemove={this.handleTabRemove} handleTabSelect={this.handleTabSelect} handleTabAdd={this.handleTabAdd}/>}
             <div className="app-content-viz">
             {this.state.error &&
-              <div>
-                Error: {this.state.errorMessage}
-              </div>
+              <Alert variant="error">
+                <ul>{this.state.errorMessage}</ul>
+              </Alert>   
             }
             {!this.state.loading ?
               !this.state.changed ? 

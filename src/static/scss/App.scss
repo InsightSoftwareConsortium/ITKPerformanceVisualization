@@ -72,11 +72,17 @@
   @include inputStyle();
   display:block;
   margin:auto;
-  margin-top: 1vh;
+  margin-top: 2vh;
 }
 
 .quick-compare-button {
   display:block;
   margin:auto;
-  margin-top: 3vh;
+  margin-top: 2vh;
+}
+
+.quick-compare-info {
+  position: absolute;
+  right: .5vw;
+  top: 1vh;
 }
