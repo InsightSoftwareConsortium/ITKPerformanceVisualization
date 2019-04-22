@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
-import Alert from "react-bootstrap/Alert";
 import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
 import Button from "../../components/Button/Button";
 import NavBar from '../../components/NavBar/NavBar';
@@ -176,20 +175,29 @@ class App extends Component {
   }
 
   handleQuickCompareSubmit() {
+    let commitHashList = this.getAttributeValues('CommitHash');
+    let commitHashListAll = this.getAttributeValues('CommitHash').map(s => s.substring(0,7));
+    commitHashListAll = commitHashListAll.concat(commitHashList);
     if((this.state.quickCompareHash1.length !== 7 && this.state.quickCompareHash1.length !== 40) || (this.state.quickCompareHash2.length !== 7 && this.state.quickCompareHash2.length !== 40)) {
       this.setState({
         error: true,
         errorMessage: "Please enter valid commit hashes to compare",
         quickComparePopup: false,
       })
-    } else if(this.getAttributeValues('CommitHash').indexOf(this.state.quickCompareHash1) === -1 || this.getAttributeValues('CommitHash').indexOf(this.state.quickCompareHash2) === -1){
+    } else if(commitHashListAll.indexOf(this.state.quickCompareHash1) === -1 || commitHashListAll.indexOf(this.state.quickCompareHash2) === -1){
       this.setState({
         error:true,
 	errorMessage: "CommitHash(es) Not Found in Data",
 	quickComparePopup: false
       });
+    } else if(this.state.quickCompareHash1 === this.state.quickCompareHash2) {
+      this.setState({
+        error: true,
+	errorMessage: "CommitHashes must be unique",
+	quickComparePopup: false
+      });
     } else {
-      this.handleTabAdd("Quick Compare "+ this.state.tabCounter, "quickCompare");      
+      this.handleTabAdd("Quick Compare "+ this.state.tabCounter, "quickCompare");
       this.setState({
         quickComparePopup:false,
       });
@@ -220,7 +228,9 @@ class App extends Component {
     let configClone = JSON.parse(JSON.stringify(configObj));
     configClone['name'] = tabName;
     if(configType === "quickCompare") {
-    
+    	let hash1 = this.getAttributeValues("CommitHash").filter(s => s.includes(this.state.quickCompareHash1))[0];
+	let hash2 = this.getAttributeValues("CommitHash").filter(s => s.includes(this.state.quickCompareHash2))[0];
+	configClone['filters']['CommitHash'] = [hash1, hash2];
     }
     clone.push(configClone);
     let clone2 = this.cloneTabList(clone);
