@@ -67,7 +67,7 @@ class Api {
     }
     let folderCallback = function(response) {
       if (response != null && response instanceof Error) {
-        console.error(response);
+        // console.error(response);
       }
       count++;
       updateLoader("Fetching Data... "+count+" Folder(s)")
@@ -102,7 +102,7 @@ class Api {
       }
       let benchmarkCallback = function(response) {
         if (response != null && response instanceof Error) {
-          console.error(response);
+          // console.error(response);
         }
         count++;
         if(count === folderLength) {
@@ -156,7 +156,7 @@ class Api {
           callback(json)
         })
         .catch(function(error) {
-          console.error("Error:", error)
+          // console.error("Error:", error)
           callback(null)
         })
   }

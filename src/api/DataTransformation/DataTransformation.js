@@ -84,11 +84,11 @@ For others:
     //Validate json
     var valid = this.validate(benchmarkJson);
     if (!valid) {
-      console.error(
-        "Invalid benchmark JSON: " + this.validate.errors[0].message + "\n",
-        benchmarkJson,
-        this.validate.errors
-      )
+      // console.error(
+      //   "Invalid benchmark JSON: " + this.validate.errors[0].message + "\n",
+      //   benchmarkJson,
+      //   this.validate.errors
+      // )
       return [];
     }
 
