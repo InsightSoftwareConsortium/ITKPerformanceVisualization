@@ -79,9 +79,9 @@ export default class Checklist extends Component {
           <div className="search-box-wrapper">
             <input id="filter-search-box" class='search-box' placeholder={"Search " + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
           </div>
+	  <div className="check-buttons-wrapper">{this.state.selection.length + " item" + ((this.state.selection.length === 1)?"":"s") + " selected"}</div>
           <div className="check-buttons-wrapper">
-            <h>{this.state.selection.length + " item" + ((this.state.selection.length === 1)?"":"s") + " selected"}</h>
-            <div style={{float: "right"}}>
+             <div>
               <Button color="blue" onClick={this.checkAllClicked}> Check All </Button>
               <Button color="red" onClick={this.uncheckAllClicked}> Uncheck All </Button>
             </div>

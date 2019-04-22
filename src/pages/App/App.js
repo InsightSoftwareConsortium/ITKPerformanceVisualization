@@ -218,7 +218,7 @@ class App extends Component {
   handleTabSelect(tabName) { 
     this.setState({
       selectedTab:tabName,
-      changed: true
+      changed: false,
     });
   }
 
@@ -239,6 +239,7 @@ class App extends Component {
       tabsClone: clone2,
       tabCounter: this.state.tabCounter + 1,
       selectedTab: tabName,
+      changed: false,
     });
   }
 
@@ -256,6 +257,7 @@ class App extends Component {
       clone[index].name = newName;
       this.setState({
         tabs: clone,
+	tabsClone: clone,
         selectedTab: newName,
       });
     }
