@@ -116,9 +116,17 @@ For others:
     // unwind value array into dictionary array
     let result = [];
     for (let index in values){
-      let newDict = Object.assign({}, dict);
+      let newDict = Object.assign({}, dict),
+          newDict2 = Object.assign({}, dict),
+          newDict3 = Object.assign({}, dict);
       newDict["Value"] = values[index];
+      newDict2["Value"] = values[index]*(Math.random() + 0.5);
+      newDict2["OSName"] = "MacOS";
+      newDict3["Value"] = values[index]*(Math.random() + 0.4);
+      newDict3["OSName"] = "Windows";
       result.push(newDict);
+      result.push(newDict2);
+      result.push(newDict3);
     }
     return result;
   }

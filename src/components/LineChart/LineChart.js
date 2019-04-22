@@ -19,7 +19,6 @@ export default class LineChart extends Component {
     independentVar: "CommitHash",
     split: "",
     color: "",
-    selectedBenchmark: "BinaryAddBenchmark",
     valuesOnYAxis: true
   }
   
@@ -33,7 +32,8 @@ export default class LineChart extends Component {
         "data": {"values": this.props.data},
         "mark": {
           "type": "line",
-          "interpolate": "monotone" //"step-after"
+          // "point": true,
+          "interpolate": "monotone"
         },
         "columns": 4,
         "encoding": {
@@ -44,8 +44,7 @@ export default class LineChart extends Component {
           },
           [v1]: {
             "field": this.props.independentVar, 
-            "type": "ordinal",
-            // "sort": {"op": "max", "field": "CommitDate"}
+            "type": "ordinal"
           },
           [v2]: {
             "field": this.props.dependentVar,
@@ -88,6 +87,5 @@ LineChart.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string,
-  valuesOnYAxis: PropTypes.bool,
-  selectedBenchmark: PropTypes.string
+  valuesOnYAxis: PropTypes.bool
 }

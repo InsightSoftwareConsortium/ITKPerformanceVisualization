@@ -18,7 +18,6 @@ export default class ScatterPlot extends Component {
 	static defaultProps = {
     independentVar: "CommitHash",
     dependentVar: "Value",
-    selectedBenchmark: "BinaryAddBenchmark",
     valuesOnYAxis: true
   }
 

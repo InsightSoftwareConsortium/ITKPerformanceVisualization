@@ -48,13 +48,13 @@ export default class HeatMap extends Component {
             {"op": "mean", "field": this.props.dependentVar, "as": "meanBenchmarkValue"},
             {"op": "stdev", "field": this.props.dependentVar, "as": "stdevBenchmarkValue"}
           ],
-          "groupby": ["BenchmarkName"]
+          "groupby": ["BenchmarkName", this.props.split]
         },
         {
           "joinaggregate": [
             {"op": "mean", "field": this.props.dependentVar, "as": "specificMeanBenchmarkValue"}
           ],
-          "groupby": ["BenchmarkName", this.props.independentVar]
+          "groupby": ["BenchmarkName", this.props.independentVar, this.props.split]
         },
         {
           "calculate": 

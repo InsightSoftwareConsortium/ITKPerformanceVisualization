@@ -19,8 +19,7 @@ export default class BoxPlot extends Component {
     independentVar: "CommitHash",
     color: "",
     split: "",
-    valuesOnYAxis: true,
-    selectedBenchmark: "BinaryAddBenchmark"
+    valuesOnYAxis: true
   }
   
   //generates spec for vega-lite heatmap visualization
@@ -88,6 +87,5 @@ BoxPlot.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string,
-  valuesOnYAxis: PropTypes.bool,
-  selectedBenchmark: PropTypes.string
+  valuesOnYAxis: PropTypes.bool
 }

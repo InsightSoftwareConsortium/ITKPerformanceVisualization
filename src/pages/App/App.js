@@ -27,8 +27,9 @@ const defaultTabConfig = {
   xAxisVariable:"CommitDate", 
   yAxisVariable:"Value", 
   colorVariable:"",
-  selectedBenchmark:"",
-  filters:{}
+  selectedBenchmark:"BinaryAddBenchmark",
+  filters:{},
+  valuesOnYAxis:true
 }
 const quickCompareTabConfig = {
   vizType:"BoxPlot", 
@@ -36,8 +37,9 @@ const quickCompareTabConfig = {
   xAxisVariable:"CommitHash", 
   yAxisVariable:"Value",
   colorVariable:"",
-  selectedBenchmark:"", 
-  filters:{}
+  selectedBenchmark:"BinaryAddBenchmark", 
+  filters:{},
+  valuesOnYAxis:true
 }
 
 class App extends Component {
@@ -399,7 +401,9 @@ class App extends Component {
                           filterExists={this.filterExists}
                 ></Dropdown>
                 </div>
-                {(this.getCurrentTab().xAxisVariable !== "BenchmarkName" && this.getCurrentTab().splitVariable !== "BenchmarkName" && this.getCurrentTab().extraVariable !== "BenchmarkName")?
+                {(this.getCurrentTab().xAxisVariable !== "BenchmarkName" && this.getCurrentTab().splitVariable !== "BenchmarkName" && 
+                 !(this.getCurrentTab().vizType === "HeatMap" && this.getCurrentTab().yAxisVariable === "BenchmarkName") &&
+                 !(this.getCurrentTab().vizType !== "HeatMap" && this.getCurrentTab().colorVariable === "BenchmarkName"))?
                   <div className="param-container">
                   <h className="benchmark-param-label">Benchmark</h>
                   <select className="benchmark-selector" onChange={this.updateSelectedBenchmark}>
@@ -454,7 +458,8 @@ class App extends Component {
                 <HeatMap independentVar={this.getCurrentTab().xAxisVariable} 
                          data={this.state.filteredData} 
                          split={this.getCurrentTab().splitVariable}
-                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
+                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} 
+                         yAxisVariable={this.getCurrentTab().yAxisVariable} />
                 :(this.getCurrentTab().vizType === "ScatterPlot")?
                 <ScatterPlot independentVar={this.getCurrentTab().xAxisVariable} 
                              data={this.state.filteredData} 
