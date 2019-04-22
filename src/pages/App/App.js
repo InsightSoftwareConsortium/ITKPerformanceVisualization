@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import LocalCommitAlert from '../../components/LocalCommitAlert/LocalCommitAlert';
 import UploadDataButton from '../../components/UploadDataButton/UploadDataButton';
 import Button from "../../components/Button/Button";
 import NavBar from '../../components/NavBar/NavBar';
@@ -488,9 +487,6 @@ class App extends Component {
                 {this.state.changed && 
                   <Popup hidePopup={()=>{this.setState({changed:false})}}>Graph Parameters changed. <div className="popup-link" onClick={this.loadViz}>Reload?</div></Popup>
                 }
-                <div>
-                  <LocalCommitAlert data={this.state.data}></LocalCommitAlert>
-                </div>
                 {
                 (this.getCurrentTabClone().vizType === "HeatMap")?
                 <HeatMap independentVar={this.getCurrentTabClone().xAxisVariable} 
