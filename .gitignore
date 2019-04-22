@@ -24,3 +24,9 @@ yarn-debug.log*
 yarn-error.log*
 
 .sass-cache
+.sass-cache/
+
+*.swp
+
+*.css.map
+>>>>>>> dev

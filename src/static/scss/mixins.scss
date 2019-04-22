@@ -27,12 +27,23 @@ $buttonBorderBottom: .2vh;
 
 @mixin graph-selection($bgcolor) {
     cursor: pointer;
-    margin: 1vh 0vh 1vh 2vh;
+    margin: 0vh 1.4vh 0.5vh -0.5vh;
     border: 0.2vh solid gainsboro;
     border-radius: 0.5vh;
-    width: 0.4 * $sidebarWidth;
-    height: 0.4 * $sidebarWidth;
+    width: 0.32 * $sidebarWidth;
+    height: 0.29 * $sidebarWidth;
     background-color: white;
-    font-size: 1.11vw;
+    font-size: 0.9vw;
     font-weight: bold;
+}
+
+@mixin inputStyle() {
+    padding: 0.82vh 0.7vw 0.6vh 0.7vw;
+    border:.1vh solid gainsboro;
+    border-bottom: .5vh solid gainsboro;
+    background-color: white;
+    font-size: 0.9vw;
+    -webkit-appearance: none; 
+   -moz-appearance: none;
+   appearance: none;
 }

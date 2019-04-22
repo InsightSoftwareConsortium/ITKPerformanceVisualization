@@ -1,0 +1,55 @@
+.filter-box-container {
+    overflow-y: scroll;
+    margin-top: 0;
+    height: 18vh;
+}
+
+.filterbox-item {
+    display: inline-flex;
+}
+
+.filterbox-label {
+    margin-left: 2vw;
+    font-size: 1vw;
+}
+
+.circle-filter-button {
+    margin-left: 0.8vw;
+    margin-right: 0;
+    margin-top: 1vh;
+    text-align: center;
+    width: 1.5vw;
+    height: 1.5vw;
+    border-radius: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 1vw;
+    padding-bottom: 1.5vh;
+    color: white;
+    font-weight: bold;
+
+    /*&:hover {
+      &::after {
+          content: "-";
+      }
+    }*/
+}
+
+
+.add-filter-button {
+    position: absolute;
+    margin-left: 14.4vw;
+    margin-top: -3vh;
+    border-radius: 100%;
+    padding: 0vh 0vh 0.15vh 0vh;
+    width: 3vh;
+    height: 3vh;
+}
+
+.no-filters-msg {
+    font-size: 2vh;
+    margin-top: 1vh;
+    margin-left: 4vw;
+}

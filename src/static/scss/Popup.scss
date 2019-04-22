@@ -1,0 +1,41 @@
+.popup-container {
+    position: fixed;
+    margin: auto;
+    right: 0;
+    left: 0;
+    width: 15vw;
+    background-color: white;
+    border: .1vh solid gainsboro;
+    font-size: 1.8vh;
+    border-radius: 1vh;
+    padding: 1vh 1vw;
+    z-index: 1001;
+}
+
+.popup-link {
+    display: inline;
+    color: blue;
+    cursor: pointer;
+    &:hover {
+        color: darkblue;
+    }
+}
+
+.popup-error {
+    background-color: #ff4444 !important;
+    border-color: #CC0000 !important;
+    z-index: 1002;
+    color: white;
+}
+
+.popup-exit {
+    position: absolute;
+    right: .5vw;
+    top: .2vh;
+    font-size: 1.7vh;
+    cursor: pointer;
+
+    &:hover {
+       color: grey;
+    }
+}

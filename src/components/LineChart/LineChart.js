@@ -4,7 +4,7 @@ import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
 
 /**
- * Component for boxplot visualization for all Benchmarks
+ * Component for linechart visualization for all Benchmarks
  * Accepted props:
  *    --dependentVar: dependent variable for boxplot, such as value
  *    --independentVar: independent variable for plot, such as commitHash
@@ -13,12 +13,12 @@ import PropTypes from 'prop-types';
  *                If not specified, all instances will be used
  *    --split: specifies how to split charts based on a particular field 
  */
-export default class BoxPlot extends Component {
+export default class LineChart extends Component {
   static defaultProps = {
     dependentVar: "Value",
     independentVar: "CommitHash",
-    color: "",
     split: "",
+    color: "",
     valuesOnYAxis: true
   }
   
@@ -27,61 +27,61 @@ export default class BoxPlot extends Component {
     let v1 = this.props.valuesOnYAxis?"x":"y",
         v2 = this.props.valuesOnYAxis?"y":"x";
 
-    let resolveOption = (this.props.split !== "")?
-        {
+    return {
+        "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
+        "data": {"values": this.props.data},
+        "mark": {
+          "type": "line",
+          // "point": true,
+          "interpolate": "monotone"
+        },
+        "columns": 4,
+        "encoding": {
+          "facet": {
+            "field": this.props.split, 
+            "type": "nominal", 
+            "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+          },
+          [v1]: {
+            "field": this.props.independentVar, 
+            "type": "ordinal"
+          },
+          [v2]: {
+            "field": this.props.dependentVar,
+            "aggregate": "median"
+          },
+          "color": {
+            "field": this.props.color,
+            "type": "nominal"
+          }
+        },
+        "resolve": {
           "axis": {[v1]: "independent", [v2]: "independent"},
           "scale": {[v2]: "independent"}
-        }:{};
-
-    return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
-      "description": "Box plots for each benchmark",
-      "data": {"values": this.props.data},
-      "mark": {
-        "type": "boxplot",
-        "extent": "min-max"
-      },
-      "columns": 4,
-      "encoding": {
-        "facet": {
-          "field": this.props.split, 
-          "type": "nominal", 
-          "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
-        },
-        [v1]: {
-          "field": this.props.independentVar,
-          "type": "ordinal",
-          "sort": {"op": "max", "field": "CommitDate"}
-        },
-        [v2]: {
-          "field": this.props.dependentVar,
-          "type": "quantitative",
         }
-      },
-      "resolve": resolveOption
-    };
+      };
   }
 
   componentDidMount() {
     this.spec = this._spec();
-    vegaEmbed(this.refs.BoxPlotContainer, this.spec);
+    vegaEmbed(this.refs.LineChartContainer, this.spec);
   }
 
   //re-render vega visualization if input has changed
   componentDidUpdate(prevProps) {
     this.spec = this._spec();
-    vegaEmbed(this.refs.BoxPlotContainer, this.spec);
+    vegaEmbed(this.refs.LineChartContainer, this.spec);
   }
 
   // Creates container div that vega-lite will embed into
   render() { 
     return (
-      <div ref='BoxPlotContainer'/>
+      <div ref='LineChartContainer'/>
     );
   }
 }
 
-BoxPlot.propTypes = {
+LineChart.propTypes = {
   dependentVar: PropTypes.oneOf(["Value"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 

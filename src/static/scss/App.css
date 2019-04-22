@@ -36,4 +36,127 @@
   font-weight: bold;
 }
 
+.quick-compare-popup {
+  right: 6vw;
+  z-index: 1001;
+  position: fixed;
+  width: 15vw;
+  height: 20vh;
+  padding: 2vh 2vw 2vh 2vw;
+  border-radius: 1%;
+  border: 0.1vw solid gainsboro;
+  background-color: white;
+  margin-top: 1.5vh;
+}
+.quick-compare-popup::before {
+  content: "";
+  display: block;
+  position: absolute;
+  background-color: white;
+  border-left: 0.1vw solid gainsboro;
+  border-bottom: 0.1vw solid gainsboro;
+  width: 5vh;
+  height: 5vh;
+  margin-left: 10vw;
+  margin-top: -4.4vh;
+  transform: rotate(135deg);
+}
+
+.graph-selection-box {
+  border: 0.1vh solid gainsboro;
+  border-radius: 0.5vh;
+  margin-bottom: 2vh;
+  margin-left: 3vh;
+  margin-top: -0.9vh;
+  padding-top: 1.5vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: 16.5vw;
+  height: 26vh;
+}
+
+.param-container {
+  display: inline-flex;
+  margin-bottom: 0.3vh;
+}
+
+.filter-selection-box {
+  border: 0.1vh solid gainsboro;
+  border-radius: 0.5vh;
+  margin-bottom: 2vh;
+  margin-left: 3vh;
+  margin-top: -0.9vh;
+  padding-top: 1.5vh;
+  scroll-margin-top: 1.5vh;
+  width: 16.5vw;
+  height: 19vh;
+}
+
+.box-title {
+  margin-left: 4.2vh;
+  background-color: whitesmoke;
+}
+
+.param-label {
+  margin-left: 1.2vw;
+  font-size: 0.9vw;
+  margin-top: 1.7vh;
+  width: 2vw;
+}
+
+.benchmark-param-label {
+  margin-left: 1.2vw;
+  font-size: 0.9vw;
+  margin-top: 1.7vh;
+  width: 4.75vw;
+}
+
+.flip-axes-button {
+  margin: 0 auto;
+  display: block;
+  margin-top: 0.5vh;
+}
+
+.benchmark-selector {
+  cursor: pointer;
+  margin-top: 0.5vh;
+  margin-left: 1vh;
+  font-size: 0.7vw;
+  overflow: auto;
+  width: 9vw;
+  padding: 1.1vh 0.7vw 0.9vh 0.7vw;
+  border: 0.1vh solid gainsboro;
+  border-bottom: 0.5vh solid gainsboro;
+  background-color: white;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+.quick-compare-input {
+  padding: 0.82vh 0.7vw 0.6vh 0.7vw;
+  border: 0.1vh solid gainsboro;
+  border-bottom: 0.5vh solid gainsboro;
+  background-color: white;
+  font-size: 0.9vw;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+.quick-compare-button {
+  display: block;
+  margin: auto;
+  margin-top: 2vh;
+}
+
+.quick-compare-info {
+  position: absolute;
+  right: 0.5vw;
+  top: 1vh;
+}
+
 /*# sourceMappingURL=App.css.map */

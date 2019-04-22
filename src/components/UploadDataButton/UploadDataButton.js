@@ -48,7 +48,7 @@ export default class UploadDataButton extends Button {
     return (
       <div>
         <Button color="blue" onClick={this.onClick}>
-          Upload Data
+          Upload Data &nbsp; {this.props.children}
         </Button>
         <div id="local-upload-input">
           <input

@@ -67,10 +67,10 @@ class Api {
     }
     let folderCallback = function(response) {
       if (response != null && response instanceof Error) {
-        console.error(response);
+        // console.error(response);
       }
       count++;
-      updateLoader("Fetching Data..."+count+" Folder(s)")
+      updateLoader("Fetching Data... "+count+" Folder(s)")
       if(count === ids.length) {
         if (data != null && data.length > 0) onSuccess(data);
         else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))
@@ -102,7 +102,7 @@ class Api {
       }
       let benchmarkCallback = function(response) {
         if (response != null && response instanceof Error) {
-          console.error(response);
+          // console.error(response);
         }
         count++;
         if(count === folderLength) {
@@ -156,7 +156,7 @@ class Api {
           callback(json)
         })
         .catch(function(error) {
-          console.error("Error:", error)
+          // console.error("Error:", error)
           callback(null)
         })
   }

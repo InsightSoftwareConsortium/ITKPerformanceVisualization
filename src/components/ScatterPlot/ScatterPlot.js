@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import 'canvas';
 import vegaEmbed from 'vega-embed';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
-import { isNullOrUndefined } from 'util';
 
 /**
  * Component for scatterplot visualization for a single benchmark
@@ -20,21 +18,19 @@ export default class ScatterPlot extends Component {
 	static defaultProps = {
     independentVar: "CommitHash",
     dependentVar: "Value",
-    selectedBenchmark: "ThreadOverheadBenchmark",
+    valuesOnYAxis: true
   }
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
+    let v1 = this.props.valuesOnYAxis?"x":"y",
+        v2 = this.props.valuesOnYAxis?"y":"x";
+
     return {    
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
         "data": {"values": this.props.data},
         "title": this.props.selectedBenchmark,
           "transform": [
-              {"filter": {"field": this.props.independentVar, 
-              "oneOf": isNullOrUndefined(this.props.selected) ? 
-                Object.keys(_.groupBy(this.props.data, value => value[this.props.independentVar])) :
-                this.props.selected}},
-              {"filter": {"field": "BenchmarkName", "equal": this.props.selectedBenchmark}},
               {
                 "joinaggregate": [
                   {"op": "median", "field": this.props.dependentVar, "as": "values"},
@@ -43,7 +39,7 @@ export default class ScatterPlot extends Component {
               }
           ],
           "encoding": {
-              "x": {
+              [v1]: {
                 "field": this.props.independentVar, 
                 "type": "ordinal",
                 "sort": {"op": "max", "field": "CommitDate"}
@@ -55,7 +51,7 @@ export default class ScatterPlot extends Component {
                     "type": "point"
                 },
                 "encoding": {
-                    "y": {
+                    [v2]: {
                       "field": this.props.dependentVar,
                       "type": "quantitative"
                     },
@@ -70,7 +66,7 @@ export default class ScatterPlot extends Component {
                     "size": 50
                 },
                 "encoding": {
-                  "y": {
+                  [v2]: {
                     "field": "values",
                     "aggregate": "median",
                   },
@@ -111,5 +107,6 @@ ScatterPlot.propTypes = {
   dependentVar: PropTypes.oneOf(["Value"]),
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", "BenchmarkName",
-                  "CommitHash"])
+                  "CommitHash"]),
+  valuesOnYAxis: PropTypes.bool
 }
