@@ -29,7 +29,6 @@ export default class ScatterPlot extends Component {
     return {    
         "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc12.json",
         "data": {"values": this.props.data},
-        "width": 500,
         "title": (this.props.split === "" && this.props.color === "")? this.props.selectedBenchmark: "",
         "transform": [
             {
