@@ -96,7 +96,7 @@ class App extends Component {
 
     let commit1 = urlParams.get('commit1');
     let commit2 = urlParams.get('commit2');
-    if(commit1  && commit2) {
+    if(commit1 !== null  && commit2 !== null) {
       this.setState({
         quickCompareHash1:commit1,
         quickCompareHash2:commit2
@@ -153,7 +153,7 @@ class App extends Component {
       _this.setState({
         data: response,
         loading: false,
-      }, ()=>{_this.loadViz();_this.handleQuickCompareSubmit()});
+      }, ()=>{_this.loadViz();if(_this.state.quickCompareHash1.length > 6) _this.handleQuickCompareSubmit()});
     }
     let onFailure = function(response) {
       console.log(response);
