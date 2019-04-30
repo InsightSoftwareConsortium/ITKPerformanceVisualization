@@ -84,18 +84,17 @@ For others:
     //Validate json
     var valid = this.validate(benchmarkJson);
     if (!valid) {
-      // console.error(
-      //   "Invalid benchmark JSON: " + this.validate.errors[0].message + "\n",
-      //   benchmarkJson,
-      //   this.validate.errors
-      // )
+      console.error(
+        "Invalid benchmark JSON: " + this.validate.errors[0].message + "\n",
+        benchmarkJson,
+        this.validate.errors
+      )
       return [];
     }
 
     //parse benchmark name
     //Name is found after second underscore in full name
-    let nameIndex = benchmarkName.indexOf("_", benchmarkName.indexOf("_") + 1) + 1;
-    benchmarkName = benchmarkName.slice(nameIndex).split(".")[0];
+    benchmarkName = benchmarkName.split("_")[2].split(/_|\./)[0];
     
     let dict = {
       _local: isLocal,
