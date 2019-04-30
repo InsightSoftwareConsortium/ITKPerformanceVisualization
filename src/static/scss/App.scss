@@ -158,3 +158,20 @@
   right: .5vw;
   top: 1vh;
 }
+
+.param-label .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  z-index: 2;
+  margin-top: -25px;
+  margin-left: 105%; 
+}
+
+.param-label:hover .tooltiptext {
+  visibility: visible;
+}

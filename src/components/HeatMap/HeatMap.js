@@ -30,7 +30,7 @@ export default class HeatMap extends Component {
 
     return {
       "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
-      "title": "Normalized runtimes",
+      "title": (this.props.useRawValues)? "Runtimes":"Normalized runtimes",
       "data": {"values": this.props.data},
       "selection": {
           "benchmarks": {
@@ -41,6 +41,7 @@ export default class HeatMap extends Component {
               "type": "interval", "bind": "scales"
           }
       },
+      "columns": 1,
       "transform": [
         {
           "sort": [{"field": this.props.dependentVar}],
@@ -48,13 +49,13 @@ export default class HeatMap extends Component {
             {"op": "mean", "field": this.props.dependentVar, "as": "meanBenchmarkValue"},
             {"op": "stdev", "field": this.props.dependentVar, "as": "stdevBenchmarkValue"}
           ],
-          "groupby": ["BenchmarkName", this.props.split]
+          "groupby": (this.props.split === "")? ["BenchmarkName"]:["BenchmarkName", this.props.split]
         },
         {
           "joinaggregate": [
             {"op": "mean", "field": this.props.dependentVar, "as": "specificMeanBenchmarkValue"}
           ],
-          "groupby": ["BenchmarkName", this.props.independentVar, this.props.split]
+          "groupby": (this.props.split === "")? ["BenchmarkName", this.props.independentVar]:["BenchmarkName", this.props.independentVar, this.props.split]
         },
         {
           "calculate": 
@@ -83,10 +84,10 @@ export default class HeatMap extends Component {
           "color": {
               "condition": {
                   "selection": "benchmarks",
-                  "field": "ZScore",
+                  "field": (this.props.useRawValues)? "specificMeanBenchmarkValue":"ZScore",
                   "type": "quantitative",
                   "sort": "descending",
-                  "axis": {"title": this.props.dependentVar + " Z-Score"},
+                  "axis": {"title": (this.props.useRawValues)? "Mean Probe Time":"Mean Probe Time Z-Score"},
               },
               "value": "white",
           }
@@ -128,5 +129,6 @@ HeatMap.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   valuesOnYAxis: PropTypes.bool,
+  useRawValues: PropTypes.bool,
   selectedBenchmark: PropTypes.string
 }

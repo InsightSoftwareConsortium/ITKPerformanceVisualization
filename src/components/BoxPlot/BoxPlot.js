@@ -41,7 +41,11 @@ export default class BoxPlot extends Component {
         "type": "boxplot",
         "extent": "min-max"
       },
-      "columns": 4,
+      "transform": [{
+        "calculate": (this.props.color === "")? "datum." + this.props.independentVar:"toString(datum." + this.props.independentVar + ") + ' - ' + toString(datum." + this.props.color + ")",
+        "as": "adjIndVar"
+      }],
+      "columns": 1,
       "encoding": {
         "facet": {
           "field": this.props.split, 
@@ -49,13 +53,16 @@ export default class BoxPlot extends Component {
           "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
         },
         [v1]: {
-          "field": this.props.independentVar,
-          "type": "ordinal",
-          "sort": {"op": "max", "field": "CommitDate"}
+          "field": "adjIndVar",
+          "type": "ordinal"
         },
         [v2]: {
           "field": this.props.dependentVar,
           "type": "quantitative",
+        },
+        "color": (this.props.color === "")? {"value": "#99badd"}:{
+          "field": this.props.color,
+          "type": "nominal"
         }
       },
       "resolve": resolveOption
@@ -87,5 +94,6 @@ BoxPlot.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string,
+  color: PropTypes.string,
   valuesOnYAxis: PropTypes.bool
 }

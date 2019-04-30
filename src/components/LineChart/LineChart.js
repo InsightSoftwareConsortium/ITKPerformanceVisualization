@@ -18,35 +18,36 @@ export default class LineChart extends Component {
     dependentVar: "Value",
     independentVar: "CommitHash",
     split: "",
-    color: "",
-    valuesOnYAxis: true
+    color: ""
   }
   
   //generates spec for vega-lite heatmap visualization
   _spec() {
-    let v1 = this.props.valuesOnYAxis?"x":"y",
-        v2 = this.props.valuesOnYAxis?"y":"x";
-
     return {
         "$schema": "https://vega.github.io/schema/vega-lite/v3.json",
         "data": {"values": this.props.data},
         "mark": {
           "type": "line",
-          // "point": true,
+          "point": true,
+          "size": 50,
           "interpolate": "monotone"
         },
-        "columns": 4,
+        "transform": [{
+          "calculate": "''",
+          "as": "dummy"
+        }],
+        "columns": 1,
         "encoding": {
           "facet": {
-            "field": this.props.split, 
+            "field": (this.props.split === "")? "dummy":this.props.split, 
             "type": "nominal", 
             "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
           },
-          [v1]: {
+          "x": {
             "field": this.props.independentVar, 
-            "type": "ordinal"
+            "type": "ordinal",
           },
-          [v2]: {
+          "y": {
             "field": this.props.dependentVar,
             "aggregate": "median"
           },
@@ -56,8 +57,8 @@ export default class LineChart extends Component {
           }
         },
         "resolve": {
-          "axis": {[v1]: "independent", [v2]: "independent"},
-          "scale": {[v2]: "independent"}
+          "axis": {"x": "independent", "y": "independent"},
+          "scale": {"y": "independent"}
         }
       };
   }
@@ -86,6 +87,5 @@ LineChart.propTypes = {
   independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
-  split: PropTypes.string,
-  valuesOnYAxis: PropTypes.bool
+  split: PropTypes.string
 }
