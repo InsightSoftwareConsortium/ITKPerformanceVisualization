@@ -33,6 +33,7 @@ export default class Checklist extends Component {
   handleOutsideClick(event) {
     if(!this.node.contains(event.target)) 
       this.props.hideChecklist();
+      this.props.updateFilterSelection(this.props.name, this.state.selection);
   }
 
   searchBoxChanged(event){
@@ -68,13 +69,12 @@ export default class Checklist extends Component {
     this.setState({
       selection: this.state.selection
     })
-    this.props.updateFilterSelection(this.props.name, this.state.selection);
   }
 
   render() {
     return (
       <div class='checklist-container' ref={node=>this.node=node}>
-        <div onClick={this.props.hideChecklist} className="checklist-exit">X</div>
+        <div onClick={()=>{this.props.hideChecklist();this.props.updateFilterSelection(this.props.name, this.state.selection);}} className="checklist-exit">X</div>
         <div id='filter-menu'>
           <div className="search-box-wrapper">
             <input id="filter-search-box" class='search-box' placeholder={"Search " + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>

@@ -16,7 +16,7 @@ class Api {
     this.folderDetailsSubFolders = "nFolders";
     this.folderDetailsItems = "nItems";
     this.benchmarkCollectionID = "5af50c818d777f06857985e3"; 
-    this.maxLimit = 100;
+    this.maxLimit = 10;
   }
 
   getFolderDetails(id, onSuccess, onFailure) {

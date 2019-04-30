@@ -38,7 +38,7 @@ const quickCompareTabConfig = {
   colorVariable:"",
   selectedBenchmark:"BinaryAddBenchmark", 
   filters:{},
-  valuesOnYAxis:true
+  valuesOnYAxis:false
 }
 
 class App extends Component {
@@ -53,15 +53,15 @@ class App extends Component {
       },
       showSidebar: true,
       tabs: [],
-      tabsClone: [],
       selectedTab: "",
       tabCounter: 1,
       data: null,
       filteredData: null,
-      changed: true,
       loading: true,
       error: false,
       errorMessage: "",
+      notification: false,
+      notificationMessage:"",
       loadingMessage: "Fetching Data... 0 Folder(s)",
       quickComparePopup: false,
       quickCompareHash1: "",
@@ -90,8 +90,19 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.handleTabAdd("Default");
     let _this = this;
+    this.handleTabAdd("Default");
+    let urlParams = new URLSearchParams(window.location.search);
+
+    let commit1 = urlParams.get('commit1');
+    let commit2 = urlParams.get('commit2');
+    if(commit1  && commit2) {
+      this.setState({
+        quickCompareHash1:commit1,
+        quickCompareHash2:commit2
+      });
+    }
+
     let onSuccess = function(folders) {
       let folderIds = [];
       /* Folder Selection here */
@@ -102,6 +113,7 @@ class App extends Component {
       _this.collectData(folderIds);
     }
     let onFailure = function(response) {
+      console.log(response);
       _this.setState({
         error: true,
         errorMessage: response
@@ -141,9 +153,10 @@ class App extends Component {
       _this.setState({
         data: response,
         loading: false,
-      });
+      }, ()=>{_this.loadViz();_this.handleQuickCompareSubmit()});
     }
     let onFailure = function(response) {
+      console.log(response);
       _this.setState({
         error: true,
         errorMessage: response,
@@ -158,13 +171,38 @@ class App extends Component {
     }
 
     Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure, updateLoader);
+
   }
 
   addLocalData = (localData) => {
     let current = this.state.data.concat(localData);
-    this.setState({
-      data: current
+    let commits = this.getLocalCommitsFromData(current);
+    if(commits.length > 1) {
+      this.setState({
+        quickCompareHash1: commits[0],
+        quickCompareHash2: commits[1],
+        data: current,
+        notification: true,
+        notificationMessage: "Data successfully uploaded. Quick Compare viz created."
+      });
+      this.handleQuickCompareSubmit();
+    } else {
+      this.setState({
+        quickCompareHash1: commits[0],
+        data: current,
+        notification: true,
+        notificationMessage: "Data successfully uploaded. One new commit added."
+      });
+    }
+  }
+
+  getLocalCommitsFromData(concatData) {
+    let commits = [];
+    concatData.forEach(function(data) {
+      if(data['_local'] && commits.indexOf(data['CommitHash']) === -1)
+        commits.push(data['CommitHash']);
     });
+    return commits
   }
 
   showQuickCompare = () => {
@@ -207,7 +245,10 @@ class App extends Component {
     let index = this.state.tabs.findIndex(tab => tab.name === this.state.selectedTab);
     let clone = this.cloneTabList(this.state.tabs);
     clone[index][property] = data;
-    this.setState({tabs:clone, changed: true});
+    this.setState({tabs:clone});
+    if(!this.state.loading) {
+      this.loadViz();
+    }
   }
 
   setParentState(state) {
@@ -217,7 +258,6 @@ class App extends Component {
   handleTabSelect(tabName) { 
     this.setState({
       selectedTab:tabName,
-      changed: false,
     });
   }
 
@@ -228,17 +268,14 @@ class App extends Component {
     configClone['name'] = tabName;
     if(configType === "quickCompare") {
     	let hash1 = this.getAttributeValues("CommitHash").filter(s => s.includes(this.state.quickCompareHash1))[0];
-	let hash2 = this.getAttributeValues("CommitHash").filter(s => s.includes(this.state.quickCompareHash2))[0];
-	configClone['filters']['CommitHash'] = [hash1, hash2];
+      let hash2 = this.getAttributeValues("CommitHash").filter(s => s.includes(this.state.quickCompareHash2))[0];
+      configClone['filters']['CommitHash'] = [hash1, hash2];
     }
     clone.push(configClone);
-    let clone2 = this.cloneTabList(clone);
     this.setState({
       tabs: clone,
-      tabsClone: clone2,
       tabCounter: this.state.tabCounter + 1,
       selectedTab: tabName,
-      changed: false,
     });
   }
 
@@ -256,7 +293,6 @@ class App extends Component {
       clone[index].name = newName;
       this.setState({
         tabs: clone,
-	tabsClone: clone,
         selectedTab: newName,
       });
     }
@@ -269,7 +305,6 @@ class App extends Component {
     }
     this.setState({
       tabs:this.state.tabs.filter(tab => tab.name !== tabName),
-      tabsClone: this.state.tabs.filter(tab => tab.name !== tabName),
       selectedTab: selectedTab
     });
   }
@@ -282,18 +317,13 @@ class App extends Component {
     return this.getTabByName(this.state.selectedTab);
   }
 
-  getCurrentTabClone() {
-    return this.state.tabsClone[this.state.tabsClone.findIndex(tab => tab.name === this.state.selectedTab)];
-  }
-
   flipAxes() {
     this.changeTabData("valuesOnYAxis", !this.getCurrentTab().valuesOnYAxis);
   }
 
   loadViz() {
     // this.setState({data: mySqlRemote.query("select * from myDataTable where {apply filters}")});
-    let clone = this.cloneTabList(this.state.tabs);
-    this.setState({filteredData: this.filterData(), tabsClone: clone, changed: false});
+    this.setState({filteredData: this.filterData()});
   }
 
   getDataAttributes(){
@@ -318,12 +348,12 @@ class App extends Component {
   updateFilterSelection(attr, selection){
     if (attr !== "")
       this.getCurrentTab().filters[attr] = selection;
-    this.setState({changed: true});
+    this.loadViz();
   }
 
   deleteFilterSelection(attr){
     delete this.getCurrentTab().filters[attr];
-    this.setState({changed: true});
+    this.loadViz();
   }
 
   filterExists(attr){
@@ -482,36 +512,38 @@ class App extends Component {
                 {this.state.errorMessage}
               </Popup>   
             }
+            {this.state.notification &&
+              <Popup hidePopup={()=>{this.setState({notification:false})}}>
+                {this.state.notificationMessage}
+              </Popup>   
+            }
             {!this.state.loading ? 
               <div>
-                {this.state.changed && 
-                  <Popup hidePopup={()=>{this.setState({changed:false})}}>Graph Parameters changed. <div className="popup-link" onClick={this.loadViz}>Reload?</div></Popup>
-                }
                 {
-                (this.getCurrentTabClone().vizType === "HeatMap")?
-                <HeatMap independentVar={this.getCurrentTabClone().xAxisVariable} 
+                (this.getCurrentTab().vizType === "HeatMap")?
+                <HeatMap independentVar={this.getCurrentTab().xAxisVariable} 
                          data={this.state.filteredData} 
-                         split={this.getCurrentTabClone().splitVariable}
-                         valuesOnYAxis={this.getCurrentTabClone().valuesOnYAxis} />
-                :(this.getCurrentTabClone().vizType === "ScatterPlot")?
-                <ScatterPlot independentVar={this.getCurrentTabClone().xAxisVariable} 
+                         split={this.getCurrentTab().splitVariable}
+                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
+                :(this.getCurrentTab().vizType === "ScatterPlot")?
+                <ScatterPlot independentVar={this.getCurrentTab().xAxisVariable} 
                              data={this.state.filteredData} 
-                             split={this.getCurrentTabClone().splitVariable}
-                             selectedBenchmark={this.getCurrentTabClone().selectedBenchmark}
-                             valuesOnYAxis={this.getCurrentTabClone().valuesOnYAxis} />
-                :(this.getCurrentTabClone().vizType === "BoxPlot")?
-                <BoxPlot independentVar={this.getCurrentTabClone().xAxisVariable} 
+                             split={this.getCurrentTab().splitVariable}
+                             selectedBenchmark={this.getCurrentTab().selectedBenchmark}
+                             valuesOnYAxis={this.getCurrentTab().valuesOnYAxis} />
+                :(this.getCurrentTab().vizType === "BoxPlot")?
+                <BoxPlot independentVar={this.getCurrentTab().xAxisVariable} 
                          data={this.state.filteredData} 
-                         split={this.getCurrentTabClone().splitVariable}
-                         valuesOnYAxis={this.getCurrentTabClone().valuesOnYAxis}
-                         selectedBenchmark={this.getCurrentTabClone().selectedBenchmark} />
-                :(this.getCurrentTabClone().vizType === "LineChart")?
-                <LineChart independentVar={this.getCurrentTabClone().xAxisVariable}
+                         split={this.getCurrentTab().splitVariable}
+                         valuesOnYAxis={this.getCurrentTab().valuesOnYAxis}
+                         selectedBenchmark={this.getCurrentTab().selectedBenchmark} />
+                :(this.getCurrentTab().vizType === "LineChart")?
+                <LineChart independentVar={this.getCurrentTab().xAxisVariable}
                            data={this.state.filteredData}
-                           split={this.getCurrentTabClone().splitVariable}
-                           selectedBenchmark={this.getCurrentTabClone().selectedBenchmark}
-                           valuesOnYAxis={this.getCurrentTabClone().valuesOnYAxis}
-                           color={this.getCurrentTabClone().colorVariable} />
+                           split={this.getCurrentTab().splitVariable}
+                           selectedBenchmark={this.getCurrentTab().selectedBenchmark}
+                           valuesOnYAxis={this.getCurrentTab().valuesOnYAxis}
+                           color={this.getCurrentTab().colorVariable} />
                 :<h>Invalid Graph Type</h>
                 }
               </div>
