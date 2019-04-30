@@ -23,4 +23,4 @@ Then open http://localhost:3000/ in your browser.
 
 Development Info
 ----------------
-This application was initially developed in spring 2019 by undergraduate computer science majors at the University of North Carolina at Chapel Hill for a class project. The app's technical design document can be found <a href="https://docs.google.com/document/d/1KefTJq8YKsru8QNANrKbZxv_by-7HXmj5sYq4w7BOr0/edit?usp=sharing" target="_blank">here</a>, and more information on the app and its development can be found at the team's [course website](http://itkperformance.web.unc.edu/).
+This application was initially developed in spring 2019 by undergraduate computer science majors at the University of North Carolina at Chapel Hill for a class project. The app's technical design document, which includes suggested information for future development, can be found <a href="https://docs.google.com/document/d/1KefTJq8YKsru8QNANrKbZxv_by-7HXmj5sYq4w7BOr0/edit?usp=sharing" target="_blank">here</a>, and more information on the app and its development can be found at the team's [course website](http://itkperformance.web.unc.edu/).
