@@ -109,7 +109,10 @@ class App extends Component {
       /* Folder Selection here */
       folders = folders.slice(folders.length - 6, folders.length - 1);
       for (let folder in folders) {
+        if ( folders.hasOwnProperty(folder))
+        {
         folderIds.push(folders[folder]["_id"]);
+        }
       }
       _this.collectData(folderIds);
     }
