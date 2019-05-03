@@ -3,7 +3,7 @@ import LocalCommitAlert from './LocalCommitAlert';
 import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 
 describe('Render LocalCommitAlert', () => {

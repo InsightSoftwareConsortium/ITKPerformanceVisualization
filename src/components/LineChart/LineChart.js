@@ -19,7 +19,7 @@ export default class LineChart extends Component {
     independentVar: "CommitHash",
     split: "",
     color: ""
-  }
+  };
   
   //generates spec for vega-lite heatmap visualization
   _spec() {
@@ -88,4 +88,4 @@ LineChart.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", 
                   "CommitHash"]),
   split: PropTypes.string
-}
+};

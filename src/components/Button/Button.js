@@ -15,5 +15,5 @@ export default class Button extends Component {
 
 Button.propTypes = {
   color:  PropTypes.oneOf(['blue', 'red', 'green', 'yellow'])
-}
+};
 

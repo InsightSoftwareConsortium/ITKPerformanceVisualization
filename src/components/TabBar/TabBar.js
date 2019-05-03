@@ -40,4 +40,4 @@ TabBar.propTypes = {
   selectedTab: PropTypes.string,
   tabCounter: PropTypes.number,
   tabs: PropTypes.array,
-}
+};

@@ -39,4 +39,4 @@ NavBar.propTypes = {
     right: PropTypes.array,
     center: PropTypes.array,
   })
-}
+};

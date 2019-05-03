@@ -3,7 +3,7 @@ import BoxPlot from './BoxPlot';
 import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 describe('Render BoxPlot', () => {
   it('renders correct BoxPlot component with given props', () => {
@@ -11,7 +11,7 @@ describe('Render BoxPlot', () => {
       data: mockData,
       independentVariable: "CommitHash",
       dependentVariable: "Value"
-    }
+    };
 
     const BoxPlotComponent = render(<BoxPlot {...props}/>);
     expect(BoxPlotComponent).toBeDefined();

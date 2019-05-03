@@ -65,4 +65,4 @@ FilterBox.propTypes = {
   updateFilterSelection: PropTypes.func,
   deleteFilterSelection: PropTypes.func,
   filterExists: PropTypes.func
-}
+};

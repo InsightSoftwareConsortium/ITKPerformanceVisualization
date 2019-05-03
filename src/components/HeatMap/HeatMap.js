@@ -21,7 +21,7 @@ export default class HeatMap extends Component {
     independentVar: "CommitHash",
     valuesOnYAxis: true,
     selectedBenchmark: "BinaryAddBenchmark"
-  }
+  };
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
@@ -131,4 +131,4 @@ HeatMap.propTypes = {
   valuesOnYAxis: PropTypes.bool,
   useRawValues: PropTypes.bool,
   selectedBenchmark: PropTypes.string
-}
+};

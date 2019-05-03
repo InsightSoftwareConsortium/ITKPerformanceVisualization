@@ -14,7 +14,7 @@ export default class GraphSelection extends Component {
     else if(this.props.vizType === "BoxPlot")
       image = boxplotsample;
     else if(this.props.vizType === "ScatterPlot")
-      image = scatterplotsample
+      image = scatterplotsample;
     else if(this.props.vizType === "LineChart")
       image = linechartsample;
     else
@@ -32,4 +32,4 @@ GraphSelection.propTypes = {
   selected: PropTypes.bool,
   vizType:  PropTypes.oneOf(['HeatMap','ScatterPlot','BoxPlot','LineChart']),
   changeVizType: PropTypes.func
-}
+};

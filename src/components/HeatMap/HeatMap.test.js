@@ -3,7 +3,7 @@ import HeatMap from './HeatMap';
 import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 
 describe('Render Heatmap', () => {
@@ -12,7 +12,7 @@ describe('Render Heatmap', () => {
       data: mockData,
       independentVariable: "CommitHash",
       dependentVariable: "Value"
-    }
+    };
     
     const vegaEmbedNode = render(<HeatMap {...props}/>);
     expect(vegaEmbedNode).toBeDefined();

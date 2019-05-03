@@ -4,7 +4,7 @@ import mockData from '../visualizationTestData.json';
 import { render, cleanup } from 'react-testing-library'
 import { expressionFunction } from 'vega';
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 describe('Render ScatterPlot', () => {
   it('renders correct ScatterPlot component with given props', () => {
@@ -12,7 +12,7 @@ describe('Render ScatterPlot', () => {
       data: mockData,
       independentVariable: "CommitHash",
       dependentVariable: "Value"
-    }
+    };
 
     const ScatterPlotComponent = render(<ScatterPlot {...props}/>);
     expect(ScatterPlotComponent).toBeDefined();

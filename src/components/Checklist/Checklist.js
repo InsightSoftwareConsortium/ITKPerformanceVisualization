@@ -9,7 +9,7 @@ export default class Checklist extends Component {
     this.state = {
       selection: this.props.default,
       searchItems: this.props.options
-    }
+    };
     
     this.checkBoxClicked = this.checkBoxClicked.bind(this);
     this.searchBoxChanged = this.searchBoxChanged.bind(this);
@@ -54,7 +54,7 @@ export default class Checklist extends Component {
   checkAllClicked(value){
     for (var index in this.state.searchItems)
       if (!this.state.selection.includes(this.state.searchItems[index]))
-        this.state.selection.push(this.state.searchItems[index])
+        this.state.selection.push(this.state.searchItems[index]);
     this.updateSelection();
   }
   
@@ -119,4 +119,4 @@ Checklist.propTypes = {
   default: PropTypes.array,
   updateFilterSelection: PropTypes.func,
   hideChecklist: PropTypes.func
-}
+};

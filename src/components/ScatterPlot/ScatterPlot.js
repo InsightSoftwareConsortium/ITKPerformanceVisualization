@@ -19,7 +19,7 @@ export default class ScatterPlot extends Component {
     independentVar: "CommitHash",
     dependentVar: "Value",
     valuesOnYAxis: true
-  }
+  };
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
@@ -142,4 +142,4 @@ ScatterPlot.propTypes = {
                   "OSPlatform", "OSRelease", "OSName", "CommitDate", "BenchmarkName",
                   "CommitHash"]),
   valuesOnYAxis: PropTypes.bool
-}
+};

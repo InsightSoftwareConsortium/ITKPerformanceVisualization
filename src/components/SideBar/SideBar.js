@@ -16,4 +16,4 @@ export default class SideBar extends Component {
 SideBar.propTypes = {
   toggleSidebar: PropTypes.bool,
   setParentState: PropTypes.func,
-}
+};

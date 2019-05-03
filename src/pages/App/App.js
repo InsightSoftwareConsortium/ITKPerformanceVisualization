@@ -29,7 +29,7 @@ const defaultTabConfig = {
   selectedBenchmark:"BinaryAddBenchmark",
   filters:{},
   valuesOnYAxis:true
-}
+};
 const quickCompareTabConfig = {
   vizType:"BoxPlot", 
   splitVariable:"BenchmarkName", 
@@ -39,7 +39,7 @@ const quickCompareTabConfig = {
   selectedBenchmark:"BinaryAddBenchmark", 
   filters:{},
   valuesOnYAxis:false
-}
+};
 
 class App extends Component {
 
@@ -66,7 +66,7 @@ class App extends Component {
       quickComparePopup: false,
       quickCompareHash1: "",
       quickCompareHash2: "",
-    }
+    };
     this.node = null;
     this.setParentState = this.setParentState.bind(this);
     this.handleTabSelect = this.handleTabSelect.bind(this);
@@ -115,14 +115,14 @@ class App extends Component {
         }
       }
       _this.collectData(folderIds);
-    }
+    };
     let onFailure = function(response) {
       console.log(response);
       _this.setState({
         error: true,
         errorMessage: response
       })
-    }
+    };
     Api.getFoldersFromParent(null, onSuccess, onFailure);
   }
 
@@ -146,7 +146,7 @@ class App extends Component {
     let list = [];
     tabs.forEach(function(tab) {
       list.push(Object.assign({}, tab));
-    })
+    });
     return list;
   }
 
@@ -158,7 +158,7 @@ class App extends Component {
         data: response,
         loading: false,
       }, ()=>{_this.loadViz();if(_this.state.quickCompareHash1.length > 6) _this.handleQuickCompareSubmit()});
-    }
+    };
     let onFailure = function(response) {
       console.log(response);
       _this.setState({
@@ -167,12 +167,12 @@ class App extends Component {
         data: null,
         loading: false
       });
-    }
+    };
     let updateLoader = function(message) {
       _this.setState({
           loadingMessage: message
       });
-    }
+    };
 
     Api.getBenchmarkDataFromMultipleFolders(folderIds, onSuccess, onFailure, updateLoader);
 
@@ -198,7 +198,7 @@ class App extends Component {
         notificationMessage: "Data successfully uploaded. One new commit added."
       });
     }
-  }
+  };
 
   getLocalCommitsFromData(concatData) {
     let commits = [];
@@ -213,7 +213,7 @@ class App extends Component {
     this.setState({
       quickComparePopup: true,
     })
-  }
+  };
 
   handleQuickCompareSubmit() {
     let commitHashList = this.getAttributeValues('CommitHash');

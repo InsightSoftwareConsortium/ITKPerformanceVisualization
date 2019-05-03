@@ -14,7 +14,7 @@ export default class UploadDataButton extends Button {
         let json = Dti.parseBenchmark(file.name, JSON.parse(reader.result), true);
         callback(json);
       }
-    }
+    };
     reader.readAsText(file);
   }
 
@@ -33,16 +33,16 @@ export default class UploadDataButton extends Button {
         //change state, add data
         _this.props.addLocalData(data);
       }
-    }
+    };
 
     for (let i = 0; i < files.length; i++) {
       _this.readFile(files[i], onFileSuccess)
     }
-  }
+  };
 
   onClick = (event) => {
     this.inputElement.click();
-  }
+  };
 
   render() {
     return (

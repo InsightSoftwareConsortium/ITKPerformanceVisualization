@@ -10,7 +10,7 @@ class Api {
       itemsByFolderId: "item?folderId=<>",
       itemById: "item/<>/download",
       limit: "&limit=<>"
-    }
+    };
     this.folderItemId = "_id";
     this.folderItemName = "name";
     this.folderDetailsSubFolders = "nFolders";
@@ -53,7 +53,7 @@ class Api {
           onSuccess(_this.transformer.parseFolderMetadata(folder));
         }
       }) 
-    }
+    };
     this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }
 
@@ -64,18 +64,18 @@ class Api {
     let onFolderSuccess = function(response) {
       data = data.concat(response);
       folderCallback();
-    }
+    };
     let folderCallback = function(response) {
       if (response != null && response instanceof Error) {
         // console.error(response);
       }
       count++;
-      updateLoader("Fetching Data... "+count+" Folder(s)")
+      updateLoader("Fetching Data... "+count+" Folder(s)");
       if(count === ids.length) {
         if (data != null && data.length > 0) onSuccess(data);
         else onFailure(new Error("Unable to obtain benchmark data from folders: " + ids))
       }
-    }
+    };
 
     for (let index in ids)
       _this.getBenchmarkDataFromSingleFolder(ids[index], onFolderSuccess, folderCallback);
@@ -99,7 +99,7 @@ class Api {
           data = data.concat(object);
         });
         benchmarkCallback();
-      }
+      };
       let benchmarkCallback = function(response) {
         if (response != null && response instanceof Error) {
           // console.error(response);
@@ -108,7 +108,7 @@ class Api {
         if(count === folderLength) {
           onSuccess(data);
         }
-      }
+      };
   
       _this.GET(URL, function(response) {
         if (response == null) {
@@ -124,7 +124,7 @@ class Api {
           }
         }
       })
-    }
+    };
 
     this.getFolderDetails(id, onDetailsSuccess, onFailure);
   }

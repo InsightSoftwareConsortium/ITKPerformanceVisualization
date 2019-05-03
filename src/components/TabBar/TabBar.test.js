@@ -3,7 +3,7 @@ import TabBar from './TabBar';
 import Dashboard from "../Dashboard/Dashboard";
 import { render, cleanup } from 'react-testing-library';
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 
 let tabs = [
@@ -11,7 +11,7 @@ let tabs = [
     name: "Default",
     content: <Dashboard/>
   }
-]
+];
 
 let tabCounter = 0;
 

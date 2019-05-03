@@ -20,7 +20,7 @@ export default class BoxPlot extends Component {
     color: "",
     split: "",
     valuesOnYAxis: true
-  }
+  };
   
   //generates spec for vega-lite heatmap visualization
   _spec() {
@@ -96,4 +96,4 @@ BoxPlot.propTypes = {
   split: PropTypes.string,
   color: PropTypes.string,
   valuesOnYAxis: PropTypes.bool
-}
+};

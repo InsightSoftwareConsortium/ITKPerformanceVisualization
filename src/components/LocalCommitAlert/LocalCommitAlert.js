@@ -12,7 +12,7 @@ import _ from 'lodash';
  */
 export default class LocalCommitAlert extends Component {
   constructor(props){
-    super(props)
+    super(props);
     this.localCommits = [];
   }
 

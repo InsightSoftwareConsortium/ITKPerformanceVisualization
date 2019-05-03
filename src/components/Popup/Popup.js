@@ -18,4 +18,4 @@ export default class Popup extends Component {
 Popup.propTypes = {
   style: PropTypes.string,
   type: PropTypes.string
-}
+};

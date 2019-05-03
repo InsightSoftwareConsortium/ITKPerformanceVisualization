@@ -8,7 +8,7 @@ export default class Dropdown extends Component {
       super(props);
       this.state = {
         filterOpen: false
-      }
+      };
 
       this.selectionChanged = this.selectionChanged.bind(this);
       this.filterButtonClicked = this.filterButtonClicked.bind(this);
@@ -62,4 +62,4 @@ Dropdown.propTypes = {
   updateAttributeSelection: PropTypes.func,
   updateFilterSelection: PropTypes.func,
   filterExists: PropTypes.func
-}
+};

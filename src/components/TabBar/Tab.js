@@ -8,7 +8,7 @@ export default class Tab extends Component {
     this.state = {
       editName:false,
       value: this.props.name
-    }
+    };
     this.handleNameChange = this.handleNameChange.bind(this);
     this.handleValueChange = this.handleValueChange.bind(this);
   }
@@ -50,4 +50,4 @@ Tab.propTypes = {
   changeName: PropTypes.func,
   name: PropTypes.string,
   selected: PropTypes.bool,
-}
+};

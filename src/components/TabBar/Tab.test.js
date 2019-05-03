@@ -2,7 +2,7 @@ import React from 'react';
 import Tab from './Tab';
 import { render, cleanup } from 'react-testing-library'
 
-afterEach(cleanup)
+afterEach(cleanup);
 
 
 
