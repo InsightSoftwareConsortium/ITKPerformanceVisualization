@@ -1,6 +1,6 @@
 import React from 'react';
 import GraphSelection from './GraphSelection';
-import { render, cleanup } from 'react-testing-library'
+import { render, cleanup } from 'react-testing-library';
 
 afterEach(cleanup);
 

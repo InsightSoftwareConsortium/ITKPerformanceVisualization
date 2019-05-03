@@ -1,23 +1,23 @@
-import Ajv from 'ajv'
-import BenchmarkSchema from './BenchmarkSchema.json'
+import Ajv from 'ajv';
+import BenchmarkSchema from './BenchmarkSchema.json';
 
 class DataTransformation {
   constructor() {
     this.scatterPlotDataKeys = {
-      CommitDate: "ITK_MANUAL_BUILD_INFORMATION.GIT_CONFIG_DATE",
-      CommitHash: "ITK_MANUAL_BUILD_INFORMATION.GIT_CONFIG_SHA1",
-      ITKVersion: "SystemInformation.ITKVersion",
-      OSName: "SystemInformation.OperatingSystem.Name",
-      OSPlatform: "SystemInformation.OperatingSystem.Platform",
-      OSRelease: "SystemInformation.OperatingSystem.Release",
-      NumThreads: "RunTimeInformation.GetGlobalDefaultNumberOfThreads",
-      System: "SystemInformation.System",
+      CommitDate: 'ITK_MANUAL_BUILD_INFORMATION.GIT_CONFIG_DATE',
+      CommitHash: 'ITK_MANUAL_BUILD_INFORMATION.GIT_CONFIG_SHA1',
+      ITKVersion: 'SystemInformation.ITKVersion',
+      OSName: 'SystemInformation.OperatingSystem.Name',
+      OSPlatform: 'SystemInformation.OperatingSystem.Platform',
+      OSRelease: 'SystemInformation.OperatingSystem.Release',
+      NumThreads: 'RunTimeInformation.GetGlobalDefaultNumberOfThreads',
+      System: 'SystemInformation.System',
     };
-    this.valuesKey = "Probes.0.Values";
+    this.valuesKey = 'Probes.0.Values';
 
-    this.idKey = "_id";
-    this.nameKey = "name";
-    this.sizeKey = "size";
+    this.idKey = '_id';
+    this.nameKey = 'name';
+    this.sizeKey = 'size';
 
     let ajv = new Ajv();
     this.validate = ajv.compile(BenchmarkSchema);
@@ -40,7 +40,7 @@ class DataTransformation {
   parseFolderMetadata(folderList) {
     //filter our empty folders
     let sizeKey = this.sizeKey;
-    let filteredArray = folderList.filter((folder) => {return folder[sizeKey] > 0});
+    let filteredArray = folderList.filter((folder) => {return folder[sizeKey] > 0;});
     return this.parseMetadata(filteredArray);
   }
 
@@ -94,12 +94,12 @@ For others:
 
     //parse benchmark name
     //Name is found after second underscore in full name
-    let nameIndex = benchmarkName.indexOf("_", benchmarkName.indexOf("_") + 1) + 1;
-    benchmarkName = benchmarkName.slice(nameIndex).split(".")[0];
-    
+    let nameIndex = benchmarkName.indexOf('_', benchmarkName.indexOf('_') + 1) + 1;
+    benchmarkName = benchmarkName.slice(nameIndex).split('.')[0];
+
     let dict = {
       _local: isLocal,
-      BenchmarkName: benchmarkName, 
+      BenchmarkName: benchmarkName,
     };
     for (let key in this.scatterPlotDataKeys) {
       let val = findValue(benchmarkJson, this.scatterPlotDataKeys[key]);
@@ -111,16 +111,16 @@ For others:
       dict[key] = val;
     }
 
-    if (dict["BenchmarkName"].startsWith("Resample"))
-      dict["BenchmarkName"] = "ResampleBenchmark";
+    if (dict['BenchmarkName'].startsWith('Resample'))
+      dict['BenchmarkName'] = 'ResampleBenchmark';
 
     let values = findValue(benchmarkJson, this.valuesKey);
-    
+
     // unwind value array into dictionary array
     let result = [];
     for (let index in values){
       let newDict = Object.assign({}, dict);
-      newDict["Value"] = values[index];
+      newDict['Value'] = values[index];
       result.push(newDict);
     }
     return result;
@@ -128,7 +128,7 @@ For others:
 }
 
 var findValue = function(object, dir) {
-  let keys = dir.split(".");
+  let keys = dir.split('.');
   let pointer = object;
 
   for (let i = 0; i < keys.length; i++) {

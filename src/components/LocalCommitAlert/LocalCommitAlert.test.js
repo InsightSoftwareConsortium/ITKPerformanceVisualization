@@ -1,7 +1,7 @@
 import React from 'react';
 import LocalCommitAlert from './LocalCommitAlert';
 import mockData from '../visualizationTestData.json';
-import { render, cleanup } from 'react-testing-library'
+import { render, cleanup } from 'react-testing-library';
 
 afterEach(cleanup);
 

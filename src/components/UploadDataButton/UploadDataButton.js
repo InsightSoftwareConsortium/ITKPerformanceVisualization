@@ -36,7 +36,7 @@ export default class UploadDataButton extends Button {
     };
 
     for (let i = 0; i < files.length; i++) {
-      _this.readFile(files[i], onFileSuccess)
+      _this.readFile(files[i], onFileSuccess);
     }
   };
 
@@ -58,12 +58,12 @@ export default class UploadDataButton extends Button {
             multiple
             onInput={(event) => this.onInput(event)}
             onClick={(event) => {
-              event.target.value = null
+              event.target.value = null;
             }}
           />
         </div>
       </div>
-    )
+    );
   }
 }
 
