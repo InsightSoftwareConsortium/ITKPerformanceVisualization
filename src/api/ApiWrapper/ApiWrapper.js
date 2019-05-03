@@ -24,7 +24,7 @@ class Api {
 
     this.GET(URL, function(details) {
       if (details == null) {
-        onFailure(new Error('Error retreiving folder details for folder id: ' + id));
+        onFailure(new Error('Error retrieving folder details for folder id: ' + id));
       }
       else {
         onSuccess(details);
@@ -47,7 +47,7 @@ class Api {
 
       _this.GET(URL, function(folder) {
         if (folder == null) {
-          onFailure(new Error('Error retreiving folders from parent with id: ' + id));
+          onFailure(new Error('Error retrieving folders from parent with id: ' + id));
         }
         else {
           onSuccess(_this.transformer.parseFolderMetadata(folder));
