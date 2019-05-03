@@ -51,14 +51,14 @@ export default class Checklist extends Component {
     this.updateSelection();
   }
 
-  checkAllClicked(value){
+  checkAllClicked( /* value */){
     for (var index in this.state.searchItems)
       if (!this.state.selection.includes(this.state.searchItems[index]))
         this.state.selection.push(this.state.searchItems[index]);
     this.updateSelection();
   }
 
-  uncheckAllClicked(value){
+  uncheckAllClicked( /* value */){
     for (var index in this.state.searchItems)
       if (this.state.selection.includes(this.state.searchItems[index]))
         this.state.selection.splice(this.state.selection.indexOf(this.state.searchItems[index]), 1);
@@ -79,7 +79,7 @@ export default class Checklist extends Component {
           <div className="search-box-wrapper">
             <input id="filter-search-box" className='search-box' placeholder={'Search ' + this.props.name} onChange={this.searchBoxChanged} type="text"/><i className="fas fa-search search-box-icon"/>
           </div>
-	  <div className="check-buttons-wrapper">{this.state.selection.length + ' item' + ((this.state.selection.length === 1)?'':'s') + ' selected'}</div>
+          <div className="check-buttons-wrapper">{this.state.selection.length + ' item' + ((this.state.selection.length === 1)?'':'s') + ' selected'}</div>
           <div className="check-buttons-wrapper">
             <div>
               <Button color="blue" onClick={this.checkAllClicked}> Check All </Button>

@@ -155,8 +155,7 @@ class Api {
       .then(function (json) {
         callback(json);
       })
-      .catch(function(error) {
-        // console.error("Error:", error)
+      .catch(function(/*error*/) {
         callback(null);
       });
   }

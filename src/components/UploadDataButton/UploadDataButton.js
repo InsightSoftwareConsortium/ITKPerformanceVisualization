@@ -40,7 +40,7 @@ export default class UploadDataButton extends Button {
     }
   };
 
-  onClick = (event) => {
+  onClick = (/*event*/) => {
     this.inputElement.click();
   };
 

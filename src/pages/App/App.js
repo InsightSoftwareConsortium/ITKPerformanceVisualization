@@ -117,7 +117,7 @@ class App extends Component {
       _this.collectData(folderIds);
     };
     let onFailure = function(response) {
-      console.log(response);
+      //console.log(response);
       _this.setState({
         error: true,
         errorMessage: response
@@ -160,7 +160,7 @@ class App extends Component {
       }, ()=>{_this.loadViz();if(_this.state.quickCompareHash1.length > 6) _this.handleQuickCompareSubmit();});
     };
     let onFailure = function(response) {
-      console.log(response);
+      //console.log(response);
       _this.setState({
         error: true,
         errorMessage: response,
@@ -271,7 +271,7 @@ class App extends Component {
     let configClone = JSON.parse(JSON.stringify(configObj));
     configClone['name'] = tabName;
     if(configType === 'quickCompare') {
-    	let hash1 = this.getAttributeValues('CommitHash').filter(s => s.includes(this.state.quickCompareHash1))[0];
+      let hash1 = this.getAttributeValues('CommitHash').filter(s => s.includes(this.state.quickCompareHash1))[0];
       let hash2 = this.getAttributeValues('CommitHash').filter(s => s.includes(this.state.quickCompareHash2))[0];
       configClone['filters']['CommitHash'] = [hash1, hash2];
     }
