@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
  * Accepted props:
  *    --dependentVar: dependent variable for plot, such as value
  *    --independentVar: independent variable for plot, such as commitHash
- *    --selected: optional, can specify a subset of selected instances of the 
+ *    --selected: optional, can specify a subset of selected instances of the
  *                independent variable to chart in the form of an array
  *                (i.e. array of commitHashes).
  *                If not specified, all instances will be used
@@ -17,92 +17,92 @@ import PropTypes from 'prop-types';
 export default class HeatMap extends Component {
 
   static defaultProps = {
-    dependentVar: "Value",
-    independentVar: "CommitHash",
+    dependentVar: 'Value',
+    independentVar: 'CommitHash',
     valuesOnYAxis: true,
-    selectedBenchmark: "BinaryAddBenchmark"
-  }
+    selectedBenchmark: 'BinaryAddBenchmark'
+  };
 
   //generates spec for vega-lite heatmap visualization
   _spec() {
-    let v1 = this.props.valuesOnYAxis?"x":"y",
-        v2 = this.props.valuesOnYAxis?"y":"x";
+    let v1 = this.props.valuesOnYAxis?'x':'y',
+      v2 = this.props.valuesOnYAxis?'y':'x';
 
     return {
-      "$schema": "https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json",
-      "title": (this.props.useRawValues)? "Runtimes":"Normalized runtimes",
-      "data": {"values": this.props.data},
-      "selection": {
-          "benchmarks": {
-            "type": "single",
-            "fields": ["BenchmarkName"]
-          },
-          "grid": {
-              "type": "interval", "bind": "scales"
-          }
+      '$schema': 'https://vega.github.io/schema/vega-lite/v3.0.0-rc13.json',
+      'title': (this.props.useRawValues)? 'Runtimes':'Normalized runtimes',
+      'data': {'values': this.props.data},
+      'selection': {
+        'benchmarks': {
+          'type': 'single',
+          'fields': ['BenchmarkName']
+        },
+        'grid': {
+          'type': 'interval', 'bind': 'scales'
+        }
       },
-      "columns": 1,
-      "transform": [
+      'columns': 1,
+      'transform': [
         {
-          "sort": [{"field": this.props.dependentVar}],
-          "joinaggregate": [
-            {"op": "mean", "field": this.props.dependentVar, "as": "meanBenchmarkValue"},
-            {"op": "stdev", "field": this.props.dependentVar, "as": "stdevBenchmarkValue"}
+          'sort': [{'field': this.props.dependentVar}],
+          'joinaggregate': [
+            {'op': 'mean', 'field': this.props.dependentVar, 'as': 'meanBenchmarkValue'},
+            {'op': 'stdev', 'field': this.props.dependentVar, 'as': 'stdevBenchmarkValue'}
           ],
-          "groupby": (this.props.split === "")? ["BenchmarkName"]:["BenchmarkName", this.props.split]
+          'groupby': (this.props.split === '')? ['BenchmarkName']:['BenchmarkName', this.props.split]
         },
         {
-          "joinaggregate": [
-            {"op": "mean", "field": this.props.dependentVar, "as": "specificMeanBenchmarkValue"}
+          'joinaggregate': [
+            {'op': 'mean', 'field': this.props.dependentVar, 'as': 'specificMeanBenchmarkValue'}
           ],
-          "groupby": (this.props.split === "")? ["BenchmarkName", this.props.independentVar]:["BenchmarkName", this.props.independentVar, this.props.split]
+          'groupby': (this.props.split === '')? ['BenchmarkName', this.props.independentVar]:['BenchmarkName', this.props.independentVar, this.props.split]
         },
         {
-          "calculate": 
-            "(datum.specificMeanBenchmarkValue-datum.meanBenchmarkValue)/(datum.stdevBenchmarkValue)", 
-            "as": "ZScore"
+          'calculate':
+            '(datum.specificMeanBenchmarkValue-datum.meanBenchmarkValue)/(datum.stdevBenchmarkValue)',
+          'as': 'ZScore'
         }
       ],
-      "mark": "rect",
-        "encoding": {
-          "facet": {
-            "field": this.props.split, 
-            "type": "nominal", 
-            "header": {"title": this.props.split, "titleFontSize": 20, "labelFontSize": 10}
+      'mark': 'rect',
+      'encoding': {
+        'facet': {
+          'field': this.props.split,
+          'type': 'nominal',
+          'header': {'title': this.props.split, 'titleFontSize': 20, 'labelFontSize': 10}
+        },
+        [v1]: {
+          'field': this.props.independentVar,
+          'type': 'ordinal',
+          'sort': {'op': 'max', 'field': 'CommitDate'}
+        },
+        [v2]: {
+          'field': 'BenchmarkName',
+          'type': 'nominal',
+          'axis': {'title': 'Benchmark'},
+          'sort': {'field': 'meanBenchmarkValue', 'order': 'descending'}
+        },
+        'color': {
+          'condition': {
+            'selection': 'benchmarks',
+            'field': (this.props.useRawValues)? 'specificMeanBenchmarkValue':'ZScore',
+            'type': 'quantitative',
+            'sort': 'descending',
+            'axis': {'title': (this.props.useRawValues)? 'Mean Probe Time':'Mean Probe Time Z-Score'},
           },
-          [v1]: {
-            "field": this.props.independentVar, 
-            "type": "ordinal",
-            "sort": {"op": "max", "field": "CommitDate"}
-          },
-          [v2]: {
-            "field": "BenchmarkName", 
-            "type": "nominal", 
-            "axis": {"title": "Benchmark"},
-            "sort": {"field": "meanBenchmarkValue", "order": "descending"}
-          },
-          "color": {
-              "condition": {
-                  "selection": "benchmarks",
-                  "field": (this.props.useRawValues)? "specificMeanBenchmarkValue":"ZScore",
-                  "type": "quantitative",
-                  "sort": "descending",
-                  "axis": {"title": (this.props.useRawValues)? "Mean Probe Time":"Mean Probe Time Z-Score"},
-              },
-              "value": "white",
+          'value': 'white',
+        }
+      },
+      'config': {
+        'range': {
+          'heatmap': {
+            'scheme': 'redblue'
           }
         },
-        "config": {
-          "range": {
-            "heatmap": {
-              "scheme": "redblue"
-            }
-          },
-          "view": {
-            "stroke": "transparent"
-          }
+        'view': {
+          'stroke': 'transparent'
         }
-      };
+      }
+    };
   }
 
   componentDidMount() {
@@ -116,7 +116,7 @@ export default class HeatMap extends Component {
   }
 
   // Creates container div that vega-lite will embed into
-  render() { 
+  render() {
     return (
       <div ref='HeatMapContainer'/>
     );
@@ -124,11 +124,11 @@ export default class HeatMap extends Component {
 }
 
 HeatMap.propTypes = {
-  dependentVar:  PropTypes.oneOf(["Value", "StandardDeviation", "Mean"]),
-  independentVar: PropTypes.oneOf(["ITKVersion", "NumThreads", "System", 
-                  "OSPlatform", "OSRelease", "OSName", "CommitDate", 
-                  "CommitHash"]),
+  dependentVar:  PropTypes.oneOf(['Value', 'StandardDeviation', 'Mean']),
+  independentVar: PropTypes.oneOf(['ITKVersion', 'NumThreads', 'System',
+    'OSPlatform', 'OSRelease', 'OSName', 'CommitDate',
+    'CommitHash']),
   valuesOnYAxis: PropTypes.bool,
   useRawValues: PropTypes.bool,
   selectedBenchmark: PropTypes.string
-}
+};
