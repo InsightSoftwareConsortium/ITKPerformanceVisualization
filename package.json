@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ajv": "^6.10.0",
+    "ajv": "^6.12.3",
     "canvas": "^2.3.1",
     "eslint-nibble": "^5.1.0",
     "jest-dom": "^3.1.2",
